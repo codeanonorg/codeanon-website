@@ -14,9 +14,14 @@ app.get('/', (req, res) => {
    res.sendFile(path.join(__dirname + '/public/login.html'));
 })
 
+app.get('/profile', (req, res) => {
+    res.render('profile.ejs', {msg: "test"})
+})
 
 app.post('/', (req, res) => {
-  app.render('index.ejs', {msg: "test"})
+  console.log(req.body)
+  res.redirect('/profile')
+  res.end()
 })
 
 app.listen(8080, () => {
