@@ -1,17 +1,22 @@
 
 const express = require('express')
-const https = require('https')
+const path = require('path')
+const bodyParser = require('body-parser')
 
 let app = express()
 
 app.use(express.static('public'))
+app.use(express.static('bower_components'))
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.render('index.html')
+   res.sendFile(path.join(__dirname + '/public/login.html'));
 })
 
-app.get('/login/:name', (req, res) => {
-  res.render('index.ejs', {msg: req.params.name})
+
+app.post('/', (req, res) => {
+  app.render('index.ejs', {msg: "test"})
 })
 
 app.listen(8080, () => {
