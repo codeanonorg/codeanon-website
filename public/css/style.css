@@ -1,0 +1,16 @@
+:root {
+  background-image: url(../pictures/backgrd.jpg);
+  overflow: hidden;
+}
+.middle-screen {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .yellow-col {
+    background-color: #ffd800;
+  }
+  .is-full-height {
+    height: 100vh;
+  }
