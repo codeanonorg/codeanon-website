@@ -3,11 +3,14 @@
   overflow: hidden;
 }
 .middle-screen {
-  position: fixed;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.yellow-col {
-  background-color: #ffd800;
-}
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .yellow-col {
+    background-color: #ffd800;
+  }
+  .if-full-height {
+    height: 100vh;
+  }
