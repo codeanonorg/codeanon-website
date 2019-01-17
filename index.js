@@ -1,8 +1,8 @@
 
 const express = require('express')
+const session = require('cookie-session')
 const path = require('path')
 const bodyParser = require('body-parser')
-const SHA256 = require("crypto-js/sha256")
 
 let app = express()
 
@@ -11,25 +11,11 @@ app.use(express.static('bower_components'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
+app.use(session({
+  secret: 'jaimelescookies'
+}))
+
 const users = require('./users.json').users
-
-let pendingToken = []
-
-function generateTokenFor(user) {
-  const n = SHA256(Date.now()).toString()
-  const token = `${SHA256(user).toString()}${n}`
-  pendingToken.push(token)
-  return token
-}
-
-function disableToken(t) {
-  for (let i=0; i < pendingToken.length; i++) {
-    if (pendingToken[i] === t) {
-      pendingToken.splice(i, 1)
-      break;
-    }
-  }
-}
 
 function auth(email, password) {
   let ok = false;
@@ -43,30 +29,43 @@ function auth(email, password) {
 }
 
 app.get('/', (req, res) => {
-   res.sendFile(path.join(__dirname + '/public/login.html'));
+  res.redirect('/login')
 })
 
-app.get('/profile/:token', (req, res) => {
-  if (pendingToken.includes(req.params.token)) {
-    disableToken(req.params.token)
-    res.render('profile.ejs', {msg: req.params.token})
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname + '/public/login.html'));
+})
+
+app.get('/profile', (req, res) => {
+  if (req.session.user && req.session.) {
+    res.render('profile.ejs', {msg: req.session.user.email})
   } else {
-    console.log("error profile")
+    res.redirect('/login')
   }
 })
 
-app.post('/', (req, res) => {
+app.get('/logout', (req, res) => {
+  req.session = null
+  res.send('Bye !')
+})
+
+app.post('/login', (req, res) => {
+  
   console.log(req.body)
 
   let email = req.body['email']
   let password = req.body['password']
 
   if (auth(email, password)) {
-    let t = generateTokenFor()
-    res.redirect(`/profile/${t}`)
-    res.end()
+    
+    req.session.user = {
+      'email': email
+    }
+
+    res.redirect('/profile')
+    
   } else {
-    console.log('error pass')
+    res.redirect('/login')
   }
 })
 
