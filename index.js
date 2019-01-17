@@ -50,7 +50,7 @@ app.get('/home', (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.session = null
-  res.send('Bye !')
+  res.redirect('/login')
 })
 
 app.post('/login', (req, res) => {

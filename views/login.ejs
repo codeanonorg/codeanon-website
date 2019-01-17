@@ -25,10 +25,11 @@
   <body>
     <div class="columns is-mobile is-centered">
       <div class="column is-one-quarter middle-screen yellow-col">
+        <% if (errors) { %>
         <% for (let err of errors) { %>
           <!-- red message error -->
           <p><%= err.msg %></p>
-        <% } %>
+        <% }} %>
         <form method="POST">
           <input type="text" name="email">
           <input type="text" name="password">
