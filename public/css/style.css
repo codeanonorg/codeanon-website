@@ -9,7 +9,22 @@
     transform: translate(-50%, -50%);
   }
   .yellow-col {
-    background-color: #ffd800;
+    background-color: #ffd800; /* #EBBB12 */
+  }
+  .grey-col {
+    background-color: #2f2f2f;
+  }
+  .black-col {
+    background-color: #020202;
+  }
+  .white-col {
+    background-color: #FDFDFC;
+  }
+  .egg-shell-col {
+    background-color: #e0dfd5;
+  }
+  .light-grey-col {
+    background-color: #414142;
   }
   .is-full-height {
     height: 100vh;
