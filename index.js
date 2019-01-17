@@ -36,9 +36,9 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname + '/public/login.html'));
 })
 
-app.get('/profile', (req, res) => {
-  if (req.session.user && req.session.) {
-    res.render('profile.ejs', {msg: req.session.user.email})
+app.get('/home', (req, res) => {
+  if (req.session.user) {
+    res.render('home.ejs', {msg: req.session.user.email})
   } else {
     res.redirect('/login')
   }
@@ -62,7 +62,7 @@ app.post('/login', (req, res) => {
       'email': email
     }
 
-    res.redirect('/profile')
+    res.redirect('/home')
     
   } else {
     res.redirect('/login')
