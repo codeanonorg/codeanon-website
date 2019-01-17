@@ -13,3 +13,5 @@ Pour lancer le serveur :
 Pour essayer le site :
 
 [cliquer ici](http://127.0.0.1:8080)
+
+*Attention, vous devez d'abord lancer le serveur en local !!*
