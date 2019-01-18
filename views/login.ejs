@@ -3,16 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./bulma.css">
     
+    <link rel="stylesheet" href="css/bulma.css">
+    <link rel="stylesheet" href="css/style.css">
+
     <!-- crypto lib -->
     <script type="text/javascript" src="crypto-js/crypto-js.js"></script>
     <script type="text/javascript">
       var encrypted = CryptoJS.SHA256("bbb");
       console.log(encrypted.toString())
     </script>
+
 
     <!-- main script -->
     <script src="js/script.js"></script>
@@ -24,9 +25,14 @@
   <body>
     <div class="columns is-mobile is-centered">
       <div class="column is-one-quarter middle-screen yellow-col">
+        <% if (errors) { %>
+        <% for (let err of errors) { %>
+          <!-- red message error -->
+          <p><%= err.msg %></p>
+        <% }} %>
         <form method="POST">
-          <input type="text" name="test">
-          <input type="text" name="test2">
+          <input type="text" name="email">
+          <input type="text" name="password">
           <input type="submit">
         </form>
       </div>
