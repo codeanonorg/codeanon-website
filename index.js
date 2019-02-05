@@ -31,14 +31,36 @@ function auth(email, password) {
   return ok
 }
 
-app.get('/', (req, res) => {
-  res.redirect('/login')
-})
 
-app.get('/login', (req, res) => {
-  // res.sendFile(path.join(__dirname + '/public/login.html'));
-  res.render('login.ejs', {errors: req.session.errors})
+app.get('/', (req, res) => {
+  //res.redirect('/login')
+  //backURL=req.header('Referer') || '/';
+  if (req.session.user) {
+    res.redirect("/home");
+  } else {
+    res.redirect('/login');
+  }
 })
+app.get('/login', (req, res) =>{
+  //backURL=req.header('Referer') || '/';
+  if (req.session.user) {
+    res.redirect('/home');
+  } else {
+    res.render('login.ejs', {errors: req.session.errors});
+  }
+  //res.redirect(backURL);
+});
+/*
+app.get('/login', (req, res) => {
+
+  //send user back to last page if already loged in
+  if (req.session.user) {
+    res.redirect('back');
+  } else {
+    res.render('login.ejs', {errors: req.session.errors});
+  }
+  //res.render('login.ejs', {errors: req.session.errors})
+})*/
 
 app.get('/home', (req, res) => {
   if (req.session.user) {
@@ -89,6 +111,9 @@ app.post('/login', (req, res) => {
     res.redirect('/home')
   }
 
+})
+app.use(function(req, res, next) {
+  res.status(404).render("404.ejs", {reqUrl: req.url});
 })
 
 app.listen(8080, () => {
