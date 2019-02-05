@@ -18,7 +18,7 @@ app.use(session({
 
 app.use(expressValidator())
 
-const users = require('./users.json').users
+const users = require('./users.json').users;
 
 function auth(email, password) {
   let ok = false;
@@ -53,8 +53,17 @@ app.get('/logout', (req, res) => {
   res.redirect('/login')
 })
 
+app.get("/profile", (req, res) => {
+  if (req.session.user) {
+    res.render('profile.ejs', {msg: req.session.user.email})
+  } else {
+    res.redirect('/login')
+  }
+})
+
+
 app.post('/login', (req, res) => {
-  
+
   console.log(req.body)
 
   let email = req.body['email']
@@ -62,7 +71,7 @@ app.post('/login', (req, res) => {
 
   req.checkBody('email', 'Email is required').notEmpty();
   req.checkBody('email', 'Please enter a valid email').isEmail();
- 
+
   const errors = req.validationErrors()
   const check = auth(email, password)
 
