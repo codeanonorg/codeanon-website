@@ -54,7 +54,7 @@ app.get('/logout', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-  
+
   console.log(req.body)
 
   let email = req.body['email']
@@ -62,7 +62,7 @@ app.post('/login', (req, res) => {
 
   req.checkBody('email', 'Email is required').notEmpty();
   req.checkBody('email', 'Please enter a valid email').isEmail();
- 
+
   const errors = req.validationErrors()
   const check = auth(email, password)
 
@@ -81,6 +81,16 @@ app.post('/login', (req, res) => {
   }
 
 })
+app.use(function(req, res, next) {
+
+  res.writeHead(404);
+  //res.render("404.ejs", {reqUrl: req.url})
+
+
+  res.status(404).send('Page introuvable !');
+
+})
+
 
 app.listen(8080, () => {
   console.log('Listening on port 8080')
