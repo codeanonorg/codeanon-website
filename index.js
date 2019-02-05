@@ -112,6 +112,16 @@ app.post('/login', (req, res) => {
   }
 
 })
+app.use(function(req, res, next) {
+
+  res.writeHead(404);
+  //res.render("404.ejs", {reqUrl: req.url})
+
+
+  res.status(404).send('Page introuvable !');
+
+})
+
 
 app.use(function(req, res, next) {
 
