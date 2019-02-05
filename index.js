@@ -113,6 +113,15 @@ app.post('/login', (req, res) => {
 
 })
 
+app.use(function(req, res, next) {
+
+  //res.render("404.ejs", {reqUrl: req.url})
+
+
+  res.status(404).render("404.ejs", {reqUrl: req.url});
+
+})
+
 app.listen(8080, () => {
   console.log('Listening on port 8080')
 })
