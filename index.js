@@ -33,13 +33,7 @@ function auth(email, password) {
 
 
 app.get('/', (req, res) => {
-  //res.redirect('/login')
-  //backURL=req.header('Referer') || '/';
-  if (req.session.user) {
-    res.redirect("/home");
-  } else {
-    res.redirect('/login');
-  }
+  res.redirect('/login');
 })
 app.get('/login', (req, res) =>{
   //backURL=req.header('Referer') || '/';
