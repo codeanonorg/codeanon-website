@@ -29,11 +29,15 @@
           <!-- red message error -->
           <p><%= err.msg %></p>
         <% }} %>
-        <form method="POST">
-          <input type="text" name="email">
+        <form method="POST" id="connectForm">
+          Email:<br>
+          <input type="text" name="email"><br>
+          Password:<br>
           <input type="password" name="password">
-          <input type="submit">
+          <br>
         </form>
+        <br>
+        <button class="button is-success" type="submit" form="connectForm" value="Login">Login</button>
       </div>
     </div>
   </body>
