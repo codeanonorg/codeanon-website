@@ -104,8 +104,12 @@ app.get('/test', (req, res) => {
   }
 })
 
-app.use(function(req, res, next) {
-  res.status(404).render("404.ejs", {reqUrl: req.url});
+// app.use(function(req, res, next) {
+//   res.status(404).render("404.ejs", {reqUrl: req.url});
+// })
+
+app.get('*', (req, res) => {
+  res.status(404).render('404.ejs', {reqUrl: req.url})
 })
 
 app.listen(8080, () => {
