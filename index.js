@@ -44,17 +44,6 @@ app.get('/login', (req, res) =>{
   }
   //res.redirect(backURL);
 });
-/*
-app.get('/login', (req, res) => {
-
-  //send user back to last page if already loged in
-  if (req.session.user) {
-    res.redirect('back');
-  } else {
-    res.render('login.ejs', {errors: req.session.errors});
-  }
-  //res.render('login.ejs', {errors: req.session.errors})
-})*/
 
 app.get('/home', (req, res) => {
   if (req.session.user) {
@@ -106,6 +95,14 @@ app.post('/login', (req, res) => {
   }
 
 })
+app.get('/test', (req, res) => {
+  if (req.session.user) {
+    res.render('test.ejs', {msg: req.session.user.email})
+  } else {
+    res.redirect('/login')
+  }
+})
+
 app.use(function(req, res, next) {
   res.status(404).render("404.ejs", {reqUrl: req.url});
 })

@@ -45,3 +45,9 @@
   -webkit-transform: scale(1.03);
   transform: scale(1.03);
 }
+.got-text-cent {
+  text-align: center;
+}
+.padd-15 {
+  padding: 15px;
+}

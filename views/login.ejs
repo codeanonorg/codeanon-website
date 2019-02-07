@@ -22,22 +22,99 @@
     <title>CodeAnon</title>
   </head>
   <body>
-    <div class="columns is-mobile is-centered">
-      <div class="column is-one-quarter middle-screen yellow-col">
-        <% if (errors) { %>
-        <% for (let err of errors) { %>
-          <!-- red message error -->
-          <p><%= err.msg %></p>
-        <% }} %>
-        <form method="POST" id="connectForm">
-          Email:<br>
-          <input type="text" name="email"><br>
-          Password:<br>
-          <input type="password" name="password">
-          <br>
-        </form>
-        <br>
-        <button class="button is-success" type="submit" form="connectForm" value="Login">Login</button>
+    <div class="columns is-mobile">
+      <div class="column is-one-quarter middle-screen got-text-cent">
+          <div class="tabs is-centered is-boxed">
+              <ul>
+                <li id="login-act" class="is-active">
+                  <a onclick="openTab('login')">
+                    <span>Log in</span>
+                  </a>
+                </li>
+                <li id="register-act" class="">
+                  <a onclick="openTab('register')">
+                    <span>Register</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div id="login" class="white-col padd-15">
+              <form method="POST" id="connectForm">
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                      <input class="input" type="text" placeholder="Unsername or Email" name="email">
+                      <span class="icon is-small is-left">
+                        </i><i class="fas fa-id-card"></i>
+                      </span>
+                    </p>
+                  </div>
+                  <div class="field">
+                    <p class="control has-icons-left">
+                      <input class="input" type="password" placeholder="Password" name="password">
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                      </span>
+                    </p>
+                  </div>
+                  <div class="field">
+                    <p class="control">
+                      <button class="button is-success" >
+                        Login
+                      </button>
+                    </p>
+                  </div>
+                </form>
+            </div>
+            <div id="register" class="white-col padd-15" style="display:none">
+                <div class="field">
+                    <p class="control has-icons-left has-icons-right">
+                      <input class="input" type="username" placeholder="Unsername">
+                      <span class="icon is-small is-left">
+                          <i class="fas fa-user"></i>
+                      </span>
+                    </p>
+                  </div>
+                  <div class="field">
+                      <p class="control has-icons-left">
+                        <input class="input" type="email" placeholder="Email">
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                      </p>
+                    </div>
+                    <div class="field">
+                        <p class="control has-icons-left">
+                          <input class="input" type="email" placeholder="Confirm Email">
+                          <span class="icon is-small is-left">
+                              <i class="fas fa-envelope"></i>
+                          </span>
+                        </p>
+                      </div>
+                      <div class="field">
+                          <p class="control has-icons-left">
+                            <input class="input" type="password" placeholder="Password">
+                            <span class="icon is-small is-left">
+                              <i class="fas fa-lock"></i>
+                            </span>
+                          </p>
+                        </div>
+                  <div class="field">
+                    <p class="control has-icons-left">
+                      <input class="input" type="password" placeholder="ConfirmPassword">
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                      </span>
+                    </p>
+                  </div>
+                  <div class="field">
+                    <p class="control">
+                      <button class="button is-success">
+                        Login
+                      </button>
+                    </p>
+                  </div>
+            </div>
+            </div>
       </div>
     </div>
   </body>
