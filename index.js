@@ -10,7 +10,7 @@ let app = express()
 app.use(express.static('public'))
 app.use(express.static('bower_components'))
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
 app.use(session({
   secret: 'jaimelescookies'
@@ -18,7 +18,7 @@ app.use(session({
 
 app.use(expressValidator())
 
-const users = require('./users.json').users
+const users = require('./users.json').users;
 
 function auth(email, password) {
   let ok = false;
@@ -36,9 +36,14 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-  // res.sendFile(path.join(__dirname + '/public/login.html'));
-  res.render('login.ejs', {errors: req.session.errors})
-})
+  //backURL=req.header('Referer') || '/';
+  if (req.session.user) {
+    res.redirect('/home')
+  } else {
+    res.render('login.ejs', {errors: req.session.errors});
+  }
+  //res.redirect(backURL);
+});
 
 app.get('/home', (req, res) => {
   if (req.session.user) {
@@ -53,8 +58,17 @@ app.get('/logout', (req, res) => {
   res.redirect('/login')
 })
 
+app.get("/profile", (req, res) => {
+  if (req.session.user) {
+    res.render('profile.ejs', {msg: req.session.user.email})
+  } else {
+    res.redirect('/login')
+  }
+})
+
+
 app.post('/login', (req, res) => {
-  
+
   console.log(req.body)
 
   let email = req.body['email']
@@ -62,7 +76,7 @@ app.post('/login', (req, res) => {
 
   req.checkBody('email', 'Email is required').notEmpty();
   req.checkBody('email', 'Please enter a valid email').isEmail();
- 
+
   const errors = req.validationErrors()
   const check = auth(email, password)
 
@@ -80,6 +94,18 @@ app.post('/login', (req, res) => {
     res.redirect('/home')
   }
 
+})
+
+app.get('/test', (req, res) => {
+  if (req.session.user) {
+    res.render('test.ejs', {msg: req.session.user.email})
+  } else {
+    res.redirect('/login')
+  }
+})
+
+app.use(function(req, res, next) {
+  res.status(404).render("404.ejs", {reqUrl: req.url});
 })
 
 app.listen(8080, () => {

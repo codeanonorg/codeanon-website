@@ -3,6 +3,10 @@
     {
       "email": "arthur.correnson@gmail.com",
       "password": "test"
+    },
+    {
+      "email": "admin@admin.com",
+      "password": "admin"
     }
   ]
 }

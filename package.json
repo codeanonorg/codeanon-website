@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arxaqapi/ca-website.git"
+    "url": "git+https://github.com/jdrprod/ca-website.git"
   },
   "author": "Codeanon",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/arxaqapi/ca-website/issues"
+    "url": "https://github.com/jdrprod/ca-website/issues"
   },
-  "homepage": "https://github.com/arxaqapi/ca-website#readme",
+  "homepage": "https://github.com/jdrprod/ca-website#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
@@ -23,7 +23,8 @@
     "crypto-js": "^3.1.9-1",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
-    "express-validator": "^5.3.1"
+    "express-validator": "^5.3.1",
+    "mongoose": "^5.4.10"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
