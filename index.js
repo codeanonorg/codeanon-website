@@ -10,7 +10,7 @@ let app = express()
 app.use(express.static('public'))
 app.use(express.static('bower_components'))
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
 app.use(session({
   secret: 'jaimelescookies'
@@ -31,14 +31,14 @@ function auth(email, password) {
   return ok
 }
 
-
 app.get('/', (req, res) => {
-  res.redirect('/login');
+  res.redirect('/login')
 })
-app.get('/login', (req, res) =>{
+
+app.get('/login', (req, res) => {
   //backURL=req.header('Referer') || '/';
   if (req.session.user) {
-    res.redirect('/home');
+    res.redirect('/home')
   } else {
     res.render('login.ejs', {errors: req.session.errors});
   }
@@ -95,6 +95,7 @@ app.post('/login', (req, res) => {
   }
 
 })
+
 app.get('/test', (req, res) => {
   if (req.session.user) {
     res.render('test.ejs', {msg: req.session.user.email})

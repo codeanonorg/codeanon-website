@@ -2,7 +2,9 @@
   "users": [
     {
       "email": "arthur.correnson@gmail.com",
-      "password": "test",
+      "password": "test"
+    },
+    {
       "email": "admin@admin.com",
       "password": "admin"
     }
