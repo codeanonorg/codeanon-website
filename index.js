@@ -4,6 +4,9 @@ const express = require('express')
 const expressValidator = require('express-validator')
 const session = require('cookie-session')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+
+//mongoose.connect("mongodb://localhost:port/nom_base_donnée")
 
 let app = express()
 
