@@ -23,7 +23,7 @@ app.use(expressValidator())
 
 const users = require('./users.json').users;
 
-function auth(email, password) {
+function auth(email, password) { // auth function
   let ok = false;
   for (let u of users) {
     if (u.email === email && u.password === password) {
@@ -32,6 +32,10 @@ function auth(email, password) {
     }
   }
   return ok
+}
+
+function register(email, password) { // register function
+  // wip
 }
 
 app.get('/', (req, res) => {
@@ -47,6 +51,16 @@ app.get('/login', (req, res) => {
   }
   //res.redirect(backURL);
 });
+
+app.get('/register', (req, res) => {
+  // new page to handle register post, should be easier and more readable
+  // or we can differentiate names and all on the same page: registreEmail =/= loginMail
+  if (req.user.session) {
+    res.redirect('/home')
+  } else {
+    res.render('register.ejs', {errors: req.session.errors})
+  }
+})
 
 app.get('/home', (req, res) => {
   if (req.session.user) {
@@ -74,11 +88,11 @@ app.post('/login', (req, res) => {
 
   console.log(req.body)
 
-  let email = req.body['email']
-  let password = req.body['password']
+  let email = req.body['loginEmail']
+  let password = req.body['loginPassword']
 
-  req.checkBody('email', 'Email is required').notEmpty();
-  req.checkBody('email', 'Please enter a valid email').isEmail();
+  req.checkBody('loginEmail', 'Email is required').notEmpty();
+  req.checkBody('loginEmail', 'Please enter a valid email').isEmail();
 
   const errors = req.validationErrors()
   const check = auth(email, password)
@@ -98,6 +112,18 @@ app.post('/login', (req, res) => {
   }
 
 })
+/*
+app.post('/register', (req, res) => {
+  console.log(req.body)
+  let username = req.body['registerUsername']
+  let email = req.body['registerEmail']
+  let confirmEmail = req.body['registerConfirmEmail']
+  let password = req.body['registerPassword']
+  let confirmPassword = req.body['registerConfirmPassword']
+  // wip
+})
+same page or different page??
+*/
 
 app.get('/test', (req, res) => {
   if (req.session.user) {
