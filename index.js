@@ -68,11 +68,6 @@ app.get('/register', (req, res) => {
   // new page to handle register post, should be easier and more readable
   // or we can differentiate names and all on the same page: registreEmail =/= loginMail
   res.render('register.ejs')
-  /*if (req.user.session) {
-    res.redirect('/home')
-  } else {
-    res.render('register.ejs', {errors: req.session.errors})
-  }*/
 })
 
 app.get('/home', (req, res) => {
@@ -138,7 +133,16 @@ app.post('/register', (req, res) => {
   let confirmEmail = req.body['registerConfirmEmail']
   let password = req.body['registerPassword']
   let confirmPassword = req.body['registerConfirmPassword']
+  let hashedPassword =
+  let hashedConfirmPassword =
 
+  if((email !== confirmEmail) or (hashedPassword !== hashedConfirmPassword))
+  {
+    res.login('/login')
+  } else
+  {
+    send email, username, pass to db
+  }
   
   // wip
 })

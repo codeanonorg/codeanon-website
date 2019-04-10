@@ -1,85 +1,93 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="css/bulma.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- crypto lib -->
-    <script type="text/javascript" src="crypto-js/crypto-js.js"></script>
-    <script type="text/javascript">
+  <link rel="stylesheet" type="text/css" href="css/bulma.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 
-      var encrypted = CryptoJS.SHA256("bbb");
-      console.log(encrypted.toString())
-    </script>
+  <!-- crypto lib -->
+  <script type="text/javascript" src="crypto-js/crypto-js.js"></script>
+  <script type="text/javascript">
 
-    <!-- main script -->
-    <script type="text/javascript" src="js/script.js"></script>
-    <!-- font awesome -->
-    <script type="text/javascript" defer src="js/all.js"></script>
-    <title>CodeAnon</title>
-  </head>
-  <body>
-    <div class="columns is-mobile">
-      <div class="column is-one-quarter middle-screen got-text-cent">
-            <div id="login" class=" padd-15"><!-- class="white-col"-->
-              <form method="POST" id="connectForm">
-                  <div id="register" class=" padd-15"><!-- class="white-col"-->
-                      <div class="field">
-                          <p class="control has-icons-left has-icons-right">
-                            <input class="input" type="username" placeholder="Unsername">
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-user"></i>
-                            </span>
-                          </p>
-                        </div>
-                        <div class="field">
-                            <p class="control has-icons-left">
-                              <input class="input" type="email" placeholder="Email">
-                              <span class="icon is-small is-left">
-                                  <i class="fas fa-envelope"></i>
-                              </span>
-                            </p>
-                          </div>
-                          <div class="field">
-                              <p class="control has-icons-left">
-                                <input class="input" type="email" placeholder="Confirm Email">
-                                <span class="icon is-small is-left">
-                                    <i class="fas fa-envelope"></i>
-                                </span>
-                              </p>
-                            </div>
-                            <div class="field">
-                                <p class="control has-icons-left">
-                                  <input class="input" type="password" placeholder="Password">
-                                  <span class="icon is-small is-left">
-                                    <i class="fas fa-lock"></i>
-                                  </span>
-                                </p>
-                              </div>
-                        <div class="field">
-                          <p class="control has-icons-left">
-                            <input class="input" type="password" placeholder="Confirm Password">
-                            <span class="icon is-small is-left">
-                              <i class="fas fa-lock"></i>
-                            </span>
-                          </p>
-                        </div>
-                        <div class="field">
-                          <p class="control">
-                            <button class="button is-success">
-                              Register
-                            </button>
-                          </p>
-                        </div>
-                  </div>
-              </form>
+    var encrypted = CryptoJS.SHA256("bbb");
+    console.log(encrypted.toString())
+  </script>
+
+  <!-- main script -->
+  <script type="text/javascript" src="js/script.js"></script>
+  <!-- font awesome -->
+  <script type="text/javascript" defer src="js/all.js"></script>
+  <title>CodeAnon</title>
+</head>
+
+<body>
+  <div class="columns is-mobile">
+    <div class="column is-one-quarter middle-screen got-text-cent">
+      <div id="login" class=" padd-15">
+        <!-- class="white-col"-->
+        <form method="POST" id="connectForm">
+          <div id="register" class=" padd-15">
+            <!-- class="white-col"-->
+            <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <input class="input" type="username" placeholder="Unsername">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </p>
             </div>
-            
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input" type="email" placeholder="Email">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </p>
             </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input" type="email" placeholder="Confirm Email">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input" type="password" placeholder="Password">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control has-icons-left">
+                <input class="input" type="password" placeholder="Confirm Password">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button class="button is-success">
+                  Register
+                </button>
+              </p>
+            </div>
+          </div>
+        </form>
+        <a href="/login">
+          <button class="button button-noBorder yellow-col">Go to login page</button>
+        </a>
       </div>
+
     </div>
-  </body>
+  </div>
+  </div>
+</body>
+
 </html>

@@ -24,23 +24,9 @@
   <body>
     <div class="columns is-mobile">
       <div class="column is-one-quarter middle-screen got-text-cent">
-          <div class="tabs is-centered is-boxed">
-              <ul>
-                <li id="login-act" class="is-active">
-                  <a onclick="openTab('login')">
-                    <span>Log in</span>
-                  </a>
-                </li>
-                <li id="register-act" class="">
-                  <a onclick="openTab('register')">
-                    <span>Register</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div id="login" class="white-col padd-15">
-              <form method="POST" id="connectForm">
-                <div class="field">
+            <div id="login" class="padd-15">
+              <div class="field">
+                <form method="POST" id="connectForm">
                   <p class="control has-icons-left has-icons-right">
                     <input class="input" type="text" placeholder="Unsername or Email" name="loginEmail">
                     <span class="icon is-small is-left">
@@ -56,64 +42,19 @@
                     </span>
                   </p>
                 </div>
+                <%= errorMsg %>
                 <div class="field">
                   <p class="control">
                     <button class="button is-success" >
                       Login
-                    </button>
+                    </button>                    
                   </p><!---->
-                  <%= errorMsg %>
-                </div>
-              </form>
-            </div>
-            <div id="register" class="white-col padd-15" style="display:none">
-                <div class="field">
-                    <p class="control has-icons-left has-icons-right">
-                      <input class="input" type="username" placeholder="Unsername">
-                      <span class="icon is-small is-left">
-                          <i class="fas fa-user"></i>
-                      </span>
-                    </p>
-                  </div>
-                  <div class="field">
-                      <p class="control has-icons-left">
-                        <input class="input" type="email" placeholder="Email">
-                        <span class="icon is-small is-left">
-                            <i class="fas fa-envelope"></i>
-                        </span>
-                      </p>
-                    </div>
-                    <div class="field">
-                        <p class="control has-icons-left">
-                          <input class="input" type="email" placeholder="Confirm Email">
-                          <span class="icon is-small is-left">
-                              <i class="fas fa-envelope"></i>
-                          </span>
-                        </p>
-                      </div>
-                      <div class="field">
-                          <p class="control has-icons-left">
-                            <input class="input" type="password" placeholder="Password">
-                            <span class="icon is-small is-left">
-                              <i class="fas fa-lock"></i>
-                            </span>
-                          </p>
-                        </div>
-                  <div class="field">
-                    <p class="control has-icons-left">
-                      <input class="input" type="password" placeholder="Confirm Password">
-                      <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
-                      </span>
-                    </p>
-                  </div>
-                  <div class="field">
-                    <p class="control">
-                      <button class="button is-success">
-                        Register
-                      </button>
-                    </p>
-                  </div>
+
+                </form>
+                <a href="/register">
+                  <button class="button button-noBorder yellow-col">Go to register page</button>
+                </a>
+              </div>
             </div>
             </div>
       </div>

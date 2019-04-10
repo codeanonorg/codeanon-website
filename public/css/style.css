@@ -51,3 +51,11 @@
 .padd-15 {
   padding: 15px;
 }
+
+.align-right {
+  justify-content: right;
+}
+
+.button-noBorder {
+  border-width: 0;
+}
