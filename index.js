@@ -23,6 +23,8 @@ app.use(expressValidator())
 
 const users = require('./users.json').users;
 
+let checkLogin = 1;
+
 function auth(email, password) { // auth function
   let ok = false;
   for (let u of users) {
@@ -47,7 +49,17 @@ app.get('/login', (req, res) => {
   if (req.session.user) {
     res.redirect('/home')
   } else {
-    res.render('login.ejs', {errors: req.session.errors});
+    if (checkLogin === 0) {
+      res.render('login.ejs', {
+        errorMsg: "invalid username or password",
+        errors: req.session.errors
+      })
+    } else {
+      res.render('login.ejs', {
+        errors: req.session.errors,
+        errorMsg: ""
+      });
+    }
   }
   //res.redirect(backURL);
 });
@@ -55,11 +67,12 @@ app.get('/login', (req, res) => {
 app.get('/register', (req, res) => {
   // new page to handle register post, should be easier and more readable
   // or we can differentiate names and all on the same page: registreEmail =/= loginMail
-  if (req.user.session) {
+  res.render('register.ejs')
+  /*if (req.user.session) {
     res.redirect('/home')
   } else {
     res.render('register.ejs', {errors: req.session.errors})
-  }
+  }*/
 })
 
 app.get('/home', (req, res) => {
@@ -96,17 +109,22 @@ app.post('/login', (req, res) => {
 
   const errors = req.validationErrors()
   const check = auth(email, password)
-
-  if(errors) {
+  console.log(errors)
+  if(errors) 
+  {
+    checkLogin = 0;
     req.session.errors = errors;
     res.redirect('/login');
-  } else if (!check) {
+  } else if (!check) 
+  {
     req.session.errors = [{msg: 'invalid username or password'}]
+    checkLogin = 0;
     res.redirect('/login')
-  } else {
+  } else
+  {
     req.session.user = {
       'email': email
-    }
+  }
 
     res.redirect('/home')
   }
@@ -120,6 +138,8 @@ app.post('/register', (req, res) => {
   let confirmEmail = req.body['registerConfirmEmail']
   let password = req.body['registerPassword']
   let confirmPassword = req.body['registerConfirmPassword']
+
+  
   // wip
 })
 same page or different page??
