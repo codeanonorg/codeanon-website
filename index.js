@@ -4,10 +4,31 @@ const express = require('express')
 const expressValidator = require('express-validator')
 const session = require('cookie-session')
 const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
 
-//mongoose.connect("mongodb://localhost:port/nom_base_donnée")
+/*  // DATABASE SETUP
+const sqlite3 = require('sqlite3')
 
+let db = new.sqlite3.Database('/users.db', (err) => {
+  if(err)
+  {
+    console.log(err.message)
+  }
+  console.log('connected to db')
+
+  db.close((err) => {
+    if(err)
+    {
+      console.log(err.message)
+    }
+    console.log('db closed')
+  })
+})
+
+sqlite3.OPEN_CREATE
+sqlite3.OPEN_READONLY
+sqlite3.OPEN_READWRITE
+
+*/
 let app = express()
 
 app.use(express.static('public'))
@@ -23,12 +44,13 @@ app.use(expressValidator())
 
 const users = require('./users.json').users;
 
-let checkLogin = 1;
+let checkLogin = 1; // check if login succesful or not, if not display message about the failed logib attempt
+let registerCheck = 1;
 
 function auth(email, password) { // auth function
   let ok = false;
   for (let u of users) {
-    if (u.email === email && u.password === password) {
+    if (u.email === email && u.password === password) {  // simplifie to remove let ok = ...
       ok = true
       break;
     }
@@ -67,7 +89,19 @@ app.get('/login', (req, res) => {
 app.get('/register', (req, res) => {
   // new page to handle register post, should be easier and more readable
   // or we can differentiate names and all on the same page: registreEmail =/= loginMail
-  res.render('register.ejs')
+  if (req.session.user)
+  {
+    res.redirect('/home');
+  } else if (registerCheck === 0)
+  {
+    res.render('register.ejs', {
+      registerFailMsg: "Email or password do not match"
+    })
+  } else {
+    res.render('register.ejs', {
+      registerFailMsg: ""
+    });
+  }
 })
 
 app.get('/home', (req, res) => {
@@ -138,10 +172,12 @@ app.post('/register', (req, res) => {
 
   if((email !== confirmEmail) or (hashedPassword !== hashedConfirmPassword))
   {
-    res.login('/login')
+    registerCheck += 1;
+    res.redirect('/register');
   } else
   {
-    send email, username, pass to db
+    // make a ajavscript object Json.parse
+    // send email, username, pass to db
   }
   
   // wip
