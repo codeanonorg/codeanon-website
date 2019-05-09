@@ -4,31 +4,39 @@ const express = require('express')
 const expressValidator = require('express-validator')
 const session = require('cookie-session')
 const bodyParser = require('body-parser')
+//////////
+const mongo = require('mongodb').MongoClient
 
-/*  // DATABASE SETUP
-const sqlite3 = require('sqlite3')
+const url = 'mongodb://localhost:27017'//db' //27017 default port
 
-let db = new.sqlite3.Database('/users.db', (err) => {
-  if(err)
-  {
-    console.log(err.message)
-  }
-  console.log('connected to db')
 
-  db.close((err) => {
-    if(err)
-    {
-      console.log(err.message)
-    }
-    console.log('db closed')
-  })
+mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
+	if (err) {
+		console.log(err)
+		return
+	}
+	const db = client.db('userdb')
+	const userCol = db.collection('users')
+
+	// add admin below and create database and collection
+	userCol.insertOne({username: 'admin', email: 'admin@admin.com', hashedPassword: 'admin'})
+
+	// delete admin
+	//userCol.deleteOne({username: 'admin'})
+
+	// show all items (documents)
+	/*
+	userCol.find().toArray((err, items) => {
+	  console.log(items)
+	})
+	*/
+	// close connection
+	client.close()
 })
 
-sqlite3.OPEN_CREATE
-sqlite3.OPEN_READONLY
-sqlite3.OPEN_READWRITE
+console.log("succesfully accessed db")
+//////////
 
-*/
 let app = express()
 
 app.use(express.static('public'))
