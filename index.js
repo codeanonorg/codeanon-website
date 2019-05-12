@@ -4,38 +4,8 @@ const express = require('express')
 const expressValidator = require('express-validator')
 const session = require('cookie-session')
 const bodyParser = require('body-parser')
-//////////
 const mongo = require('mongodb').MongoClient
-
 const url = 'mongodb://localhost:27017'//db' //27017 default port
-
-
-mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
-	if (err) {
-		console.log(err)
-		return
-	}
-	const db = client.db('userdb')
-	const userCol = db.collection('users')
-
-	// add admin below and create database and collection
-	userCol.insertOne({username: 'admin', email: 'admin@admin.com', hashedPassword: 'admin'})
-
-	// delete admin
-	//userCol.deleteOne({username: 'admin'})
-
-	// show all items (documents)
-	/*
-	userCol.find().toArray((err, items) => {
-	  console.log(items)
-	})
-	*/
-	// close connection
-	client.close()
-})
-
-console.log("succesfully accessed db")
-//////////
 
 let app = express()
 
@@ -52,13 +22,16 @@ app.use(expressValidator())
 
 const users = require('./users.json').users;
 
-let checkLogin = 1; // check if login succesful or not, if not display message about the failed logib attempt
+let checkLogin = 1; // check if login is successful or not, if not display message about the failed login attempt
 let registerCheck = 1;
-
-function auth(email, password) { // auth function
+///////////////////////////
+//  a changer
+///////////////////////////
+function auth(username, password) { // auth function
   let ok = false;
   for (let u of users) {
-    if (u.email === email && u.password === password) {  // simplifie to remove let ok = ...
+    // CHANGE WITH USERNAME
+    if (u.username === username && u.password === password) {  // simplifie to remove let ok = ...
       ok = true
       break;
     }
@@ -69,7 +42,8 @@ function auth(email, password) { // auth function
 function register(email, password) { // register function
   // wip
 }
-
+////////////////////
+////////////////////
 app.get('/', (req, res) => {
   res.redirect('/login')
 })
@@ -114,7 +88,7 @@ app.get('/register', (req, res) => {
 
 app.get('/home', (req, res) => {
   if (req.session.user) {
-    res.render('home.ejs', {msg: req.session.user.email})
+    res.render('home.ejs', {msg: req.session.user.username})
   } else {
     res.redirect('/login')
   }
@@ -127,7 +101,7 @@ app.get('/logout', (req, res) => {
 
 app.get("/profile", (req, res) => {
   if (req.session.user) {
-    res.render('profile.ejs', {msg: req.session.user.email})
+    res.render('profile.ejs', {msg: req.session.user.username})
   } else {
     res.redirect('/login')
   }
@@ -138,15 +112,17 @@ app.post('/login', (req, res) => {
 
   console.log(req.body)
 
-  let email = req.body['loginEmail']
+  let username = req.body['loginUsername']
   let password = req.body['loginPassword']
 
-  req.checkBody('loginEmail', 'Email is required').notEmpty();
-  req.checkBody('loginEmail', 'Please enter a valid email').isEmail();
+  req.checkBody('loginUsername', 'Username is required').notEmpty();
+  //req.checkBody('loginEmail', 'Please enter a valid email').isEmail();
 
   const errors = req.validationErrors()
-  const check = auth(email, password)
+  const check = auth(username, password) // ##
+
   console.log(errors)
+
   if(errors) 
   {
     checkLogin = 0;
@@ -160,7 +136,7 @@ app.post('/login', (req, res) => {
   } else
   {
     req.session.user = {
-      'email': email
+      'username': username
   }
 
     res.redirect('/home')
@@ -195,7 +171,7 @@ same page or different page??
 
 app.get('/test', (req, res) => {
   if (req.session.user) {
-    res.render('test.ejs', {msg: req.session.user.email})
+    res.render('test.ejs', {msg: req.session.user.username})
   } else {
     res.redirect('/login')
   }
