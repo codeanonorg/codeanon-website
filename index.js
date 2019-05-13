@@ -20,75 +20,58 @@ app.use(session({
 }))
 
 app.use(expressValidator())
-/* a supprimer
-mongo.connect(databaseUrl, {useNewUrlParser: true}, (err, client) => {
-  const db = client.db('CodeAnonDatabase')
-  const userCol = db.collection('users')
-  userCol.insertOne({username: "admin", email: "admin@admin.admin", hashedPassword: "admin"})
-  client.close()
-  console.log("admin created");
-})
-*/
+
 const users = require('./users.json').users;
 
 let checkLogin = 1; // check if login is successful or not, if not display message about the failed login attempt
 let registerCheck = 1;
-///////////////////////////
-//  a changer
-///////////////////////////
 
 async function login(usernamePara) {
     const client = await mongo.connect(databaseUrl, { useNewUrlParser : true });
     const user = await client.db('CodeAnonDatabase').collection('users').findOne({ 'username' : usernamePara})
+    await client.close()
     return user
 }
 
-function register(usernamePara, emailPara, passwordPara) {
-    mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
-        if (err) {
-            console.log(err)
-            return
+/*   Si MongoDB n'est pas installer, décommenter ce paragraphe et commenter
+     la fonction asynchrone du dessus
+function auth(username, password) { // auth function
+    let ok = false;
+    for (let u of users) {
+        // CHANGE WITH USERNAME
+        if (u.username === username && u.password === password) {  // simplifie to remove let ok = ...
+            ok = true
+            break;
         }
+    }
+    return ok
+}
+*/
 
-        const db = client.db('db')
-        const userCol = db.collection('users')
+async function register(usernamePara, emailPara, passwordPara) {
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const userCollection = await client.db('CodeAnonDatabase').collection('users');
 
-        let alreadyExist = 0 // test if username or email already exist
+    const findWithUsername = await userCollection.findOne({ 'username' : usernamePara});
+    const findWithEmail = await userCollection.findOne({ 'email' : emailPara});
 
-        userCol.findOne({ username: usernamePara }, (err, item) => {
-            if (err) {
-                console.log(err)
-                return
-            }
-            if (item !== null) {
-                alreadyExist = 1
-            }
+    if (findWithUsername === null && findWithEmail === null)
+    {
+        await userCollection.insertOne({ 
+            'username': usernamePara,
+            'email': emailPara,
+            'hashedPassword': passwordPara
         })
-
-        userCol.findOne({ email: emailPara }, (err, item) => {
-            if (err) {
-                console.log(err)
-                return
-            }
-            if (item !== null) {
-                alreadyExist = 2
-            }
-        })
-        console.log(alreadyExist)
-        console.log(` already exists ${alreadyExist}`)
-        if (alreadyExist === 0) {
-            userCol.insertOne({ username: usernamePara, email: emailPara, hashedPassword: passwordPara })
-        }
-        client.close()
-        return alreadyExist
-    })
+        await client.close()
+        return true
+    } else
+    {
+        await client.close()
+        return false
+    }
 }
 
 
-
-
-////////////////////
-////////////////////
 app.get('/', (req, res) => {
     res.redirect('/login')
 })
@@ -115,7 +98,6 @@ app.get('/login', (req, res) => {
 
 app.get('/register', (req, res) => {
     // new page to handle register post, should be easier and more readable
-    // or we can differentiate names and all on the same page: registreEmail =/= loginMail
     if (req.session.user) {
         res.redirect('/home');
     } else if (registerCheck === 0) {
@@ -187,8 +169,8 @@ app.post('/login', async (req, res) => {
         res.redirect('/login');
     }
 })
-
-app.post('/register', (req, res) => {
+// register POST not working properlyn, adds a empty document in the database
+app.post('/register', async (req, res) => {
     console.log(req.body);
     let username = req.body['registerUsername']
     let email = req.body['registerEmail']
@@ -198,28 +180,14 @@ app.post('/register', (req, res) => {
     //let hashedPassword =
     //let hashedConfirmPassword =
     // !!!!!!!!!!!!!!!!!!!   TEST PASSWORD AND CONFIRMPASS, EMAIL AND CONFIRM EMAIl
-    let registerStatus = register(username, email, password)
+    let registerStatus = await register(username, email, password)
 
-    if (registerStatus === 0) {
+    if (registerStatus) {
         res.redirect('/register'); // with objetc saying register ok
     } else {
         res.redirect('/register') // with object saying register not ok enter good credentials
     }
 
-
-    /*
-    if((email !== confirmEmail) or (hashedPassword !== hashedConfirmPassword))
-    {
-      registerCheck += 1;
-      res.redirect('/register');
-    } else
-    {
-      // make a ajavscript object Json.parse
-      // send email, username, pass to db
-    }
-    */
-
-    // wip
 })
 
 

@@ -1,121 +1,78 @@
-function login(usernamePara, passwordPara) {
-  let testLog = false
-  // if in database login, else NO 
-  mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
-    if(err)
-    {
-      console.log(err)
-      return false
-    }
-    const db = client.db('db')
-    const userCol = db.collection('users')
+async function register(usernamePara, emailPara, passwordPara) {
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const userCollection = await client.db('CodeAnonDatabase').collection('users');
 
-    userCol.findOne({ username: usernamePara }, (err, item) => {
-      console.log("c'est déjà pas mal...")
-      if(item === null)
-      {
-        testLog = false
-      } else if(item.username === usernamePara && item.hashedPassword === passwordPara)
-      {
-        console.log("c bon conectéé normalement")
-        testLog = true
-      } else
-      { 
-        testLog = false
-      }
-    })
-    client.close()
-  })
-  console.log("testlog !")
-  console.log(testLog)
-  return testLog
+    const findWithUsername = await userCollection.findOne({ 'username' : usernamePara});
+    const findWithEmail = await userCollection.findOne({ 'email' : emailPara});
+
+    if (findWithUsername === null && findWithEmail === null)
+    {
+        await userCollection.insertOne({ 'username': usernamePara, 'email': emailPara, 'hashedPassword': passwordPara })
+        await client.close()
+        return true
+    } else
+    {
+        await client.close()
+        return false
+    }
 }
 
+/////////////////////////////////////
 function register(usernamePara, emailPara, passwordPara) {
-  mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
-    if (err) {
-      console.log(err)
-      return
-    }
+    mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
+        if (err) {
+            console.log(err)
+            return
+        }
 
-    const db = client.db('db')
-    const userCol = db.collection('users')
+        const db = client.db('CodeAnonDatabase')
+        const userCol = db.collection('users')
 
-    let alreadyExist = 0 // test if username or email already exist
+        let alreadyExist = 0 // test if username or email already exist
 
-    userCol.findOne({username: usernamePara}, (err, item) => {
-      if(err)
-      {
-        console.log(err)
-        return
-      }
-      if(item !== null)
-      {
-        alreadyExist = 1
-      }
+        userCol.findOne({ username: usernamePara }, (err, item) => {
+            if (err) {
+                console.log(err)
+                return
+            }
+            if (item !== null) {
+                alreadyExist = 1
+            }
+        })
+
+        userCol.findOne({ email: emailPara }, (err, item) => {
+            if (err) {
+                console.log(err)
+                return
+            }
+            if (item !== null) {
+                alreadyExist = 2
+            }
+        })
+        console.log(alreadyExist)
+        console.log(` already exists ${alreadyExist}`)
+        if (alreadyExist === 0) {
+            userCol.insertOne({ username: usernamePara, email: emailPara, hashedPassword: passwordPara })
+        }
+        client.close()
+        return alreadyExist
     })
-
-    userCol.findOne({email: emailPara}, (err, item) => {
-      if(err)
-      {
-        console.log(err)
-        return
-      }
-      if(item !== null)
-      {
-        alreadyExist = 2
-      }
-    })
-    console.log(alreadyExist)
-    console.log(` already exists ${alreadyExist}`)
-    if (alreadyExist === 0)
-    {
-      userCol.insertOne({username: usernamePara, email: emailPara, hashedPassword: passwordPara})
-    }
-    client.close()
-    return alreadyExist
-  })
 }
 
-
-
-
-function login(usernamePara, passwordPara) {
-  let testLog = false
-  // if in database login, else NO 
-  mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
-    if(err)
-    {
-      console.log(err)
-      return false
+/////////////////////////////////////
+function auth(username, password) { // auth function
+    let ok = false;
+    for (let u of users) {
+        // CHANGE WITH USERNAME
+        if (u.username === username && u.password === password) {  // simplifie to remove let ok = ...
+            ok = true
+            break;
+        }
     }
-    const db = client.db('db')
-    const userCol = db.collection('users')
-
-    userCol.findOne({ username: usernamePara })
-    .then(item => {
-      console.log("c'est déjà pas mal...")
-      if(item === null)
-      {
-        testLog = false
-      } else if(item.username === usernamePara && item.hashedPassword === passwordPara)
-      {
-        console.log("c bon conectéé normalement")
-        testLog = true
-      } else
-      { 
-        testLog = false
-      }
-    })
-    .catch(err => {
-      console.error(err)
-    })
-    client.close()
-  })
-  console.log("testlog !")
-  console.log(testLog)
-  return testLog
+    return ok
 }
+
+///////////////////////////////////////
 
 /*
 const mongo = require('mongodb').MongoClient
@@ -167,12 +124,12 @@ const userSchema = new mongoose.Schema({
         trim: true
       },
 
-    password: {
+    hashedPassword: {
         type: String,
         required: true,
       }
 
-}) 
+})
 
 let User = mongoose.model('User', UserSchema);
 module.exports = userDb;

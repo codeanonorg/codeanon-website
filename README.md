@@ -2,9 +2,15 @@
 
 ## Pour les devs
 
+* Veillez a installer MongoDB pour pouvoir se connecter au site
+
 Pour installer les dépendances :
 
 ```$ npm install```
+
+Pour creer le profil admin dans la base de données MongoDB:
+
+```$ node createAdmin.js```
 
 Pour lancer le serveur :
 
