@@ -1,30 +1,34 @@
-
 function login(usernamePara, passwordPara) {
+  let testLog = false
   // if in database login, else NO 
   mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
     if(err)
     {
       console.log(err)
-      return
+      return false
     }
     const db = client.db('db')
     const userCol = db.collection('users')
 
-    let dbUser = userCol.findOne({ username: usernamePara }, (err, item) => {
-      if(item===null)
+    userCol.findOne({ username: usernamePara }, (err, item) => {
+      console.log("c'est déjà pas mal...")
+      if(item === null)
       {
-        return false
+        testLog = false
       } else if(item.username === usernamePara && item.hashedPassword === passwordPara)
       {
-        return true
+        console.log("c bon conectéé normalement")
+        testLog = true
       } else
       { 
-        return false
+        testLog = false
       }
     })
     client.close()
-    return dbUser
   })
+  console.log("testlog !")
+  console.log(testLog)
+  return testLog
 }
 
 function register(usernamePara, emailPara, passwordPara) {
@@ -62,7 +66,8 @@ function register(usernamePara, emailPara, passwordPara) {
         alreadyExist = 2
       }
     })
-
+    console.log(alreadyExist)
+    console.log(` already exists ${alreadyExist}`)
     if (alreadyExist === 0)
     {
       userCol.insertOne({username: usernamePara, email: emailPara, hashedPassword: passwordPara})
@@ -72,6 +77,45 @@ function register(usernamePara, emailPara, passwordPara) {
   })
 }
 
+
+
+
+function login(usernamePara, passwordPara) {
+  let testLog = false
+  // if in database login, else NO 
+  mongo.connect(url, { useNewUrlParser: true }, (err, client) => {
+    if(err)
+    {
+      console.log(err)
+      return false
+    }
+    const db = client.db('db')
+    const userCol = db.collection('users')
+
+    userCol.findOne({ username: usernamePara })
+    .then(item => {
+      console.log("c'est déjà pas mal...")
+      if(item === null)
+      {
+        testLog = false
+      } else if(item.username === usernamePara && item.hashedPassword === passwordPara)
+      {
+        console.log("c bon conectéé normalement")
+        testLog = true
+      } else
+      { 
+        testLog = false
+      }
+    })
+    .catch(err => {
+      console.error(err)
+    })
+    client.close()
+  })
+  console.log("testlog !")
+  console.log(testLog)
+  return testLog
+}
 
 /*
 const mongo = require('mongodb').MongoClient
