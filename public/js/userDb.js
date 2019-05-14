@@ -52,7 +52,11 @@ function register(usernamePara, emailPara, passwordPara) {
         console.log(alreadyExist)
         console.log(` already exists ${alreadyExist}`)
         if (alreadyExist === 0) {
-            userCol.insertOne({ username: usernamePara, email: emailPara, hashedPassword: passwordPara })
+            userCol.insertOne({ 
+                'username': usernamePara,
+                'email': emailPara,
+                'hashedPassword': passwordPara
+            })
         }
         client.close()
         return alreadyExist
@@ -72,8 +76,7 @@ function auth(username, password) { // auth function
     return ok
 }
 
-///////////////////////////////////////
-
+////////////////////////////
 /*
 const mongo = require('mongodb').MongoClient
 const url = 'mongodb://localhost:27017'//db' //27017 default port

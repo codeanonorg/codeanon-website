@@ -47,28 +47,22 @@ function auth(username, password) { // auth function
     return ok
 }
 */
+async function testIfUserInDb(usernamePara) {
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    return await client.db('CodeAnonDatabase').collection('users').findOne({ 'username' : usernamePara});
+}
+
+async function testIfEmailInDb(emailPara) {
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    return await client.db('ConeAnonDatabase').collection('users').findOne({'email': emailPara});
+}
 
 async function register(usernamePara, emailPara, passwordPara) {
     const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
     const userCollection = await client.db('CodeAnonDatabase').collection('users');
-
-    const findWithUsername = await userCollection.findOne({ 'username' : usernamePara});
-    const findWithEmail = await userCollection.findOne({ 'email' : emailPara});
-
-    if (findWithUsername === null && findWithEmail === null)
-    {
-        await userCollection.insertOne({ 
-            'username': usernamePara,
-            'email': emailPara,
-            'hashedPassword': passwordPara
-        })
-        await client.close()
-        return true
-    } else
-    {
-        await client.close()
-        return false
-    }
+    let user = { username: usernamePara, email: emailPara, hashedPassword: passwordPara}
+    await userCollection.insertOne(user)
+    await client.close()
 }
 
 
@@ -134,8 +128,6 @@ app.get("/profile", (req, res) => {
 
 
 app.post('/login', async (req, res) => {
-    console.log("req.body");
-    console.log(req.body);
 
     let username = req.body['loginUsername'];
     let password = req.body['loginPassword'];
@@ -147,12 +139,10 @@ app.post('/login', async (req, res) => {
     const credentials = await login(username)
     // get the user datas if user exist, else return 'null'
     if (errors) {
-        console.log("err"); // del
         checkLogin = 0;
         req.session.errors = errors;
         res.redirect('/login');
     } else if (credentials === null) { // if user not in database
-        console.log("err 2"); // del
         req.session.errors = [{ msg: 'invalid username or password' }];
         checkLogin = 0;
         res.redirect('/login');
@@ -171,7 +161,7 @@ app.post('/login', async (req, res) => {
 })
 // register POST not working properlyn, adds a empty document in the database
 app.post('/register', async (req, res) => {
-    console.log(req.body);
+
     let username = req.body['registerUsername']
     let email = req.body['registerEmail']
     let confirmEmail = req.body['registerConfirmEmail']
@@ -180,12 +170,17 @@ app.post('/register', async (req, res) => {
     //let hashedPassword =
     //let hashedConfirmPassword =
     // !!!!!!!!!!!!!!!!!!!   TEST PASSWORD AND CONFIRMPASS, EMAIL AND CONFIRM EMAIl
-    let registerStatus = await register(username, email, password)
+    const testUser = await testIfUserInDb(username)
+    const testEmail = await testIfEmailInDb(email)
 
-    if (registerStatus) {
-        res.redirect('/register'); // with objetc saying register ok
-    } else {
-        res.redirect('/register') // with object saying register not ok enter good credentials
+    if(testUser === null && testEmail === null)
+    {
+        await register(username, email, password)
+        res.redirect('/register')
+    } else
+    {
+        console.log("ERR")
+        res.redirect('/register')
     }
 
 })
