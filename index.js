@@ -67,7 +67,30 @@ async function register(usernamePara, emailPara, passwordPara) {
 
 
 app.get('/', (req, res) => {
-    res.redirect('/login')
+    res.redirect('/root')
+})
+
+app.get('/root', (req, res) => {
+    if (req.session.user)
+    {
+        res.redirect('/home')
+    } else
+    {
+        res.render('root.ejs')
+    }
+})
+
+app.post('/root', (req, res) => {
+    let cmd = req.body['receivedUserInput'];
+    
+    if (cmd === 'login'){
+        res.redirect('/login')
+    } else if (cmd === 'register')
+    {
+        res.redirect('/register')
+    }else {
+        res.redirect('/root');
+    }
 })
 
 app.get('/login', (req, res) => {
