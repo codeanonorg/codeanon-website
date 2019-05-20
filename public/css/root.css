@@ -1,0 +1,38 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background: rgb(2,2,2);
+    color: #FDFDFC;
+    overflow: hidden;
+}
+.terminalInput {
+    position: absolute;
+    top: 35%;
+    left: 63.5%;
+    transform: translate(-50%, -50%);
+}
+input[type=terminal] {
+    color: #FDFDFC;
+    background-color: #020202;
+    border: none;
+    font-size: 30px;
+    width: 150px;
+}
+.terminalTxt {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fadeIn {
+    animation: fadeIn 5s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
