@@ -6,21 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" type="text/css" href="css/root.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/spectre.min.css"> -->
+    
     <script type="text/javascript" src="js/script.js"></script>
 
     <title>CodeAnon</title>
 </head>
 
 <body>
-    <div class="terminalTxt fadeIn">
-        <h1>[____@CodeAnon ~]$
-        </h1>
-    </div>
-    <div class="terminalInput fadeIn">
-        <form method="POST" id="userInputForm">
-            <input type="terminal" autofocus name="receivedUserInput">
-        </form>
-    </div>
+    <h1 class="fadeIn">[____@CodeAnon ~]$</h1>
+
+    <form method="POST">
+        <input class="fadeIn"type="terminal" autofocus autocomplete="off" name="receivedUserInput" >
+    </form>
     
 </body>
 </html>

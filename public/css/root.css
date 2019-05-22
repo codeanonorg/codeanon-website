@@ -1,31 +1,30 @@
-body {
+body, html {
     font-family: 'Courier New', Courier, monospace;
-    background: rgb(2,2,2);
+    background: #020202;
     color: #FDFDFC;
     overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
-.terminalInput {
-    position: absolute;
-    top: 35%;
-    left: 63.5%;
-    transform: translate(-50%, -50%);
+
+h1{
+    margin: 20px;
+    font-size: 40px;
 }
+
 input[type=terminal] {
     color: #FDFDFC;
     background-color: #020202;
     border: none;
     font-size: 30px;
-    width: 150px;
+    width: 110px;
 }
-.terminalTxt {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+form {
+    margin-top: 14px;
 }
-
 .fadeIn {
     animation: fadeIn 5s;
+    float: left;
 }
 
 @keyframes fadeIn {
