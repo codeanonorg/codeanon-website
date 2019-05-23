@@ -66,11 +66,8 @@ async function register(usernamePara, emailPara, passwordPara) {
 }
 
 
-app.get('/', (req, res) => {
-    res.redirect('/root')
-})
 
-app.get('/root', (req, res) => {
+app.get('/', (req, res) => {
     if (req.session.user)
     {
         res.redirect('/home')
@@ -80,7 +77,7 @@ app.get('/root', (req, res) => {
     }
 })
 
-app.post('/root', (req, res) => {
+app.post('/', (req, res) => {
     let cmd = req.body['receivedUserInput'];
     
     if (cmd === 'login'){
@@ -89,7 +86,7 @@ app.post('/root', (req, res) => {
     {
         res.redirect('/register')
     }else {
-        res.redirect('/root');
+        res.redirect('/');
     }
 })
 
@@ -132,7 +129,7 @@ app.get('/home', (req, res) => {
     if (req.session.user) {
         res.render('home.ejs', { msg: req.session.user.username })
     } else {
-        res.redirect('/login')
+        res.redirect('/')
     }
 })
 
@@ -145,7 +142,7 @@ app.get("/profile", (req, res) => {
     if (req.session.user) {
         res.render('profile.ejs', { msg: req.session.user.username })
     } else {
-        res.redirect('/login')
+        res.redirect('/')
     }
 })
 
@@ -213,7 +210,7 @@ app.get('/test', (req, res) => {
     if (req.session.user) {
         res.render('test.ejs', { msg: req.session.user.username })
     } else {
-        res.redirect('/login')
+        res.redirect('/')
     }
 })
 
