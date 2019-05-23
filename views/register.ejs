@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="css/register.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <!-- crypto lib -->
     <script type="text/javascript" src="crypto-js/crypto-js.js"></script>
@@ -44,17 +44,17 @@
         <div class="clear">
 
             <h1 class="left">[____@CodeAnon ~]$ password:</h1>
-            <input class="left" type="terminal" autofocus autocomplete="off" name="registerPassword">
+            <input class="left" type="password" autofocus autocomplete="off" name="registerPassword">
 
         </div>
         <div class="clear">
 
             <h1 class="left">[____@CodeAnon ~]$ confirm password:</h1>
-            <input class="left" type="terminal" autofocus autocomplete="off" name="registerConfirmPassword">
+            <input class="left" type="password" autofocus autocomplete="off" name="registerConfirmPassword">
 
         </div>
-        <div class="clear">
-            <%= registerFailMsg %>
+        <div class="clear error-msg">
+            <b><%= registerFailMsg %></b>
         </div>
         <div class="clear">
             <button><b>Register</b></button>

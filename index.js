@@ -163,7 +163,7 @@ app.post('/login', async (req, res) => {
         req.session.errors = errors;
         res.redirect('/login');
     } else if (credentials === null) { // if user not in database
-        req.session.errors = [{ msg: 'invalid username or password' }];
+        req.session.errors = [{ errorMsg: 'invalid username or password' }];
         checkLogin = 0;
         res.redirect('/login');
     } else if (credentials.username === username && credentials.hashedPassword === password) // test password
@@ -174,12 +174,12 @@ app.post('/login', async (req, res) => {
         checkLogin = 1;
         res.redirect('/home');
     } else {    // handle errors that i haven't thougt about
-        req.session.errors = [{ msg: 'invalid username or password' }];
+        req.session.errors = [{ errorMsg: 'invalid username or password' }];
         checkLogin = 0;
         res.redirect('/login');
     }
 })
-// register POST not working properlyn, adds a empty document in the database
+
 app.post('/register', async (req, res) => {
 
     let username = req.body['registerUsername']
@@ -187,22 +187,53 @@ app.post('/register', async (req, res) => {
     let confirmEmail = req.body['registerConfirmEmail']
     let password = req.body['registerPassword']
     let confirmPassword = req.body['registerConfirmPassword']
-    //let hashedPassword =
-    //let hashedConfirmPassword =
-    // !!!!!!!!!!!!!!!!!!!   TEST PASSWORD AND CONFIRMPASS, EMAIL AND CONFIRM EMAIl
+    
+    req.checkBody('registerEmail', 'Please enter a valid email').isEmail();
+
     const testUser = await testIfUserInDb(username)
     const testEmail = await testIfEmailInDb(email)
 
-    if(testUser === null && testEmail === null)
+    if ((username === null)|| (email === null)|| (confirmEmail === null) || (password === null) || (confirmPassword === null))
     {
-        await register(username, email, password)
-        res.redirect('/register')
+        res.render('register.ejs',
+        {
+            registerFailMsg: 'please fill all fields'
+        })
+    }else if (email !== confirmEmail)
+    {
+        res.render('register.ejs', 
+        {
+            registerFailMsg: "email and confirm email are not the same"
+        })
+    } else if (password !== confirmPassword)
+    {
+        res.render('register.ejs', 
+        {
+            registerFailMsg: "password are not the same"
+        })
+    } else if (testUser !== null && testEmail !== null)
+    {
+        res.render('register.ejs',
+        {
+            registerFailMsg: "username and email already exist"
+        })
+    } else if (testEmail !== null)
+    {
+        res.render("register.ejs",
+        {
+            registerFailMsg: "email already exists"
+        })
+    }else if (testUser !== null)
+    {
+        res.render("register.ejs",
+        {
+            registerFailMsg: "username already exists"
+        })
     } else
     {
-        console.log("ERR")
-        res.redirect('/register')
+        await register(username, email, password)
+        res.redirect('/login');
     }
-
 })
 
 
