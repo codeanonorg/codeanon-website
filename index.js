@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 
 const mongo = require('mongodb').MongoClient
 const databaseUrl = 'mongodb://localhost:27017'//db' //27017 default port
+const MarkdownIt = require('markdown-it')
 
 let app = express()
 
@@ -65,6 +66,26 @@ async function register(usernamePara, emailPara, passwordPara) {
     await client.close()
 }
 
+async function submitArticle(req) {
+    // if (database not contains article named req.article_title) {
+    let md = new MarkdownIt()
+    
+    let {
+        article_content,
+        article_title,
+        article_tags,
+    } = req.body
+
+    let tags = article_tags.split(" ")
+    let htmlArticle = md.render(article_content)
+
+    console.log("Title :", article_title)
+    console.log("Tags :", tags)
+    console.log("Content :")
+    console.log(htmlArticle);
+    // }
+
+}
 
 
 app.get('/', (req, res) => {
@@ -132,12 +153,6 @@ app.get('/home', (req, res) => {
     } else {
         res.redirect('/')
     }
-})
-
-app.get('/blog', (req, res) => {
-    res.render('blog.ejs', {
-        username: "username"//req.session.user.username
-    });
 })
 
 async function getArticleById(id)
@@ -287,6 +302,23 @@ app.get('/test', (req, res) => {
 // app.use(function(req, res, next) {
 //   res.status(404).render("404.ejs", {reqUrl: req.url});
 // })
+
+app.get('/submit', (req, res) => {
+    if (req.session.user) {
+        res.render('submit.ejs', {
+            username: req.session.user.username
+        })
+    } else {
+        res.redirect('/')
+    }
+})
+
+app.post('/submit', async (req, res) => {
+    if (req.session.user) {
+        submitArticle(req)
+    }
+    res.redirect('/')
+})
 
 app.get('*', (req, res) => {
     res.status(404).render('404.ejs', { reqUrl: req.url })
