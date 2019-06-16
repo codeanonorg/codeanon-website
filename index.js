@@ -111,6 +111,7 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
+
     // new page to handle register post, should be easier and more readable
     if (req.session.user) {
         res.redirect('/home');
@@ -131,6 +132,12 @@ app.get('/home', (req, res) => {
     } else {
         res.redirect('/')
     }
+})
+
+app.get('/blog', (req, res) => {
+    res.render('blog.ejs', {
+        username: "username"//req.session.user.username
+    });
 })
 
 app.get('/logout', (req, res) => {

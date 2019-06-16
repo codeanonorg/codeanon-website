@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 
     <!-- crypto lib -->
     <script type="text/javascript" src="crypto-js/crypto-js.js"></script>
@@ -22,50 +22,48 @@
 </head>
 
 <body>
-    <form method="POST">
-        <div>
 
-            <h1 class="left">[____@CodeAnon ~]$ username:</h1>
-            <input class="left" type="terminal" autofocus autocomplete="off" name="registerUsername">
+    <form method="POST" class="back-light">
+        <div class="register-grid-container">
+            <div class="register-username">
+                <h1>[____@CodeAnon ~]$ username:</h1>
+                <input type="terminal" autofocus autocomplete="off" name="registerUsername">
+            </div>
+            <div class="register-email">
+                <h1>[____@CodeAnon ~]$ email:</h1>
+                <input type="terminal" autofocus autocomplete="off" name="registerEmail">
+            </div>
+            <div class="register-confirm-email">
+                <h1>[____@CodeAnon ~]$ confirm email:</h1>
+                <input type="terminal" autofocus autocomplete="off" name="registerConfirmEmail">
+            </div>
+            <div class="register-password">
+                <h1>[____@CodeAnon ~]$ password:</h1>
+                <input type="password" autofocus autocomplete="off" name="registerPassword">
 
-        </div>
-        <div class="clear">
+            </div>
+            <div class="register-confirm-password">
+                <h1>[____@CodeAnon ~]$ confirm password:</h1>
+                <input type="password" autofocus autocomplete="off" name="registerConfirmPassword">
 
-            <h1 class="left">[____@CodeAnon ~]$ email:</h1>
-            <input class="left" type="terminal" autofocus autocomplete="off" name="registerEmail">
-
-        </div>
-        <div class="clear">
-
-            <h1 class="left">[____@CodeAnon ~]$ confirm email:</h1>
-            <input class="left" type="terminal" autofocus autocomplete="off" name="registerConfirmEmail">
-
-        </div>
-        <div class="clear">
-
-            <h1 class="left">[____@CodeAnon ~]$ password:</h1>
-            <input class="left" type="password" autofocus autocomplete="off" name="registerPassword">
-
-        </div>
-        <div class="clear">
-
-            <h1 class="left">[____@CodeAnon ~]$ confirm password:</h1>
-            <input class="left" type="password" autofocus autocomplete="off" name="registerConfirmPassword">
-
-        </div>
-        <div class="clear error-msg">
-            <b><%= registerFailMsg %></b>
-        </div>
-        <div class="clear">
-            <button><b>Register</b></button>
+            </div>
+            <div class="register-error-msg">
+                <b><%= registerFailMsg %></b>
+            </div>
+            <div class="register-register-btn">
+                <button><b>Register</b></button>
+            </div>
+            <div class="register-to-root">
+                <button><a href="../">/</a></button>
+            </div>
+            <div class="register-to-login">
+                <button><a href="../login">/login</a></button>
+            </div>
+            <div class="register-footer">
+                <h1>Mentions légales</h1>
+            </div>
         </div>
     </form>
-    <div class="clear">
-        <button><a href="../">/</a></button>
-    </div>
-    <div class="clear">
-        <button><a href="../login">/login</a></button>
-    </div>
 </body>
 
 </html>
