@@ -1,12 +1,13 @@
 
-const path = require('path')
 const express = require('express')
 const expressValidator = require('express-validator')
 const session = require('cookie-session')
 const bodyParser = require('body-parser')
 
 const mongo = require('mongodb').MongoClient
+const ObjectId = require('mongodb').ObjectId;
 const databaseUrl = 'mongodb://localhost:27017'//db' //27017 default port
+
 const MarkdownIt = require('markdown-it')
 
 let app = express()
@@ -157,15 +158,16 @@ app.get('/home', (req, res) => {
 
 async function getArticleById(id)
 {
+    let obj_id = new ObjectId(id);
     const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
     const articleCollection = await client.db('CodeAnonDatabase').collection('articles');
-    return await articleCollection.find(ObjectId(id));
+    return await articleCollection.find({_id:obj_id});
 }
 
 app.get('/article/:ArticleId', async (req, res) => {
     
     let requestedId = req.param.ArticleId
-    let articleContent = getArticleById(requestedId)
+    let articleContent = await getArticleById(requestedId)
     if(req.session.user)
     {
         let art_title = articleContent.article_title;
