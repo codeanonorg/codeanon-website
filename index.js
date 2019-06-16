@@ -79,6 +79,20 @@ async function submitArticle(req) {
 
     let tags = article_tags.split(" ")
     let htmlArticle = md.render(article_content)
+    let date = new Date();
+
+    mongo.connect(databaseUrl, {useNewUrlParser: true}, (err, client) => {
+        const db = client.db('CodeAnonDatabase')
+        const articlesCol = db.collection('articles')
+        articlesCol.insertOne({
+            article_title: article_title,
+            article_content: htmlArticle,
+            article_tags: tags,
+            article_date: date.getMonth() + " " + date.getYear()
+        })
+        client.close()
+        console.log("article created");
+    })
 
     console.log("Title :", article_title)
     console.log("Tags :", tags)
@@ -176,13 +190,23 @@ app.get('/article/:ArticleId', async (req, res) => {
         let art_tags = articleContent.article_tags;
         let art_content = articleContent.article_content;
 
-        res.render('article.ejs', {
-            username: req.session.user.username,
-            article_title: art_title,
-            article_author: art_author,
-            article_date: art_date,
-            article_tags : art_tags,
-            article_content : art_content,            
+        // res.render('article.ejs', {
+        //     username: req.session.user.username,
+        //     article_title: art_title,
+        //     article_author: art_author,
+        //     article_date: art_date,
+        //     article_tags : [],
+        //     article_content : art_content,            
+        // })
+        console.log("render !!! ")
+
+        res.render("article.ejs", {
+            username : "usr",
+            article_title : "Titre",
+            article_author : "AC",
+            article_date : "16 juin",
+            article_tags : ["test"],
+            article_content : "<h1>Titre</h1>"
         })
     } else {
         res.redirect('/')
