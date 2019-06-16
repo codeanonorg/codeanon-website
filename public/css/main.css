@@ -9,6 +9,11 @@ html, body {
     width: 100%;
     height: 100%;
 }
+@media only screen and (max-width: 600px) {
+    * {
+      font-size: 18px !important;
+    }
+  }
 
 h1{
     font-size: 2.2rem;
@@ -81,7 +86,6 @@ form {
     background-color: #eeeeee;
     border: none;
     font-size: 2rem;
-    min-width: 7rem;
     width: 10rem;
 }
 /* login */
