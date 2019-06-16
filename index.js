@@ -67,7 +67,7 @@ async function register(usernamePara, emailPara, passwordPara) {
     await client.close()
 }
 
-async function submitArticle(req) {
+async function submitArticle(req, username) {
     // if (database not contains article named req.article_title) {
     let md = new MarkdownIt()
     
@@ -86,9 +86,10 @@ async function submitArticle(req) {
         const articlesCol = db.collection('articles')
         articlesCol.insertOne({
             article_title: article_title,
-            article_content: htmlArticle,
+            article_author: username,
+            article_date: date.getMonth() + " " + date.getYear(),
             article_tags: tags,
-            article_date: date.getMonth() + " " + date.getYear()
+            article_content: htmlArticle,
         })
         client.close()
         console.log("article created");
@@ -341,7 +342,7 @@ app.get('/submit', (req, res) => {
 
 app.post('/submit', async (req, res) => {
     if (req.session.user) {
-        submitArticle(req)
+        submitArticle(req, req.session.user.username)
     }
     res.redirect('/')
 })
