@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <!-- main script -->
+    <script type="text/javascript" src="js/script.js"></script>
+    <!-- font awesome -->
+    <script type="text/javascript" defer src="js/all.js"></script>
+
+    <title>CodeAnon</title>
+</head>
+
+<body>
+    <div class="blog-grid-container back-dark">
+        <div class="blog-head back-dark col-ocre">
+            <h1>[<%= username %>@CodeAnon ~]$</h1>
+        </div>
+        <div class="blog-right back-grey"></div>
+        <div class="blog-main back-grey col-light">
+            <article>
+                <header>
+                    <!-- Informations about the article -->
+                    <h1><%= article_title %></h1>
+                    <h2>
+                        <span class="col-ocre">
+                            <%= article_author %>
+                        </span>
+                        @CodeAnon ~ <%= article_date %>
+                    </h2>
+                    <div>
+                        <!-- article tags -->
+                        <% for (let tag of article_tags) {%>
+                        <div class="article_tag"><%= tag %></div>
+                        <% } %>
+                    </div>
+                </header>
+                
+                <br/>
+
+                <!-- content of the article -->
+                <main>
+                    <%- article_content %>
+                </main>
+            </article>
+        </div>
+        <div class="blog-left back-grey">
+        </div>
+        <div class="blog-footer back-dark">
+            <h1>Mentions légales</h1>
+        </div>
+    </div>
+</body>
+
+</html>

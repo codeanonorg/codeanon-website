@@ -135,8 +135,8 @@ app.get('/home', (req, res) => {
 })
 
 app.get('/blog', (req, res) => {
-    res.render('blog.ejs', {
-        username: "username"//req.session.user.username
+    res.render('article.ejs', {
+        username: "username"
     });
 })
 
