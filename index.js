@@ -67,16 +67,17 @@ async function register(usernamePara, emailPara, passwordPara) {
     await client.close()
 }
 
+/**
+ * Submit an article to MongoDB database
+ *
+ */
 async function submitArticle(req, username) {
-    // if (database not contains article named req.article_title) {
-    let md = new MarkdownIt()
-    
+    let md = new MarkdownIt()    
     let {
         article_content,
         article_title,
         article_tags,
     } = req.body
-
     let tags = article_tags.split(" ")
     let htmlArticle = md.render(article_content)
     let date = new Date();
@@ -85,22 +86,27 @@ async function submitArticle(req, username) {
         const db = client.db('CodeAnonDatabase')
         const articlesCol = db.collection('articles')
         articlesCol.insertOne({
-            article_title: article_title,
-            article_author: username,
-            article_date: date.getMonth() + " " + date.getYear(),
-            article_tags: tags,
-            article_content: htmlArticle,
+            article_title   : article_title,
+            article_author  : username,
+            article_date    : new Date().toString(),
+            article_tags    : tags,
+            article_content : htmlArticle,
+        }, (err, res) => {
+            if (err) {
+                // on fail
+                console.error(err)
+            } else {
+                // pretty print informations (for debug)
+                console.log("=== Article created ===")
+                console.log("title  : ", article_title)
+                console.log("author : ", username)
+                console.log("link   : ")
+                console.log("localhost:8080/article/"+String(res.insertedId))
+            }
+            // close the connection with MongoDB
+            client.close()
         })
-        client.close()
-        console.log("article created");
     })
-
-    console.log("Title :", article_title)
-    console.log("Tags :", tags)
-    console.log("Content :")
-    console.log(htmlArticle);
-    // }
-
 }
 
 
@@ -201,15 +207,6 @@ app.get('/article/:ArticleId', async (req, res) => {
              article_content : art_content,            
          })
         console.log("render !!! ")
-/*
-        res.render("article.ejs", {
-            username : "usr",
-            article_title : "Titre",
-            article_author : "AC",
-            article_date : "16 juin",
-            article_tags : ["test"],
-            article_content : "<h1>Titre</h1>"*/
-        
     } else {
         res.redirect('/')
     }
