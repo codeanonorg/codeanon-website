@@ -265,7 +265,8 @@ button:hover {
     grid-template-areas: 
     "blog-head blog-head blog-head"
     "blog-right blog-main blog-left"
-    "blog-footer blog-footer blog-footer";
+    "blog-footer blog-footer blog-footer"
+    ;
 }
   
 .blog-head {
@@ -290,6 +291,36 @@ button:hover {
     place-self: center;
 }
 
+
+.blog-main input[type=terminal] {
+    padding-top: 0.5rem;
+    color: #222831;
+    background-color: #eeeeee;
+    border: none;
+    font-size: 2rem;
+    width: 10rem;
+}
+
+.blog-title {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.blog-tags {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.blog-content {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
 
 article > h6 {
     color: #eeeeee;
