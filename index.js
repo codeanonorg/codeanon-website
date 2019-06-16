@@ -173,16 +173,17 @@ app.get('/home', (req, res) => {
 
 async function getArticleById(id)
 {
-    let obj_id = new ObjectId(id);
     const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
     const articleCollection = await client.db('CodeAnonDatabase').collection('articles');
-    return await articleCollection.find({_id:obj_id});
+    return await articleCollection.findOne({_id: ObjectId(id)});
 }
 
 app.get('/article/:ArticleId', async (req, res) => {
     
-    let requestedId = req.param.ArticleId
+    let requestedId = req.params.ArticleId
+    console.log(requestedId)
     let articleContent = await getArticleById(requestedId)
+    console.log(articleContent)
     if(req.session.user)
     {
         let art_title = articleContent.article_title;
@@ -191,24 +192,24 @@ app.get('/article/:ArticleId', async (req, res) => {
         let art_tags = articleContent.article_tags;
         let art_content = articleContent.article_content;
 
-        // res.render('article.ejs', {
-        //     username: req.session.user.username,
-        //     article_title: art_title,
-        //     article_author: art_author,
-        //     article_date: art_date,
-        //     article_tags : [],
-        //     article_content : art_content,            
-        // })
+         res.render('article.ejs', {
+             username: req.session.user.username,
+             article_title: art_title,
+             article_author: art_author,
+             article_date: art_date,
+             article_tags : [art_tags],
+             article_content : art_content,            
+         })
         console.log("render !!! ")
-
+/*
         res.render("article.ejs", {
             username : "usr",
             article_title : "Titre",
             article_author : "AC",
             article_date : "16 juin",
             article_tags : ["test"],
-            article_content : "<h1>Titre</h1>"
-        })
+            article_content : "<h1>Titre</h1>"*/
+        
     } else {
         res.redirect('/')
     }
