@@ -140,6 +140,38 @@ app.get('/blog', (req, res) => {
     });
 })
 
+async function getArticleById(id)
+{
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const articleCollection = await client.db('CodeAnonDatabase').collection('articles');
+    return await articleCollection.find(ObjectId(id));
+}
+
+app.get('/article/:ArticleId', async (req, res) => {
+    
+    let requestedId = req.param.ArticleId
+    let articleContent = getArticleById(requestedId)
+    if(req.session.user)
+    {
+        let art_title = articleContent.article_title;
+        let art_author = articleContent.article_author;
+        let art_date = articleContent.article_date;
+        let art_tags = articleContent.article_tags;
+        let art_content = articleContent.article_content;
+
+        res.render('article.ejs', {
+            username: req.session.user.username,
+            article_title: art_title,
+            article_author: art_author,
+            article_date: art_date,
+            article_tags : art_tags,
+            article_content : art_content,            
+        })
+    } else {
+        res.redirect('/')
+    }
+})
+
 app.get('/logout', (req, res) => {
     req.session = null
     res.redirect('/login')
