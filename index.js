@@ -199,9 +199,8 @@ async function getArticleById(id)
 app.get('/article/:ArticleId', async (req, res) => {
     
     let requestedId = req.params.ArticleId
-    console.log(requestedId)
     let articleContent = await getArticleById(requestedId)
-    console.log(articleContent)
+
     if(req.session.user)
     {
         let art_title = articleContent.article_title;
@@ -218,7 +217,6 @@ app.get('/article/:ArticleId', async (req, res) => {
              article_tags : [art_tags],
              article_content : art_content,            
          })
-        console.log("render !!! ")
     } else {
         res.redirect('/')
     }
