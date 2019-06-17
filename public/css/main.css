@@ -343,14 +343,16 @@ button:hover {
     margin-bottom: 1rem;
 }
 
+/* article */
 
-article > h6 {
-    color: #eeeeee;
-    font-size: 1.8rem;
+.article_tag{
+    margin-top: 1rem;
+    font-size: 1.6rem;
 }
-
-p {
-    font-size: 20px;
+::marker {
+    color: #b55400;
+    font-size: 1.4rem;
+    display: inline;
 }
 
 
