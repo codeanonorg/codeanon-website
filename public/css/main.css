@@ -31,28 +31,28 @@ form {
 }
 
 .back-dark{
-    background: #222831;
+    background: #222831 !important;
 }
 .back-grey {
-    background: #393e46;
+    background: #393e46 !important;
 }
 .back-ocre {
-    background: #b55400;
+    background: #b55400 !important;
 }
 .back-light {
-    background: #eeeeee;
+    background: #eeeeee !important;
 }
 .col-dark{
-    color:  #222831;
+    color:  #222831 !important;
 }
 .col-grey{
-    color: #393e46;
+    color: #393e46 !important;
 }
 .col-ocre{
-    color: #b55400;
+    color: #b55400 !important;
 }
 .col-light{
-    color: #eeeeee
+    color: #eeeeee !important;
 }
 
 
@@ -296,6 +296,7 @@ button:hover {
 .blog-footer {
     grid-area: blog-footer;
     place-self: center;
+    text-align: center;
 }
 
 
@@ -369,4 +370,65 @@ button:hover {
 .error-main {
     grid-area: error-main;
     place-self: center;
+}
+
+/*  HOME  */
+
+.home-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.6fr 1.6fr 0.5fr;
+    grid-template-areas: 
+    "home-header home-header home-header home-header home-header home-header"
+    "home-main home-main home-main home-main home-main home-main"
+    "home-footer home-footer home-footer home-footer home-footer home-footer";
+}
+  
+.home-header {
+    grid-area: home-header;
+    place-self: center;
+    text-align: center;
+    line-height: 5rem;
+}
+
+.home-main {
+    grid-area: home-main;
+    display: inline-flex;
+    flex-wrap: wrap;
+    place-self: center;
+}
+
+.home-footer {
+    grid-area: home-footer;
+    place-self: center;
+    text-align: center;
+}
+
+.card {
+    height: 20rem;
+    width: 20rem;
+    margin: 1rem;
+    border-radius: 2rem;
+    text-align: center;
+    background: #b55400;
+    font-size: 1.8rem;
+    padding: 0.5rem;
+}
+.card > p {
+    margin-top: 2rem;
+}
+.card > h1 {
+    font-size: 2.6rem;
+}
+.card:hover {
+    transform: scale(1.1, 1.1)
+}
+
+.disconnect {
+    width: 4rem;
+    height: 4rem;
+    font-size: 2rem;
+    border-radius: 1.2rem;
+    margin-top: 1.5rem;
 }
