@@ -88,6 +88,8 @@ form {
     font-size: 2rem;
     width: 10rem;
 }
+
+
 /* login */
 .login-grid-container {
     min-height: 100%;
@@ -257,14 +259,16 @@ button:hover {
     width: 21rem;    
 }
 
+/* BLOG */
 
 .blog-grid-container {
+    min-height: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 1fr 10fr 1fr;
     grid-template-areas: 
     "blog-head blog-head blog-head"
-    "blog-right blog-main blog-left"
+    "blog-left blog-main blog-right"
     "blog-footer blog-footer blog-footer"
     ;
 }
@@ -281,6 +285,9 @@ button:hover {
 .blog-main {
     grid-area: blog-main;
 }
+.blog-main > form > div{
+    margin-top: 1rem;
+}
   
 .blog-left {
     grid-area: blog-left;
@@ -296,9 +303,19 @@ button:hover {
     padding-top: 0.5rem;
     color: #222831;
     background-color: #eeeeee;
-    border: none;
-    font-size: 2rem;
-    width: 10rem;
+    border: 2px solid #b55400;
+    font-size: 1.2rem;
+    width: 25rem;
+}
+
+.blog-main textarea[type=text] {
+    padding-top: 0.5rem;
+    color: #020202;
+    background-color: #eeeeee; 
+    border: 2px solid #b55400;
+    width: 100%;
+    min-height: 24rem;
+    resize: vertical;
 }
 
 .blog-title {
@@ -319,8 +336,13 @@ button:hover {
     grid-area: login-password;
     display: inline-flex;
     flex-wrap: wrap;
-    align-self: center;
+    align-self: right;
+    width: 100%;
 }
+.blog-content h2 {
+    margin-bottom: 1rem;
+}
+
 
 article > h6 {
     color: #eeeeee;
@@ -329,4 +351,20 @@ article > h6 {
 
 p {
     font-size: 20px;
+}
+
+
+/* 404 */
+
+.error-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: "error-main";
+  }
+
+.error-main {
+    grid-area: error-main;
+    place-self: center;
 }
