@@ -600,3 +600,40 @@ button:hover {
     border-radius: 1.2rem;
     margin-top: 1.4rem;
 }
+
+/* PROFILE */
+
+.profile-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 2fr 2fr 2fr 0.5fr;
+    grid-template-areas:
+    "profile-top profile-top profile-top"
+    "profile-left profile-main profile-right"
+    "profile-left profile-main profile-right"
+    "profile-footer profile-footer profile-footer";
+}
+
+.profile-top {
+    grid-area: profile-top;
+    place-self: center;
+    text-align: center;
+}
+.profile-top h2 {
+    margin-top: 2rem;
+}
+.profile-left { grid-area: profile-left; }
+
+.profile-main {
+    grid-area: profile-main;
+}
+.profile-right {
+    grid-area: profile-right;
+    
+}
+.profile-footer {
+    grid-area: profile-footer;
+    place-self: center;
+    text-align: center;
+}

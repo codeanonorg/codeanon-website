@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,11 +11,24 @@
     <script type="text/javascript" src="js/script.js"></script>
 
     <title>CodeAnon</title>
-  </head>
-  <body>
-      <div class="profile-footer back-dark">
-          <h1>Mentions légales</h1>
-          <a href="/logout"><button class="disconnect"><b>X</b></button></a>
-      </div>
-  </body>
+</head>
+
+<body>
+
+    <div class="profile-grid-container back-grey">
+        <div class="profile-top col-light">
+            <h1>Welcome @ youre Profile [<span class="col-ocre"><%= username %></span>]</h1>
+            <cite><h2>"Be yourself; everyone else is already taken."</h2></cite>
+            <cite><h3>Oscar Wilde</h3></cite>
+        </div>
+        <div class="profile-left"></div>
+        <div class="profile-main"></div>
+        <div class="profile-right"></div>
+        <div class="profile-footer">
+            <h1>Mentions légales</h1>
+            <a href="/logout"><button class="disconnect"><b>X</b></button></a>
+        </div>
+    </div>
+</body>
+
 </html>

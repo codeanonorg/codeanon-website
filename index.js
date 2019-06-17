@@ -232,8 +232,11 @@ app.get('/logout', (req, res) => {
 
 app.get("/profile", (req, res) => {
     if (req.session.user) {
-        res.render('profile.ejs', { msg: req.session.user.username })
-    } else {
+        res.render('profile.ejs', {
+            username: req.session.user.username
+        })
+    } else
+    {
         res.redirect('/')
     }
 })
