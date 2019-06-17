@@ -177,6 +177,18 @@ app.get('/home', (req, res) => {
     }
 })
 
+app.get('/blog', (req, res) => {
+    if (req.session.user)
+    {
+        res.render('blog.ejs', {
+            username: req.session.user.username,
+        })
+    } else 
+    {
+        res.redirect('/')
+    }
+})
+
 async function getArticleById(id)
 {
     const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
