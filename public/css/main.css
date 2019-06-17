@@ -265,7 +265,7 @@ button:hover {
     min-height: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 10fr 1fr;
+    grid-template-rows: 1fr 8fr 1fr;
     grid-template-areas: 
     "blog-head blog-head blog-head"
     "blog-left blog-main blog-right"
@@ -309,16 +309,6 @@ button:hover {
     width: 25rem;
 }
 
-.blog-main textarea[type=text] {
-    padding-top: 0.5rem;
-    color: #020202;
-    background-color: #eeeeee; 
-    border: 2px solid #b55400;
-    width: 100%;
-    min-height: 24rem;
-    resize: vertical;
-}
-
 .blog-title {
     grid-area: login-password;
     display: inline-flex;
@@ -345,6 +335,89 @@ button:hover {
 }
 
 /* article */
+.article-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 8fr 1fr;
+    grid-template-areas: 
+    "article-head article-head article-head"
+    "article-left article-main article-right"
+    "article-footer article-footer article-footer"
+    ;
+}
+  
+.article-head {
+    grid-area: article-head;
+    place-self: center;
+}
+  
+.article-right {
+    grid-area: article-right;
+}
+  
+.article-main {
+    grid-area: article-main;
+}
+.article-main > form > div{
+    margin-top: 1rem;
+}
+  
+.article-left {
+    grid-area: article-left;
+}
+  
+.article-footer {
+    grid-area: article-footer;
+    place-self: center;
+    text-align: center;
+}
+
+
+.article-main input[type=terminal] {
+    padding-top: 0.5rem;
+    color: #222831;
+    background-color: #eeeeee;
+    border: 2px solid #b55400;
+    font-size: 1.2rem;
+    width: 25rem;
+}
+
+.article-main textarea[type=text] {
+    padding-top: 0.5rem;
+    color: #020202;
+    background-color: #eeeeee; 
+    border: 2px solid #b55400;
+    width: 100%;
+    min-height: 24rem;
+    resize: vertical;
+}
+
+.article-title {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.article-tags {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.article-content {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: right;
+    width: 100%;
+}
+.article-content h2 {
+    margin-bottom: 1rem;
+}
+
 
 .article_tag{
     margin-top: 1rem;
@@ -355,7 +428,89 @@ button:hover {
     font-size: 1.4rem;
     display: inline;
 }
+/* SUBMIT */
+.submit-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 8fr 1fr;
+    grid-template-areas: 
+    "submit-head submit-head submit-head"
+    "submit-left submit-main submit-right"
+    "submit-footer submit-footer submit-footer"
+    ;
+}
+  
+.submit-head {
+    grid-area: submit-head;
+    place-self: center;
+}
+  
+.submit-right {
+    grid-area: submit-right;
+}
+  
+.submit-main {
+    grid-area: submit-main;
+}
+.submit-main > form > div{
+    margin-top: 1rem;
+}
+  
+.submit-left {
+    grid-area: submit-left;
+}
+  
+.submit-footer {
+    grid-area: submit-footer;
+    place-self: center;
+    text-align: center;
+}
 
+
+.submit-main input[type=terminal] {
+    padding-top: 0.5rem;
+    color: #222831;
+    background-color: #eeeeee;
+    border: 2px solid #b55400;
+    font-size: 1.2rem;
+    width: 25rem;
+}
+
+.submit-main textarea[type=text] {
+    padding-top: 0.5rem;
+    color: #020202;
+    background-color: #eeeeee; 
+    border: 2px solid #b55400;
+    width: 100%;
+    min-height: 24rem;
+    resize: vertical;
+}
+
+.submit-title {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.submit-tags {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.submit-content {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: right;
+    width: 100%;
+}
+.submit-content h2 {
+    margin-bottom: 1rem;
+}
 
 /* 404 */
 
@@ -430,5 +585,5 @@ button:hover {
     height: 4rem;
     font-size: 2rem;
     border-radius: 1.2rem;
-    margin-top: 1.5rem;
+    margin-top: 1.4rem;
 }
