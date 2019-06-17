@@ -80,7 +80,10 @@ async function submitArticle(req, username) {
     } = req.body
     let tags = article_tags.split(" ")
     let htmlArticle = md.render(article_content)
+
     let date = new Date();
+    let fullDate = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
+    console.log(fullDate)
 
     mongo.connect(databaseUrl, {useNewUrlParser: true}, (err, client) => {
         const db = client.db('CodeAnonDatabase')
@@ -88,7 +91,7 @@ async function submitArticle(req, username) {
         articlesCol.insertOne({
             article_title   : article_title,
             article_author  : username,
-            article_date    : new Date().toString(),
+            article_date    : fullDate,
             article_tags    : tags,
             article_content : htmlArticle,
         }, (err, res) => {
