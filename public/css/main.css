@@ -288,7 +288,19 @@ button:hover {
 .blog-main > form > div{
     margin-top: 1rem;
 }
-  
+.blog-main > .wrapper {
+    height: 100%;
+    width: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+
+.blog-main > .search-bar {
+    width: 100%;
+    height: auto;
+}
 .blog-left {
     grid-area: blog-left;
 }
