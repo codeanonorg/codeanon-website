@@ -77,6 +77,7 @@ async function submitArticle(req, username) {
         article_content,
         article_title,
         article_tags,
+        article_description,
     } = req.body
     let tags = article_tags.split(" ")
     let htmlArticle = md.render(article_content)
@@ -89,11 +90,12 @@ async function submitArticle(req, username) {
         const db = client.db('CodeAnonDatabase')
         const articlesCol = db.collection('articles')
         articlesCol.insertOne({
-            article_title   : article_title,
-            article_author  : username,
-            article_date    : fullDate,
-            article_tags    : tags,
-            article_content : htmlArticle,
+            article_title       : article_title,
+            article_author      : username,
+            article_date        : fullDate,
+            article_tags        : tags,
+            article_description : article_description,  
+            article_content     : htmlArticle,
         }, (err, res) => {
             if (err) {
                 // on fail
@@ -210,6 +212,7 @@ app.get('/article/:ArticleId', async (req, res) => {
         let art_author = articleContent.article_author;
         let art_date = articleContent.article_date;
         let art_tags = articleContent.article_tags;
+        let art_description = articleContent.article_description;
         let art_content = articleContent.article_content;
 
          res.render('article.ejs', {
@@ -218,6 +221,7 @@ app.get('/article/:ArticleId', async (req, res) => {
              article_author: art_author,
              article_date: art_date,
              article_tags : [art_tags],
+             article_description: art_description,
              article_content : art_content,            
          })
     } else {

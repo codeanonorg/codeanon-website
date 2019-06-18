@@ -431,10 +431,13 @@ button:hover {
     margin-bottom: 1rem;
 }
 
-
 .article_tag{
     margin-top: 1rem;
     font-size: 1.6rem;
+}
+
+.article-description {
+    font-size: 1.2rem;
 }
 ::marker {
     color: #b55400;
@@ -446,7 +449,7 @@ button:hover {
     min-height: 100%;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 1fr 8fr 1fr;
+    grid-template-rows: 1fr auto 1fr;
     grid-template-areas: 
     "submit-head submit-head submit-head"
     "submit-left submit-main submit-right"
@@ -497,6 +500,15 @@ button:hover {
     border: 2px solid #b55400;
     width: 100%;
     min-height: 24rem;
+    resize: vertical;
+}
+.submit-main textarea[type=description] {
+    padding-top: 0.5rem;
+    color: #020202;
+    background-color: #eeeeee; 
+    border: 2px solid #b55400;
+    width: 100%;
+    min-height: 10rem;
     resize: vertical;
 }
 
