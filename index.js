@@ -81,18 +81,19 @@ async function submitArticle(req, username) {
     } = req.body
     let tags = article_tags.split(" ")
     let htmlArticle = md.render(article_content)
-
+//  DATE
     let date = new Date();
-    let fullDate = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
-    console.log(fullDate)
-
+    let msecDate = date.getTime();
+    //let fullDate = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
+    console.log(msecDate)
+//  DATE
     mongo.connect(databaseUrl, {useNewUrlParser: true}, (err, client) => {
         const db = client.db('CodeAnonDatabase')
         const articlesCol = db.collection('articles')
         articlesCol.insertOne({
             article_title       : article_title,
             article_author      : username,
-            article_date        : fullDate,
+            article_date        : msecDate,
             article_tags        : tags,
             article_description : article_description,  
             article_content     : htmlArticle,
@@ -208,21 +209,30 @@ app.get('/article/:ArticleId', async (req, res) => {
 
     if(req.session.user)
     {
+        
         let art_title = articleContent.article_title;
         let art_author = articleContent.article_author;
-        let art_date = articleContent.article_date;
+
+        // please do not modify this or you break the /blog page
+        let art_date_msec = articleContent.article_date; 
+        // get the date in milliseconds
+
         let art_tags = articleContent.article_tags;
         let art_description = articleContent.article_description;
         let art_content = articleContent.article_content;
-
-         res.render('article.ejs', {
-             username: req.session.user.username,
-             article_title: art_title,
-             article_author: art_author,
-             article_date: art_date,
-             article_tags : [art_tags],
-             article_description: art_description,
-             article_content : art_content,            
+        
+        // convert the date in readable format
+        let date = new Date(art_date_msec);
+        let art_date = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
+        
+        res.render('article.ejs', {
+            username: req.session.user.username,
+            article_title: art_title,
+            article_author: art_author,
+            article_date: art_date,
+            article_tags : [art_tags],
+            article_description: art_description,
+            article_content : art_content,            
          })
     } else {
         res.redirect('/')
