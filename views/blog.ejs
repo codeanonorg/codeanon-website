@@ -22,18 +22,19 @@
         <div class="blog-main back-grey col-light">
             <div class="search-bar back-ocre"></div>
             <div class="wrapper back-grey">
-                <div class="card back-dark">
-                    <h1 class="col-ocre">Article Title</h1>
-                    <p class="col-light">
-                        decriptions
-                    </p>
-                </div>
-                <div class="card back-dark">
-                    <h1 class="col-ocre">Article two</h1>
-                    <p class="col-light">
-                        a way longer description allowing the user to undersand the article name
-                    </p>
-                </div>
+                <% for (let article of article_list) {%>
+                <a href="/article/<%= article._id %> ">
+
+                    <div class="card back-dark">
+                        <h1 class="col-ocre"><%= article.article_title %></h1>
+                        <h2 class="col-ocre"><%= article.article_date %></h2>
+                        <p class="col-light">
+                            <%= article.article_description %>
+                        </p>
+                    </div>
+                </a>
+
+                <% } %>
             </div>
         </div>
         <div class="blog-left back-grey">
@@ -41,7 +42,9 @@
         </div>
         <div class="blog-footer back-dark">
             <a href="/logout"><button class="disconnect"><b>X</b></button></a>
-            <a href="/about"><h1>About us</h1></a>
+            <a href="/about">
+                <h1>About us</h1>
+            </a>
         </div>
     </div>
 </body>

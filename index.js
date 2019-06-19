@@ -81,12 +81,12 @@ async function submitArticle(req, username) {
     } = req.body
     let tags = article_tags.split(" ")
     let htmlArticle = md.render(article_content)
-//  DATE
+    //  DATE
     let date = new Date();
     let msecDate = date.getTime();
     //let fullDate = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
     console.log(msecDate)
-//  DATE
+    //  DATE
     mongo.connect(databaseUrl, {useNewUrlParser: true}, (err, client) => {
         const db = client.db('CodeAnonDatabase')
         const articlesCol = db.collection('articles')
@@ -183,11 +183,27 @@ app.get('/home', (req, res) => {
     }
 })
 
-app.get('/blog', (req, res) => {
+async function getTenMostRecentArticles() {
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const articles = await client.db('CodeAnonDatabase').collection('articles')
+    .find()
+    .limit(9)
+    .sort({ article_date: -1})
+    .toArray();
+    
+    await client.close() 
+    return await articles;   
+}
+
+app.get('/blog', async (req, res) => {
+
     if (req.session.user)
     {
+        let art_list = await getTenMostRecentArticles()
+        // get 9 last submited articles
         res.render('blog.ejs', {
             username: req.session.user.username,
+            article_list: art_list,
         })
     } else 
     {
@@ -220,7 +236,7 @@ app.get('/article/:ArticleId', async (req, res) => {
         let art_tags = articleContent.article_tags;
         let art_description = articleContent.article_description;
         let art_content = articleContent.article_content;
-        
+
         // convert the date in readable format
         let date = new Date(art_date_msec);
         let art_date = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
