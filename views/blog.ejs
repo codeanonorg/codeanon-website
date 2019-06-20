@@ -30,14 +30,17 @@
 
             </div>
             <div class="wrapper back-grey">
-                <% for (let article of article_list) {%>
-                <a href="/article/<%= article._id %> ">
+                <% for (var i = 0; i < article_list.length; i++) {%>
+                <a href="/article/<%= article_list[i]._id %> ">
 
                     <div class="card back-dark">
-                        <h1 class="col-ocre"><%= article.article_title %></h1>
-                        <h2 class="col-ocre"><%= article.article_date %></h2>
+                        <h1 class="col-ocre"><%= article_list[i].article_title %></h1>
+                        <h2 class="col-grey"><%= article_list[i].article_author %></h2>
+                        <h2 class="col-grey">
+                            <%= article_date_list[i] %>
+                        </h2>
                         <p class="col-light">
-                            <%= article.article_description %>
+                            <%= article_list[i].article_description %>
                         </p>
                     </div>
                 </a>

@@ -220,6 +220,11 @@ async function getAllArticles()
 }
 
 app.get('/blog', async (req, res) => {
+    
+    // let date = new Date(art_date_msec);
+    // let art_date = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
+
+    // FOR LOOP for the date
 
     if (req.session.user)
     {
@@ -228,9 +233,17 @@ app.get('/blog', async (req, res) => {
         if (typeof req.query['tag'] !== 'undefined')
         {
             const art_by_tag = await getArticlByTag(req.query['tag']);
+
+            let date_array = []
+            for (let i = 0; i < art_by_tag.length; i++) {
+                let date = new Date(art_by_tag[i].article_date)
+                date_array.push(date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear());                
+            }
+            
             res.render('blog.ejs', {
                 username: user,
                 article_list: art_by_tag,
+                article_date_list: date_array,
             })
         } else if (typeof req.query['allArt'] !== 'undefined')
         {
