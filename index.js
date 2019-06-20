@@ -195,21 +195,66 @@ async function getTenMostRecentArticles() {
     return await articles;   
 }
 
+async function getArticlByTag(tag)
+{
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const articles_by_tag = await client.db('CodeAnonDatabase').collection('articles')
+    .find({ article_tags: tag})
+    .sort({ article_date: -1})
+    .toArray();
+
+    await client.close()
+    return await articles_by_tag;
+}
+
+async function getAllArticles()
+{
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const articles = await client.db('CodeAnonDatabase').collection('articles')
+    .find()
+    .sort({ article_date: -1})
+    .toArray();
+
+    await client.close()
+    return await articles;
+}
+
 app.get('/blog', async (req, res) => {
 
     if (req.session.user)
     {
-        let art_list = await getTenMostRecentArticles()
-        // get 9 last submited articles
-        res.render('blog.ejs', {
-            username: req.session.user.username,
+        const user = req.session.user.username;
+        
+        if (typeof req.query['tag'] !== 'undefined')
+        {
+            const art_by_tag = await getArticlByTag(req.query['tag']);
+            res.render('blog.ejs', {
+                username: user,
+                article_list: art_by_tag,
+            })
+        } else if (typeof req.query['allArt'] !== 'undefined')
+        {
+            const all_art = await getAllArticles();
+            res.render('blog.ejs', {
+                username: user,
+                article_list: all_art,
+            })
+        }else 
+        {
+            let art_list = await getTenMostRecentArticles();
+            // get 9 last submited articles
+            res.render('blog.ejs', {
+            username: user,
             article_list: art_list,
         })
+        }
+        
     } else 
     {
         res.redirect('/')
     }
 })
+
 
 async function getArticleById(id)
 {

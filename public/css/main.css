@@ -278,7 +278,8 @@ button:hover {
     grid-area: blog-head;
     place-self: center;
 }
-  
+
+}
 .blog-right {
     grid-area: blog-right;
 }
@@ -290,7 +291,6 @@ button:hover {
     margin-top: 1rem;
 }
 .blog-main > .wrapper {
-    height: 100%;
     width: 100%;
     display: inline-flex;
     flex-wrap: wrap;
@@ -302,6 +302,21 @@ button:hover {
     width: 100%;
     height: auto;
 }
+
+.search-bar input {
+    width: 80%;
+    height: 2rem;
+    font-size: 1.4rem ;
+    background: none;
+    border: none;
+    color: #eeeeee;
+}
+
+.search-bar form {
+    text-align: center;
+    margin-top: 1rem;
+}
+
 .blog-left {
     grid-area: blog-left;
 }
@@ -310,8 +325,8 @@ button:hover {
     grid-area: blog-footer;
     place-self: center;
     text-align: center;
+    min-height: 20vh;
 }
-
 
 .blog-main input[type=terminal] {
     padding-top: 0.5rem;
@@ -322,30 +337,6 @@ button:hover {
     width: 25rem;
 }
 
-.blog-title {
-    grid-area: login-password;
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-self: center;
-}
-
-.blog-tags {
-    grid-area: login-password;
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-self: center;
-}
-
-.blog-content {
-    grid-area: login-password;
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-self: right;
-    width: 100%;
-}
-.blog-content h2 {
-    margin-bottom: 1rem;
-}
 
 /* article */
 .article-grid-container {
