@@ -3,7 +3,8 @@ const express = require('express')
 const expressValidator = require('express-validator')
 const session = require('cookie-session')
 const bodyParser = require('body-parser')
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10; // increase the number to make the brutforcing harder
 const mongo = require('mongodb').MongoClient
 const ObjectId = require('mongodb').ObjectId;
 const databaseUrl = 'mongodb://localhost:27017'//db' //27017 default port
@@ -219,12 +220,18 @@ async function getAllArticles()
     return await articles;
 }
 
-app.get('/blog', async (req, res) => {
-    
-    // let date = new Date(art_date_msec);
-    // let art_date = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
+// format the correct date ouput from a list of articles
+function formatDate(article_list)
+{
+    let date_array = []
+    for (let i = 0; i < article_list.length; i++) { // make it a function
+        let date = new Date(article_list[i].article_date)
+        date_array.push(date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear());                
+    }
+    return date_array
+}
 
-    // FOR LOOP for the date
+app.get('/blog', async (req, res) => {
 
     if (req.session.user)
     {
@@ -234,11 +241,7 @@ app.get('/blog', async (req, res) => {
         {
             const art_by_tag = await getArticlByTag(req.query['tag']);
 
-            let date_array = []
-            for (let i = 0; i < art_by_tag.length; i++) {
-                let date = new Date(art_by_tag[i].article_date)
-                date_array.push(date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear());                
-            }
+            let date_array = formatDate(art_by_tag)
 
             res.render('blog.ejs', {
                 username: user,
@@ -248,11 +251,9 @@ app.get('/blog', async (req, res) => {
         } else if (typeof req.query['allArt'] !== 'undefined')
         {
             const all_art = await getAllArticles();
-            let date_array = []
-            for (let i = 0; i < all_art.length; i++) {
-                let date = new Date(all_art[i].article_date)
-                date_array.push(date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear());                
-            }
+
+            let date_array = formatDate(all_art)
+
             res.render('blog.ejs', {
                 username: user,
                 article_list: all_art,
@@ -262,11 +263,8 @@ app.get('/blog', async (req, res) => {
         {
             let art_list = await getTenMostRecentArticles();
             // get 9 last submited articles
-            let date_array = []
-            for (let i = 0; i < art_list.length; i++) {
-                let date = new Date(art_list[i].article_date)
-                date_array.push(date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear());                
-            }
+            let date_array = formatDate(art_list)
+
             res.render('blog.ejs', {
             username: user,
             article_list: art_list,
@@ -346,6 +344,7 @@ app.post('/login', async (req, res) => {
 
     let username = req.body['loginUsername'];
     let password = req.body['loginPassword'];
+    //const hashedPass = await hashIt(password)
 
     req.checkBody('loginUsername', 'Username is required').notEmpty();
     //req.checkBody('loginEmail', 'Please enter a valid email').isEmail();
@@ -361,7 +360,7 @@ app.post('/login', async (req, res) => {
         req.session.errors = [{ errorMsg: 'invalid username or password' }];
         checkLogin = 0;
         res.redirect('/login');
-    } else if (credentials.username === username && credentials.hashedPassword === password) // test password
+    } else if (credentials.username === username && bcrypt.compareSync(password , credentials.hashedPassword)) // test password
     {
         req.session.user = {
             'username': username
@@ -382,7 +381,7 @@ app.post('/register', async (req, res) => {
     let confirmEmail = req.body['registerConfirmEmail']
     let password = req.body['registerPassword']
     let confirmPassword = req.body['registerConfirmPassword']
-    
+
     req.checkBody('registerEmail', 'Please enter a valid email').isEmail();
 
     const testUser = await testIfUserInDb(username)
@@ -426,7 +425,7 @@ app.post('/register', async (req, res) => {
         })
     } else
     {
-        await register(username, email, password)
+        await register(username, email, bcrypt.hashSync(password, saltRounds))
         res.redirect('/login');
     }
 })
@@ -439,10 +438,6 @@ app.get('/test', (req, res) => {
         res.redirect('/')
     }
 })
-
-// app.use(function(req, res, next) {
-//   res.status(404).render("404.ejs", {reqUrl: req.url});
-// })
 
 app.get('/submit', (req, res) => {
     if (req.session.user) {
