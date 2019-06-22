@@ -13,20 +13,69 @@
     <title>CodeAnon</title>
 </head>
 
-<body>
+<body onload="yes()">
 
     <div class="profile-grid-container back-grey">
         <div class="profile-top col-light">
             <h1>Welcome @ youre Profile [<span class="col-ocre"><%= username %></span>]</h1>
-            <cite><h2>"Be yourself; everyone else is already taken."</h2></cite>
-            <cite><h3>Oscar Wilde</h3></cite>
+            <cite>
+                <h2>"Be yourself; everyone else is already taken."</h2>
+            </cite>
+            <cite>
+                <h3>Oscar Wilde</h3>
+            </cite>
         </div>
         <div class="profile-left"></div>
-        <div class="profile-main"></div>
+        <div class="profile-main">
+            <div class="nav">
+                <a href="javascript:toggle('profileInformations')">
+                    <button>Profile informations</button>
+                </a>
+                <a href="javascript:toggle('favArticles')">
+                    <button>Liked articles</button>
+                </a>
+            </div>
+            <article id="profileInformations" style="display: block" class="back-dark col-light">
+                <h2>Username:<span class="col-ocre"><%= username %></span></h2>
+                <h2>Email:<span class="col-ocre"><%= email %></span></h2>
+
+                <form method="POST">
+                    <label>
+                        Change Username
+                        <input type="text" name="changeUsername">
+                    </label>
+                    <br>
+                    <label>
+                        Change Password
+                        <input type="password" name="changePassword">
+                    </label>
+                    <br>
+                    <label>
+                        Change Email
+                        <input type="email" name="changeEmail">
+                    </label>
+                    <br>
+                    <label>
+                        Enter actual password to confirm changes
+                        <input type="password" name="ConfirmChangePassword" placeholder="Old Password">
+                    </label>
+                    <div class="err-msg">
+                        <%= error %>
+                    </div>
+                    <button class="confirmChanges back-ocre col-light">Confirm changes</button>
+                    
+                </form>
+            </article>
+            <article id="favArticles" style="display: none">
+            </article>
+
+        </div>
         <div class="profile-right"></div>
         <div class="profile-footer">
             <a href="/logout"><button class="disconnect"><b>X</b></button></a>
-            <a href="/about"><h1>About us</h1></a>
+            <a href="/about">
+                <h1>About us</h1>
+            </a>
         </div>
     </div>
 </body>

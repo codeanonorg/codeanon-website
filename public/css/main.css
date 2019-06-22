@@ -631,6 +631,41 @@ button:hover {
 .profile-main {
     grid-area: profile-main;
 }
+
+.profile-main .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+.profile-main button {
+    padding: 0.5rem;
+}
+.profile-main .confirmChanges {
+    margin-top: 0.5rem !important;
+    padding: 0.3rem !important;
+}
+.confirmChanges:hover {
+    background: #393e46 !important;
+    color: #eeeeee !important;
+}
+.profile-main article {
+    margin: 1rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    line-height: 2.2rem;
+}
+
+.profile-main input {
+    border: none;
+    color:;
+    background: #eeeeee ;
+    height: ;
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
 .profile-right {
     grid-area: profile-right;
     

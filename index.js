@@ -68,6 +68,15 @@ async function register(usernamePara, emailPara, passwordPara) {
     await client.close()
 }
 
+async function updateUser(username, newUsername, newEmail, newPassword)
+{
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const userCollection = await client.db('CodeAnonDatabase').collection('users');
+    await userCollection.updateOne(
+        {username: username}, {$set: {username: newUsername, email: newEmail, hashedPassword: bcrypt.hashSync(newPassword, saltRounds)}}
+    )
+    await client.close()
+}
 /**
  * Submit an article to MongoDB database
  *
@@ -331,14 +340,51 @@ app.get('/logout', (req, res) => {
 app.get("/profile", (req, res) => {
     if (req.session.user) {
         res.render('profile.ejs', {
-            username: req.session.user.username
+            username: req.session.user.username,
+            email: req.session.user.email,
+            error: "",
         })
     } else
     {
         res.redirect('/')
     }
 })
-
+app.post('/profile', async (req, res) => {
+    if (req.session.user)
+    {    
+    } else
+    {
+        res.redirect('/');
+    }
+    let newUsername = req.body['changeUsername'];
+    let newEmail = req.body['changeEmail'];
+    let newPassword = req.body['changePassword'];
+    let confirmPassword = req.body['ConfirmChangePassword'];
+    // users
+    let dbPass = await login(req.session.user.username);
+    // chek if username or email already exists in db
+    const testUsername = await testIfUserInDb(newUsername);
+    const testEmail = await testIfEmailInDb(newEmail);
+    if (testUsername !== null)
+    {
+        // nope user already used
+    } else if (testEmail !== null)
+    {
+        // nope email already used
+    }
+    if (bcrypt.compareSync(confirmPassword , dbPass.hashedPassword))
+    {
+        await updateUser(req.session.user.username, newUsername, newEmail, newPassword)
+        res.redirect('/logout');
+    } else {
+        res.render('profile.ejs', {
+            username: req.session.user.username,
+            email: req.session.user.email,
+            error: "incorrect password",
+        })
+    }
+    // check empty fields
+})
 
 app.post('/login', async (req, res) => {
 
@@ -363,7 +409,8 @@ app.post('/login', async (req, res) => {
     } else if (credentials.username === username && bcrypt.compareSync(password , credentials.hashedPassword)) // test password
     {
         req.session.user = {
-            'username': username
+            'username': username,
+            'email': credentials.email,
         };
         checkLogin = 1;
         res.redirect('/home');
