@@ -135,7 +135,8 @@ app.get('/', (req, res) => {
         res.render('root.ejs')
     }
 })
-
+// DELETE
+/*
 app.post('/', (req, res) => {
     let cmd = req.body['receivedUserInput'];
     
@@ -148,7 +149,8 @@ app.post('/', (req, res) => {
         res.redirect('/');
     }
 })
-
+*/
+// UNTIL HERE
 app.get('/login', (req, res) => {
     //backURL=req.header('Referer') || '/';
     if (req.session.user) {

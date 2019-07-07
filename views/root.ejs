@@ -1,33 +1,37 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-
-    <script type="text/javascript" src="js/script.js"></script>
-
-    <title>CodeAnon</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>f1</title>
 </head>
 
 <body>
-    <!-- login or register-->
-    <div class="root-grid-container back-light">
-        <div class="root-head">
-            <h1>[____@CodeAnon ~]$</h1>
+    <section class="back-black col-light">
+        <nav class="nav fade-in-top glitch">
+            <ul class="menu">
+                <li><a href="/login">Login</a></li>
+                <li><a href="/" class="border-bottom">Home</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+        </nav>
+        <h1 class="flicker-in glitch fs-text" data-text="CodeAnon">CodeAnon</h1>
+        <a href="#hero"><i class="fade-in-top arrow-down"></i></a>
+    </section>
+    <section id="hero">
+        <div class="bmtfck-layout">
+            <h1>Présentation</h1>
+            <p>
+                CodeAnon est une association à but non lucratif selon la loi de 1901.
+                Elle regroupe des étudiants de Toulouse autour de différents projets liés a l'informatique, le dévellopement et la cyber-sécurité
+            </p>
+        </div>
 
-            <form method="POST">
-                <input type="terminal" autofocus autocomplete="off" name="receivedUserInput">
-            </form>
-        </div>
-        <div class="root-footer">
-            <a href="/about">
-                <h1>About us</h1>
-            </a>
-        </div>
-    </div>
+    </section>
 </body>
 
 </html>

@@ -138,10 +138,11 @@ form {
 
 .error-msg {
     background-color: #ffd800;
-    font-size: 2.4rem;
     border-radius: 0.5rem;
     color: #020202;
+    font-size: 2.4rem;
     text-align: center;
+    margin: 1rem 1rem 1rem 1rem;
 }
 
 button {

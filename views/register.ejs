@@ -1,69 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-
-    <!-- crypto lib -->
-    <script type="text/javascript" src="crypto-js/crypto-js.js"></script>
-    <script type="text/javascript">
-
-        var encrypted = CryptoJS.SHA256("bbb");
-        console.log(encrypted.toString())
-    </script>
-
-    <!-- main script -->
-    <script type="text/javascript" src="js/script.js"></script>
-
-    <title>CodeAnon</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>f1</title>
 </head>
 
 <body>
-
-    <form method="POST" class="back-light">
-        <div class="register-grid-container">
-            <div class="register-username">
-                <h1>[____@CodeAnon ~]$ username:</h1>
-                <input type="terminal" autofocus autocomplete="off" name="registerUsername">
-            </div>
-            <div class="register-email">
-                <h1>[____@CodeAnon ~]$ email:</h1>
-                <input type="terminal" autofocus autocomplete="off" name="registerEmail">
-            </div>
-            <div class="register-confirm-email">
-                <h1>[____@CodeAnon ~]$ confirm email:</h1>
-                <input type="terminal" autofocus autocomplete="off" name="registerConfirmEmail">
-            </div>
-            <div class="register-password">
-                <h1>[____@CodeAnon ~]$ password:</h1>
-                <input type="password" autofocus autocomplete="off" name="registerPassword">
-
-            </div>
-            <div class="register-confirm-password">
-                <h1>[____@CodeAnon ~]$ confirm password:</h1>
-                <input type="password" autofocus autocomplete="off" name="registerConfirmPassword">
-
-            </div>
-            <div class="register-error-msg error-msg">
-                <b><%= registerFailMsg %></b>
-            </div>
-            <div class="register-register-btn">
-                <button><b>Register</b></button>
-            </div>
-            <div class="register-to-root">
-                <button><a href="../">/</a></button>
-            </div>
-            <div class="register-to-login">
-                <button><a href="../login">/login</a></button>
-            </div>
-            <div class="register-footer">
-                <a href="/about"><h1>About us</h1></a>
-            </div>
-        </div>
-    </form>
 </body>
+<section class="back-dark col-light">
+        <nav class="nav fade-in-top">
+                <ul class="menu">
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/">Root</a></li>
+                    <li><a href="/register" class="border-bottom">Register</a></li>
+                </ul>            
+            </nav>
+    <form method="post">
+        <input type="text" name="registerUsername" placeholder="Username" autocomplete="off">
+        <br />
+        <input type="text" name="registerEmail" placeholder="E-mail" autocomplete="off">
+        <br/>
+        <input type="password" name="registerPassword" placeholder="Password" autocomplete="off">
+        <br />
+        <input type="password" name="registerConfirmPassword" placeholder="Confirm Password" autocomplete="off">
+        <br />
+        <!--   Key will be added
+        <input type="text" name="" placeholder="Key">
+        <br />
+        -->
+        <div class="error-msg">
+            <%= registerFailMsg %>
+        </div>
+        <button type="submit" class="col-light">Register</button>
+    </form>
+</section>
 
 </html>
