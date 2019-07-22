@@ -24,7 +24,7 @@ app.use(session({
 
 app.use(expressValidator())
 
-const users = require('./users.json').users;
+// const users = require('./users.json').users;
 
 let checkLogin = 1; // check if login is successful or not, if not display message about the failed login attempt
 let registerCheck = 1;
