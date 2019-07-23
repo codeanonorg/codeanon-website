@@ -1,0 +1,678 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+html, body {
+    font-size: 16px; /* root ems */
+    width: 100%;
+    height: 100%;
+}
+@media only screen and (max-width: 600px) {
+    * {
+      font-size: 18px !important;
+    }
+  }
+
+h1{
+    font-size: 2.2rem;
+}
+h2{
+    font-size: 1.6rem;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+form {
+    min-height: 100%;
+    height: inherit;
+}
+
+.back-dark{
+    background: #222831 !important;
+}
+.back-grey {
+    background: #393e46 !important;
+}
+.back-ocre {
+    background: #b55400 !important;
+}
+.back-light {
+    background: #eeeeee !important;
+}
+.col-dark{
+    color:  #222831 !important;
+}
+.col-grey{
+    color: #393e46 !important;
+}
+.col-ocre{
+    color: #b55400 !important;
+}
+.col-light{
+    color: #eeeeee !important;
+}
+
+
+/* Root grid */
+.root-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: "root-head root-head root-head ." ". . . ." ". root-footer root-footer .";
+  }
+  
+.root-head {
+    grid-area: root-head;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+.root-head > h1 {
+    padding-top: 0.5rem;
+}
+
+.root-footer {
+    grid-area: root-footer;
+    place-self: center;
+}
+
+.root-grid-container input[type=terminal] {
+    padding-top: 0.5rem;
+    color: #222831;
+    background-color: #eeeeee;
+    border: none;
+    font-size: 2rem;
+    width: 10rem;
+}
+
+
+/* login */
+.login-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto auto 1fr auto;
+    grid-template-areas: 
+    "login-username login-username login-username login-username"
+    "login-password login-password login-password login-password"
+    ". login-error-msg login-error-msg ."
+    "login-login-btn login-login-btn . ."
+    "login-to-root login-to-root . ."
+    "login-to-register login-to-register . ."
+    ". . . ."
+    ". login-footer login-footer .";
+  }
+  
+.login-username {
+    grid-area: login-username;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+  
+.login-password {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+  
+.login-error-msg {
+    grid-area: login-error-msg;
+    place-self: center;
+}
+    
+.login-login-btn { grid-area: login-login-btn; }
+    
+.login-to-root { grid-area: login-to-root; }
+
+.login-to-register { grid-area: login-to-register; }
+    
+.login-footer { grid-area: login-footer;
+    place-self: center; }
+
+
+.error-msg {
+    background-color: #ffd800;
+    border-radius: 0.5rem;
+    color: #020202;
+    font-size: 2.4rem;
+    text-align: center;
+    margin: 1rem 1rem 1rem 1rem;
+}
+
+button {
+    border: none;
+    background: #eeeeee;
+    color: #222831;
+    font-size: 25px;
+    padding-top: 6px;
+    border-radius: 5px;
+}
+button:hover {
+    background-color: #222831;
+    color:#eeeeee; 
+}
+.login-grid-container input[type=terminal] {
+    color: #222831;
+    background-color: #eeeeee;
+    border: none;
+    font-size: 1.4rem;
+    min-width: 7rem;
+    width: 10rem;
+}
+.login-grid-container input[type=password] {
+    color: #222831;
+    background-color: #eeeeee;
+    border: none;
+    font-size: 1.4rem;
+    min-width: 7rem;
+    width: 10rem;    
+}
+
+/*  REGISTER    */
+
+.register-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(9,auto), 1fr, auto;
+    grid-template-areas:
+    "register-username register-username register-username register-username"
+    "register-email register-email register-email register-email"
+    "register-confirm-email register-confirm-email register-confirm-email register-confirm-email"
+    "register-password register-password register-password register-password"
+    "register-confirm-password register-confirm-password register-confirm-password register-confirm-password"
+    ". register-error-msg register-error-msg ."
+    "register-register-btn register-register-btn . ."
+    "register-to-root register-to-root . ."
+    "register-to-login register-to-login . ."
+    ". . . ."
+    ". register-footer register-footer .";
+  }
+  
+.register-username {
+    grid-area: register-username;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;}
+  
+    
+.register-email {
+    grid-area: register-email; 
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+    
+.register-confirm-email {
+    grid-area: register-confirm-email;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;}
+    
+.register-password {
+    grid-area: register-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+    
+.register-confirm-password {
+    grid-area: register-confirm-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;}
+    
+.register-error-msg {
+    grid-area: register-error-msg;
+    place-self: center;
+}
+    
+.register-register-btn { grid-area: register-register-btn; }
+    
+.register-to-root { grid-area: register-to-root; }
+    
+.register-to-login { grid-area: register-to-login; }
+    
+.register-footer {
+    grid-area: register-footer;
+    place-self: center;
+}
+
+.register-grid-container input[type=terminal] {
+    color: #222831;
+    background-color: #eeeeee;
+    border: none;
+    font-size: 1.4rem;
+    min-width: 7rem;
+    width: 21rem;
+}
+.register-grid-container input[type=password] {
+    color: #222831;
+    background-color: #eeeeee;
+    border: none;
+    font-size: 1.4rem;
+    min-width: 7rem;
+    width: 21rem;    
+}
+
+/* BLOG */
+
+.blog-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr auto 1fr;
+    grid-template-areas: 
+    "blog-head blog-head blog-head"
+    "blog-left blog-main blog-right"
+    "blog-footer blog-footer blog-footer"
+    ;
+}
+  
+.blog-head {
+    grid-area: blog-head;
+    place-self: center;
+}
+
+}
+.blog-right {
+    grid-area: blog-right;
+}
+  
+.blog-main {
+    grid-area: blog-main;
+}
+.blog-main > form > div{
+    margin-top: 1rem;
+}
+.blog-main > .wrapper {
+    width: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+
+.blog-main > .search-bar {
+    width: 100%;
+    height: auto;
+}
+
+.search-bar input {
+    width: 80%;
+    height: 2rem;
+    font-size: 1.4rem ;
+    background: none;
+    border: none;
+    color: #eeeeee;
+}
+
+.search-bar form {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.blog-left {
+    grid-area: blog-left;
+}
+  
+.blog-footer {
+    grid-area: blog-footer;
+    place-self: center;
+    text-align: center;
+    min-height: 20vh;
+}
+
+.blog-main input[type=terminal] {
+    padding-top: 0.5rem;
+    color: #222831;
+    background-color: #eeeeee;
+    border: 2px solid #b55400;
+    font-size: 1.2rem;
+    width: 25rem;
+}
+
+
+/* article */
+.article-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 8fr 1fr;
+    grid-template-areas: 
+    "article-head article-head article-head"
+    "article-left article-main article-right"
+    "article-footer article-footer article-footer"
+    ;
+}
+  
+.article-head {
+    grid-area: article-head;
+    place-self: center;
+}
+  
+.article-right {
+    grid-area: article-right;
+}
+  
+.article-main {
+    grid-area: article-main;
+}
+.article-main > form > div{
+    margin-top: 1rem;
+}
+  
+.article-left {
+    grid-area: article-left;
+}
+  
+.article-footer {
+    grid-area: article-footer;
+    place-self: center;
+    text-align: center;
+}
+
+
+.article-main input[type=terminal] {
+    padding-top: 0.5rem;
+    color: #222831;
+    background-color: #eeeeee;
+    border: 2px solid #b55400;
+    font-size: 1.2rem;
+    width: 25rem;
+}
+
+.article-main textarea[type=text] {
+    padding-top: 0.5rem;
+    color: #020202;
+    background-color: #eeeeee; 
+    border: 2px solid #b55400;
+    width: 100%;
+    min-height: 24rem;
+    resize: vertical;
+}
+
+.article-title {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.article-tags {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.article-content {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: right;
+    width: 100%;
+}
+.article-content h2 {
+    margin-bottom: 1rem;
+}
+
+.article_tag{
+    margin-top: 1rem;
+    font-size: 1.6rem;
+}
+
+.article-description {
+    font-size: 1.2rem;
+}
+::marker {
+    color: #b55400;
+    font-size: 1.4rem;
+    display: inline;
+}
+/* SUBMIT */
+.submit-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr auto 1fr;
+    grid-template-areas: 
+    "submit-head submit-head submit-head"
+    "submit-left submit-main submit-right"
+    "submit-footer submit-footer submit-footer"
+    ;
+}
+  
+.submit-head {
+    grid-area: submit-head;
+    place-self: center;
+}
+  
+.submit-right {
+    grid-area: submit-right;
+}
+  
+.submit-main {
+    grid-area: submit-main;
+}
+.submit-main > form > div{
+    margin-top: 1rem;
+}
+  
+.submit-left {
+    grid-area: submit-left;
+}
+  
+.submit-footer {
+    grid-area: submit-footer;
+    place-self: center;
+    text-align: center;
+}
+
+
+.submit-main input[type=terminal] {
+    padding-top: 0.5rem;
+    color: #222831;
+    background-color: #eeeeee;
+    border: 2px solid #b55400;
+    font-size: 1.2rem;
+    width: 25rem;
+}
+
+.submit-main textarea[type=text] {
+    padding-top: 0.5rem;
+    color: #020202;
+    background-color: #eeeeee; 
+    border: 2px solid #b55400;
+    width: 100%;
+    min-height: 24rem;
+    resize: vertical;
+}
+.submit-main textarea[type=description] {
+    padding-top: 0.5rem;
+    color: #020202;
+    background-color: #eeeeee; 
+    border: 2px solid #b55400;
+    width: 100%;
+    min-height: 10rem;
+    resize: vertical;
+}
+
+.submit-title {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.submit-tags {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: center;
+}
+
+.submit-content {
+    grid-area: login-password;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-self: right;
+    width: 100%;
+}
+.submit-content h2 {
+    margin-bottom: 1rem;
+}
+
+/* 404 */
+
+.error-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: "error-main";
+  }
+
+.error-main {
+    grid-area: error-main;
+    place-self: center;
+}
+
+/*  HOME  */
+
+.home-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.6fr 1.6fr 0.5fr;
+    grid-template-areas: 
+    "home-header home-header home-header home-header home-header home-header"
+    "home-main home-main home-main home-main home-main home-main"
+    "home-footer home-footer home-footer home-footer home-footer home-footer";
+}
+  
+.home-header {
+    grid-area: home-header;
+    place-self: center;
+    text-align: center;
+    line-height: 5rem;
+}
+
+.home-main {
+    grid-area: home-main;
+    display: inline-flex;
+    flex-wrap: wrap;
+    place-self: center;
+}
+
+.home-footer {
+    grid-area: home-footer;
+    place-self: center;
+    text-align: center;
+}
+
+.card {
+    height: 18rem;
+    width: 18rem;
+    margin: 1rem;
+    border-radius: 2rem;
+    text-align: center;
+    background: #b55400;
+    font-size: 1.4rem;
+    padding: 0.5rem;
+}
+.card > p {
+    margin-top: 1.4rem;
+}
+.card > h1 {
+    font-size: 2rem;
+}
+.card:hover {
+    transform: scale(1.1, 1.1)
+}
+
+.disconnect {
+    width: 4rem;
+    height: 4rem;
+    font-size: 2rem;
+    border-radius: 1.2rem;
+    margin-top: 1.4rem;
+}
+
+/* PROFILE */
+
+.profile-grid-container {
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 2fr 2fr 2fr 0.5fr;
+    grid-template-areas:
+    "profile-top profile-top profile-top"
+    "profile-left profile-main profile-right"
+    "profile-left profile-main profile-right"
+    "profile-footer profile-footer profile-footer";
+}
+
+.profile-top {
+    grid-area: profile-top;
+    place-self: center;
+    text-align: center;
+}
+.profile-top h2 {
+    margin-top: 2rem;
+}
+.profile-left { grid-area: profile-left; }
+
+.profile-main {
+    grid-area: profile-main;
+}
+
+.profile-main .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+.profile-main button {
+    padding: 0.5rem;
+}
+.profile-main .confirmChanges {
+    margin-top: 0.5rem !important;
+    padding: 0.3rem !important;
+}
+.confirmChanges:hover {
+    background: #393e46 !important;
+    color: #eeeeee !important;
+}
+.profile-main article {
+    margin: 1rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    line-height: 2.2rem;
+}
+
+.profile-main input {
+    border: none;
+    color:;
+    background: #eeeeee ;
+    height: ;
+    width: 100%;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.profile-right {
+    grid-area: profile-right;
+    
+}
+.profile-footer {
+    grid-area: profile-footer;
+    place-self: center;
+    text-align: center;
+}

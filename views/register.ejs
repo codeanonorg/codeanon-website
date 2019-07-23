@@ -1,96 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <link rel="stylesheet" type="text/css" href="css/bulma.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-
-  <!-- crypto lib -->
-  <script type="text/javascript" src="crypto-js/crypto-js.js"></script>
-  <script type="text/javascript">
-
-    var encrypted = CryptoJS.SHA256("bbb");
-    console.log(encrypted.toString())
-  </script>
-
-  <!-- main script -->
-  <script type="text/javascript" src="js/script.js"></script>
-  <!-- font awesome -->
-  <script type="text/javascript" defer src="js/all.js"></script>
-  <title>CodeAnon</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>CodeAnon</title>
 </head>
 
 <body>
-  <div class="columns is-mobile">
-    <div class="column is-one-quarter middle-screen got-text-cent">
-      <div id="login" class=" padd-15">
-        <!-- class="white-col"-->
-        <form method="POST" id="connectForm">
-          <div id="register" class=" padd-15">
-            <!-- class="white-col"-->
-            <div class="field">
-              <p class="control has-icons-left has-icons-right">
-                <input class="input" type="username" placeholder="Unsername" name="registerUsername">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-user"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input class="input" type="email" placeholder="Email" name="registerEmail">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input class="input" type="email" placeholder="Confirm Email" name="registerConfirmEmail">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-envelope"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input class="input" type="password" placeholder="Password" name="registerPassword">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p class="control has-icons-left">
-                <input class="input" type="password" placeholder="Confirm Password" name="registerConfirmPassword">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div class="field">
-              <p>
-                  <%= registerFailMsg %>
-              </p>
-              <p class="control">
-                <button class="button is-success">
-                  Register
-                </button>
-              </p>
-            </div>
-          </div>
-        </form>
-        <a href="/login">
-          <button class="button button-noBorder yellow-col">Go to login page</button>
-        </a>
-      </div>
-
-    </div>
-  </div>
-  </div>
 </body>
+<section class="back-dark col-light">
+        <nav class="nav fade-in-top">
+                <ul class="menu">
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/register" class="border-bottom">Register</a></li>
+                </ul>            
+            </nav>
+    <form method="post">
+        <input type="text" name="registerUsername" placeholder="Username" autocomplete="off">
+        <br />
+        <input type="text" name="registerEmail" placeholder="E-mail" autocomplete="off">
+        <br/>
+        <input type="password" name="registerPassword" placeholder="Password" autocomplete="off">
+        <br />
+        <input type="password" name="registerConfirmPassword" placeholder="Confirm Password" autocomplete="off">
+        <br />
+        <!--   Key will be added
+        <input type="text" name="" placeholder="Key">
+        <br />
+        -->
+        <div class="error-msg">
+            <%= registerFailMsg %>
+        </div>
+        <button type="submit" class="col-light">Register</button>
+    </form>
+</section>
 
 </html>

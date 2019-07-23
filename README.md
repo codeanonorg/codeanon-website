@@ -3,20 +3,25 @@
 ## Pour les devs
 
 * Veillez a installer MongoDB pour pouvoir se connecter au site
+* [mongodb server](https://www.mongodb.com/download-center/community)
 
-Pour installer les dépendances :
+1. Pour installer les dépendances :
 
 ```$ npm install```
 
-Pour creer le profil admin dans la base de données MongoDB:
+2. Pour creer le profil admin dans la base de données MongoDB:
 
 ```$ node createAdmin.js```
 
-Pour lancer le serveur :
+3. Pour créer l'article de test
+
+```$ node createTestArticle.js```
+
+4. Pour lancer le serveur :
 
 ```$ node index.js```
 
-Pour essayer le site :
+5. Pour essayer le site :
 
 [cliquer ici](http://127.0.0.1:8080)
 

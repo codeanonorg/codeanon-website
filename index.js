@@ -1,12 +1,15 @@
 
-const path = require('path')
 const express = require('express')
 const expressValidator = require('express-validator')
 const session = require('cookie-session')
 const bodyParser = require('body-parser')
-
+const bcrypt = require('bcrypt');
+const saltRounds = 10; // increase the number to make the brutforcing harder
 const mongo = require('mongodb').MongoClient
+const ObjectId = require('mongodb').ObjectId;
 const databaseUrl = 'mongodb://localhost:27017'//db' //27017 default port
+
+const MarkdownIt = require('markdown-it')
 
 let app = express()
 
@@ -21,7 +24,7 @@ app.use(session({
 
 app.use(expressValidator())
 
-const users = require('./users.json').users;
+// const users = require('./users.json').users;
 
 let checkLogin = 1; // check if login is successful or not, if not display message about the failed login attempt
 let registerCheck = 1;
@@ -65,12 +68,65 @@ async function register(usernamePara, emailPara, passwordPara) {
     await client.close()
 }
 
+async function updateUser(username, newUsername, newEmail, newPassword)
+{
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const userCollection = await client.db('CodeAnonDatabase').collection('users');
+    await userCollection.updateOne(
+        {username: username}, {$set: {username: newUsername, email: newEmail, hashedPassword: bcrypt.hashSync(newPassword, saltRounds)}}
+    )
+    await client.close()
+}
+/**
+ * Submit an article to MongoDB database
+ *
+ */
+async function submitArticle(req, username) {
+    let md = new MarkdownIt()    
+    let {
+        article_content,
+        article_title,
+        article_tags,
+        article_description,
+    } = req.body
+    let tags = article_tags.split(" ")
+    let htmlArticle = md.render(article_content)
+    //  DATE
+    let date = new Date();
+    let msecDate = date.getTime();
+    //let fullDate = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
+    console.log(msecDate)
+    //  DATE
+    mongo.connect(databaseUrl, {useNewUrlParser: true}, (err, client) => {
+        const db = client.db('CodeAnonDatabase')
+        const articlesCol = db.collection('articles')
+        articlesCol.insertOne({
+            article_title       : article_title,
+            article_author      : username,
+            article_date        : msecDate,
+            article_tags        : tags,
+            article_description : article_description,  
+            article_content     : htmlArticle,
+        }, (err, res) => {
+            if (err) {
+                // on fail
+                console.error(err)
+            } else {
+                // pretty print informations (for debug)
+                console.log("=== Article created ===")
+                console.log("title  : ", article_title)
+                console.log("author : ", username)
+                console.log("link   : ")
+                console.log("localhost:8080/article/"+String(res.insertedId))
+            }
+            // close the connection with MongoDB
+            client.close()
+        })
+    })
+}
+
 
 app.get('/', (req, res) => {
-    res.redirect('/root')
-})
-
-app.get('/root', (req, res) => {
     if (req.session.user)
     {
         res.redirect('/home')
@@ -79,8 +135,9 @@ app.get('/root', (req, res) => {
         res.render('root.ejs')
     }
 })
-
-app.post('/root', (req, res) => {
+// DELETE
+/*
+app.post('/', (req, res) => {
     let cmd = req.body['receivedUserInput'];
     
     if (cmd === 'login'){
@@ -89,10 +146,11 @@ app.post('/root', (req, res) => {
     {
         res.redirect('/register')
     }else {
-        res.redirect('/root');
+        res.redirect('/');
     }
 })
-
+*/
+// UNTIL HERE
 app.get('/login', (req, res) => {
     //backURL=req.header('Referer') || '/';
     if (req.session.user) {
@@ -114,6 +172,7 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
+
     // new page to handle register post, should be easier and more readable
     if (req.session.user) {
         res.redirect('/home');
@@ -132,7 +191,146 @@ app.get('/home', (req, res) => {
     if (req.session.user) {
         res.render('home.ejs', { msg: req.session.user.username })
     } else {
-        res.redirect('/login')
+        res.redirect('/')
+    }
+})
+
+async function getTenMostRecentArticles() {
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const articles = await client.db('CodeAnonDatabase').collection('articles')
+    .find()
+    .limit(9)
+    .sort({ article_date: -1})
+    .toArray();
+    
+    await client.close() 
+    return await articles;   
+}
+
+async function getArticlByTag(tag)
+{
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const articles_by_tag = await client.db('CodeAnonDatabase').collection('articles')
+    .find({ article_tags: tag})
+    .sort({ article_date: -1})
+    .toArray();
+
+    await client.close()
+    return await articles_by_tag;
+}
+
+async function getAllArticles()
+{
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const articles = await client.db('CodeAnonDatabase').collection('articles')
+    .find()
+    .sort({ article_date: -1})
+    .toArray();
+
+    await client.close()
+    return await articles;
+}
+
+// format the correct date ouput from a list of articles
+function formatDate(article_list)
+{
+    let date_array = []
+    for (let i = 0; i < article_list.length; i++) { // make it a function
+        let date = new Date(article_list[i].article_date)
+        date_array.push(date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear());                
+    }
+    return date_array
+}
+
+app.get('/blog', async (req, res) => {
+
+    if (req.session.user)
+    {
+        const user = req.session.user.username;
+        
+        if (typeof req.query['tag'] !== 'undefined')
+        {
+            const art_by_tag = await getArticlByTag(req.query['tag']);
+
+            let date_array = formatDate(art_by_tag)
+
+            res.render('blog.ejs', {
+                username: user,
+                article_list: art_by_tag,
+                article_date_list: date_array,
+            })
+        } else if (typeof req.query['allArt'] !== 'undefined')
+        {
+            const all_art = await getAllArticles();
+
+            let date_array = formatDate(all_art)
+
+            res.render('blog.ejs', {
+                username: user,
+                article_list: all_art,
+                article_date_list: date_array,
+            })
+        }else 
+        {
+            let art_list = await getTenMostRecentArticles();
+            // get 9 last submited articles
+            let date_array = formatDate(art_list)
+
+            res.render('blog.ejs', {
+            username: user,
+            article_list: art_list,
+            article_date_list: date_array,
+        })
+        }
+        
+    } else 
+    {
+        res.redirect('/')
+    }
+})
+
+
+async function getArticleById(id)
+{
+    const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+    const articleCollection = await client.db('CodeAnonDatabase').collection('articles');
+    return await articleCollection.findOne({_id: ObjectId(id)});
+}
+
+app.get('/article/:ArticleId', async (req, res) => {
+    
+    let requestedId = req.params.ArticleId
+    let articleContent = await getArticleById(requestedId)
+
+    if(req.session.user)
+    {
+        
+        let art_title = articleContent.article_title;
+        let art_author = articleContent.article_author;
+
+        // please do not modify this or you break the /blog page
+        let art_date_msec = articleContent.article_date; 
+        // get the date in milliseconds
+
+        let art_tags = articleContent.article_tags;
+        let art_description = articleContent.article_description;
+        let art_content = articleContent.article_content;
+
+        // convert the date in readable format
+        let date = new Date(art_date_msec);
+        let art_date = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
+        
+        res.render('article.ejs', {
+            username: req.session.user.username,
+            article_title: art_title,
+            article_author: art_author,
+            article_date: art_date,
+            article_tags : [art_tags],
+            article_description: art_description,
+            article_content : art_content,            
+         })
+    } else {
+        res.redirect('/')
     }
 })
 
@@ -143,17 +341,58 @@ app.get('/logout', (req, res) => {
 
 app.get("/profile", (req, res) => {
     if (req.session.user) {
-        res.render('profile.ejs', { msg: req.session.user.username })
-    } else {
-        res.redirect('/login')
+        res.render('profile.ejs', {
+            username: req.session.user.username,
+            email: req.session.user.email,
+            error: "",
+        })
+    } else
+    {
+        res.redirect('/')
     }
 })
-
+app.post('/profile', async (req, res) => {
+    if (req.session.user)
+    {    
+    } else
+    {
+        res.redirect('/');
+    }
+    let newUsername = req.body['changeUsername'];
+    let newEmail = req.body['changeEmail'];
+    let newPassword = req.body['changePassword'];
+    let confirmPassword = req.body['ConfirmChangePassword'];
+    // users
+    let dbPass = await login(req.session.user.username);
+    // chek if username or email already exists in db
+    const testUsername = await testIfUserInDb(newUsername);
+    const testEmail = await testIfEmailInDb(newEmail);
+    if (testUsername !== null)
+    {
+        // nope user already used
+    } else if (testEmail !== null)
+    {
+        // nope email already used
+    }
+    if (bcrypt.compareSync(confirmPassword , dbPass.hashedPassword))
+    {
+        await updateUser(req.session.user.username, newUsername, newEmail, newPassword)
+        res.redirect('/logout');
+    } else {
+        res.render('profile.ejs', {
+            username: req.session.user.username,
+            email: req.session.user.email,
+            error: "incorrect password",
+        })
+    }
+    // check empty fields
+})
 
 app.post('/login', async (req, res) => {
 
     let username = req.body['loginUsername'];
     let password = req.body['loginPassword'];
+    //const hashedPass = await hashIt(password)
 
     req.checkBody('loginUsername', 'Username is required').notEmpty();
     //req.checkBody('loginEmail', 'Please enter a valid email').isEmail();
@@ -166,23 +405,24 @@ app.post('/login', async (req, res) => {
         req.session.errors = errors;
         res.redirect('/login');
     } else if (credentials === null) { // if user not in database
-        req.session.errors = [{ msg: 'invalid username or password' }];
+        req.session.errors = [{ errorMsg: 'invalid username or password' }];
         checkLogin = 0;
         res.redirect('/login');
-    } else if (credentials.username === username && credentials.hashedPassword === password) // test password
+    } else if (credentials.username === username && bcrypt.compareSync(password , credentials.hashedPassword)) // test password
     {
         req.session.user = {
-            'username': username
+            'username': username,
+            'email': credentials.email,
         };
         checkLogin = 1;
         res.redirect('/home');
     } else {    // handle errors that i haven't thougt about
-        req.session.errors = [{ msg: 'invalid username or password' }];
+        req.session.errors = [{ errorMsg: 'invalid username or password' }];
         checkLogin = 0;
         res.redirect('/login');
     }
 })
-// register POST not working properlyn, adds a empty document in the database
+
 app.post('/register', async (req, res) => {
 
     let username = req.body['registerUsername']
@@ -190,22 +430,53 @@ app.post('/register', async (req, res) => {
     let confirmEmail = req.body['registerConfirmEmail']
     let password = req.body['registerPassword']
     let confirmPassword = req.body['registerConfirmPassword']
-    //let hashedPassword =
-    //let hashedConfirmPassword =
-    // !!!!!!!!!!!!!!!!!!!   TEST PASSWORD AND CONFIRMPASS, EMAIL AND CONFIRM EMAIl
+
+    req.checkBody('registerEmail', 'Please enter a valid email').isEmail();
+
     const testUser = await testIfUserInDb(username)
     const testEmail = await testIfEmailInDb(email)
 
-    if(testUser === null && testEmail === null)
+    if ((username === null)|| (email === null)|| (confirmEmail === null) || (password === null) || (confirmPassword === null))
     {
-        await register(username, email, password)
-        res.redirect('/register')
+        res.render('register.ejs',
+        {
+            registerFailMsg: 'please fill all fields'
+        })
+    }else if (email !== confirmEmail)
+    {
+        res.render('register.ejs', 
+        {
+            registerFailMsg: "email and confirm email are not the same"
+        })
+    } else if (password !== confirmPassword)
+    {
+        res.render('register.ejs', 
+        {
+            registerFailMsg: "password are not the same"
+        })
+    } else if (testUser !== null && testEmail !== null)
+    {
+        res.render('register.ejs',
+        {
+            registerFailMsg: "username and email already exist"
+        })
+    } else if (testEmail !== null)
+    {
+        res.render("register.ejs",
+        {
+            registerFailMsg: "email already exists"
+        })
+    }else if (testUser !== null)
+    {
+        res.render("register.ejs",
+        {
+            registerFailMsg: "username already exists"
+        })
     } else
     {
-        console.log("ERR")
-        res.redirect('/register')
+        await register(username, email, bcrypt.hashSync(password, saltRounds))
+        res.redirect('/login');
     }
-
 })
 
 
@@ -213,13 +484,26 @@ app.get('/test', (req, res) => {
     if (req.session.user) {
         res.render('test.ejs', { msg: req.session.user.username })
     } else {
-        res.redirect('/login')
+        res.redirect('/')
     }
 })
 
-// app.use(function(req, res, next) {
-//   res.status(404).render("404.ejs", {reqUrl: req.url});
-// })
+app.get('/submit', (req, res) => {
+    if (req.session.user) {
+        res.render('submit.ejs', {
+            username: req.session.user.username
+        })
+    } else {
+        res.redirect('/')
+    }
+})
+
+app.post('/submit', async (req, res) => {
+    if (req.session.user) {
+        submitArticle(req, req.session.user.username)
+    }
+    res.redirect('/')
+})
 
 app.get('*', (req, res) => {
     res.status(404).render('404.ejs', { reqUrl: req.url })

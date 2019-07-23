@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <!-- main script -->
+    <script type="text/javascript" src="../js/script.js"></script>
+
+    <title>CodeAnon</title>
+</head>
+
+<body>
+    <div class="article-grid-container back-dark">
+        <div class="article-head back-dark col-ocre">
+            <h1>[<%= username %>@CodeAnon ~]$</h1>
+        </div>
+        <div class="article-right back-grey"></div>
+        <div class="article-main back-grey col-light">
+            <article>
+                <header>
+                    <!-- Informations about the article -->
+                    <h1><%= article_title %></h1>
+                    <h2>
+                        <span class="col-ocre">
+                            <%= article_author %>
+                        </span>
+                        @CodeAnon ~ <%= article_date %>
+                    </h2>
+                    <div>
+                        <!-- article tags -->
+                        <% for (let tag of article_tags) {%>
+                        <div class="article_tag"># <%= tag %></div>
+                        <% } %>
+                    </div>
+                    <br/>
+                    <p class="article-description"><%= article_description %></p>
+                </header>
+                
+                <br/>
+
+                <!-- content of the article -->
+                <main>
+                    <%- article_content %>
+                </main>
+            </article>
+        </div>
+        <div class="article-left back-grey">
+        </div>
+        <div class="article-footer back-dark">
+            <a href="/logout"><button class="disconnect"><b>X</b></button></a>
+            <a href="/about"><h1>About us</h1></a>
+        </div>
+    </div>
+</body>
+
+</html>

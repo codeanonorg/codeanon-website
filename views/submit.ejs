@@ -1,0 +1,62 @@
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+    <!-- Syntax highlighting css -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/default.min.css">
+    <!-- Syntax highlighting js -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+
+    <!-- main script -->
+    <script type="text/javascript" src="js/script.js"></script>
+
+    <title>CodeAnon</title>
+</head>
+
+<body>
+    <div class="submit-grid-container back-dark">
+        <div class="submit-head back-dark col-ocre">
+            <h1>[<%= username %>@CodeAnon ~]$</h1>
+        </div>
+        <div class="submit-right back-grey"></div>
+        <div class="submit-main back-grey">
+            <!-- ARTICLE SUBMIT FORM -->
+            <form method="POST" class="back-light">
+                <div class="submit-title">
+                    <h2>[____@CodeAnon ~]$ title:</h2>
+                    <input type="terminal" autofocus autocomplete="off" name="article_title">
+                </div>
+                <div class="submit-tags">
+                    <h2>[____@CodeAnon ~]$ tags:</h2>
+                    <input type="terminal" autocomplete="off" name="article_tags">
+                </div>
+                <div class="submit-description">
+                    <h2>[____@CodeAnon ~]$ description:</h2>
+                    <textarea type="description" autocomplete="off" name="article_description"></textarea>
+                </div>
+                <div class="submit-content">
+                    <h2>[____@CodeAnon ~]$ content:</h2>
+                    <textarea type="text" autocomplete="off" name="article_content"></textarea>
+                </div>
+                <div class="">
+                    <button><b>Submit</b></button>
+                </div>
+            </form>
+            <!-- END OF THE FORM -->
+        </div>
+        <div class="submit-left back-grey">
+        </div>
+        <div class="submit-footer back-dark col-light">
+            <a href="/logout"><button class="disconnect"><b>X</b></button></a>
+            <a href="/about">
+                <h1>About us</h1>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
