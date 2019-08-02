@@ -151,6 +151,12 @@ app.post('/', (req, res) => {
 })
 */
 // UNTIL HERE
+app.get('/admin', (req, res) => {
+    res.render('admin.ejs', {
+        
+    })
+})
+
 app.get('/login', (req, res) => {
     //backURL=req.header('Referer') || '/';
     if (req.session.user) {
