@@ -234,10 +234,10 @@ form{
     content: attr(data-text);
     position: absolute;
     left: 2px;
-    text-shadow: -1px 0 red;
+    text-shadow: -1px 0 rgb(255, 0, 221);
     top: 0;
     color: white;
-    background: black;
+    background: #222831;
     overflow: hidden;
     clip: rect(0, 900px, 0, 0);
     animation: noise-anim 2s infinite linear alternate-reverse
@@ -312,10 +312,10 @@ form{
     content: attr(data-text);
     position: absolute;
     left: -2px;
-    text-shadow: 1px 0 blue;
+    text-shadow: 1px 0 rgb(0, 255, 242);
     top: 0;
     color: white;
-    background: black;
+    background: #222831;
     overflow: hidden;
     clip: rect(0, 900px, 0, 0);
     animation: noise-anim-2 3s infinite linear alternate-reverse;
