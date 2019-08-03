@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" type="text/css" href="../css/main.css">
-    <!-- main script -->
-    <script type="text/javascript" src="../js/script.js"></script>
-
+    
     <title>CodeAnon</title>
 </head>
 
@@ -35,11 +33,11 @@
                         <div class="article_tag"># <%= tag %></div>
                         <% } %>
                     </div>
-                    <br/>
+                    <br />
                     <p class="article-description"><%= article_description %></p>
                 </header>
-                
-                <br/>
+
+                <br />
 
                 <!-- content of the article -->
                 <main>
@@ -51,7 +49,9 @@
         </div>
         <div class="article-footer back-dark">
             <a href="/logout"><button class="disconnect"><b>X</b></button></a>
-            <a href="/about"><h1>About us</h1></a>
+            <a href="/about">
+                <h1>About us</h1>
+            </a>
         </div>
     </div>
 </body>
