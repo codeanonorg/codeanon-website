@@ -11,26 +11,28 @@
 </head>
 
 <body>
-    <section class="back-dark col-light">
-        <nav class="nav fade-in-top glitch">
-            <ul class="menu">
-                <li><a href="/login">Login</a></li>
-                <li><a href="/" class="border-bottom">Home</a></li>
-                <li><a href="/register">Register</a></li>
+    <header>
+
+    </header>
+    <main>
+        <nav class="back-dark col-light">
+            <h1>
+                Admin Panel
+            </h1>
+            <h2>
+                Welcome <%= username %>
+            </h2>
+            <ul>
+                <li>Vérification articles</li>
+                <li>Vérificitaion Projets</li>
+                <li>CodaKey Param</li>
+                <li>userlist, roles, last login(link to profile pages)</li>
             </ul>
         </nav>
-        <h1 class="flicker-in glitch fs-text" data-text="CodeAnon">CodeAnon</h1>
-        <a href="#hero"><i class="fade-in-top arrow-down"></i></a>
-    </section>
-    <section id="back-light hero">
-        <div class="bmtfck-layout">
-            <h1>Admin</h1>
-            <p>
-                admin
-            </p>
+        <div class="back-ocre col-light">
+            {{ DISPLAY }}
         </div>
-
-    </section>
+    </main>
 </body>
 
 </html>
