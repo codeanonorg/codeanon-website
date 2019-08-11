@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const articleQuery = require('../public/js/articleQuerys')
-const formatDate = require('../public/js/dateHandling').formatDate
+const formatDate = require('../public/js/dateHandling')
 
 /* GET article/:articleId page */
 

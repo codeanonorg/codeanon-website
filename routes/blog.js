@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const articleQuery = require('../public/js/articleQuerys')
-const formatDate = require('../public/js/dateHandling').formatDate
+const formatDate = require('../public/js/dateHandling')
 
 /* GET blog page */
 router.get('/', async (req, res) => {
@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
         if (typeof req.query['tag'] !== 'undefined') {
             const art_by_tag = await articleQuery.getArticlByTag(req.query['tag']);
 
-            let date_array = formatDate(art_by_tag)
+            let date_array = formatDate(art_by_tag);
 
             res.render('blog.ejs', {
                 username: user,
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
         } else if (typeof req.query['allArt'] !== 'undefined') {
             const all_art = await articleQuery.getAllArticles();
 
-            let date_array = formatDate(all_art)
+            let date_array = formatDate(all_art);
 
             res.render('blog.ejs', {
                 username: user,
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
         } else {
             let art_list = await articleQuery.getTenMostRecentArticles();
             // get 9 last submited articles
-            let date_array = formatDate(art_list)
+            let date_array = formatDate(art_list);
 
             res.render('blog.ejs', {
                 username: user,
