@@ -312,8 +312,7 @@ button:hover {
     grid-area: blog-head;
     place-self: center;
 }
-
-}
+²
 .blog-right {
     grid-area: blog-right;
 }
@@ -708,4 +707,50 @@ button:hover {
     grid-area: profile-footer;
     place-self: center;
     text-align: center;
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    padding: 20px;
+}
+
+.header-logo {
+    text-align: center;
+}
+.header-center {
+    text-align: center;
+}
+.header-dropdown{
+    position: relative;
+    display: inline-block;
+}
+.drop-content {
+    display: none;
+    position: absolute;
+    font-size: 1.2rem;
+    min-width: 160px;
+    z-index: 1;
+}
+
+.drop-content a {
+    background: #222831;
+    padding: 0.5rem;
+    display: block;
+}
+.drop-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #eeeeee
+}
+.header-dropdown:hover .drop-content{
+    display:block;
+}
+.drop-content a:hover{
+    background: #b55400;
 }

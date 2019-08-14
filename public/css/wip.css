@@ -1,0 +1,132 @@
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+    background: #222831;
+    scroll-behavior: smooth;
+    /*overflow-x: hidden;*/
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.layout {    
+    margin: 1em auto;
+    max-width: 40em;
+    padding: 0 .62em;
+    font: 1.2em/1.62 'Courier New', Courier, monospace;
+    font-weight: 400;
+}
+
+@media print{
+    .layout {
+        max-width: none;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2 !important;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/*** COLORS ***/
+.back-black{background:#000!important}.back-dark{background:#222831!important}.back-grey{background:#393e46!important}.back-ocre{background:#b55400!important}.back-light{background:#eee!important}.back-white{background:#fff!important}.col-black{color:#000!important}.col-dark{color:#222831!important}.col-grey{color:#393e46!important}.col-ocre{color:#b55400!important}.col-light{color:#eee!important}.col-white{color:#fff!important}
+
+
+nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    color: #b55400;
+}
+nav a {
+    background: #222831;
+    order: 0;
+    display: block;
+    text-align: center;
+
+    margin: 1em 0.5em;
+    padding: 0.2em 0.2em;
+}
+nav a .lol {
+    float: right !important;
+}
+nav a:hover {
+    border-radius: 5px;
+    background: #393e46 !important;
+}
+header {
+    clear: both;
+}
+
+section {
+    margin-top: 2em;
+}
+
+footer {
+    margin-top: 1em;
+    padding: 1em 1em;
+    text-align: center;
+    border-radius: 1em;
+}
+
+span {
+    color: #b55400;
+}
+
+/*** Classes***/
+
+.marg-left{
+    margin-left: 1em;
+}
+
+.arrow-down {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 10px;
+    transform: rotate(45deg) !important;
+    -webkit-transform: rotate(45deg) !important;
+}
+
+.card {
+    padding: 1em 1em;
+    background: #eeeeee;
+    color: #222831;
+    border-radius: 1em;
+}
+.arrow-down {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 10px;
+    transform: rotate(45deg) !important;
+    -webkit-transform: rotate(45deg) !important;
+}
+
+.to-top {
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 10px;
+    transform: rotate(-135deg) !important;
+    -webkit-transform: rotate(-135deg) !important;
+    position: fixed;
+    bottom: 1.4em;
+    right: 2em;
+    z-index: 99;
+}
