@@ -30,11 +30,17 @@
 
 ### PS: Deploiement
 * sur linux, lancer le serveur sur le port 80 avec la commande:
+
 ```$ sudo node index.js &```
-* vérifier le n° du 'job'
+
+* vérifier le n° du 'job':
+
 ```$ jobs```
-* Puis retirer le 'job' de la liste des 'job' du terminal (remplacer 1 par le numéro du job donné par "$ jobs")
+
+* Puis retirer le 'job' de la liste des 'job' du terminal (remplacer 1 par le numéro du job donné par "$ jobs"):
+
 ```$ disown -h %1```
 
-* Pour arreter tous les processus liés à node.js (force la fermeture du precessus)
+* Pour arreter tous les processus liés à node.js (force la fermeture du processus):
+
 ```$ killall node```
