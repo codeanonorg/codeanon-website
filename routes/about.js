@@ -4,13 +4,17 @@ const router = require('express').Router()
 router.get('/', (req, res) => {
     let user = 'guest'
 
-    if (req.session !== null) {
-        user = req.session.user.username
+    if (req.session.user !== null && req.session.user !== undefined) {
+        try {
+            user = req.session.user.username
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     res.render('about.ejs', {
-    username: user,
-    page: "About",
+        username: user,
+        page: "About",
     })
 })
 
