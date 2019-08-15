@@ -34,6 +34,7 @@ router.get('/:ArticleId', async (req, res) => {
             article_tags: [art_tags],
             article_description: art_description,
             article_content: art_content,
+            page: 'Article'
         })
     } else {
         res.redirect('/')
