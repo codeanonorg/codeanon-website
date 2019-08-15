@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
             username: req.session.user.username,
             email: req.session.user.email,
             error: "",
+            page: 'profile',
         })
     } else {
         res.redirect('/')
@@ -44,6 +45,7 @@ router.post('/', async (req, res) => {
             username: req.session.user.username,
             email: req.session.user.email,
             error: "incorrect password",
+            page: 'profile',
         })
     }
     // check empty fields

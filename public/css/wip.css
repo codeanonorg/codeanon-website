@@ -115,7 +115,12 @@ span {
 .card:hover {
     transform: scale(1.05, 1.05)
 }
-
+.card2 {
+    padding: 0.5em 0.5em;
+    color: inherit;
+    border: 2px solid #eeeeee;
+    border-radius: 1em;
+}
 .arrow-down {
     border: solid white;
     border-width: 0 3px 3px 0;
@@ -143,18 +148,19 @@ span {
 }
 
 input {
-    background: inherit;
+    background: #222831;
     border: none;
     border-bottom: 2px solid #eeeeee;
     color: inherit;
     font-size: 1.2rem;
     margin-top: 1rem;
-    padding: 10px;
+    padding: 0.6em; /* ATTENTION : 10px */
 }
 input:focus{
     border-bottom: 2px solid #b55400;
     color: white;
 }
+
 button{
     margin: 1rem auto 0 auto;
     font-size: 1.4rem;
