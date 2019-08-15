@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/wip.css">
 
     <title>CodeAnon</title>
-  </head>
-  <body class="back-dark ">
+</head>
 
-    <div class="error-grid-container col-ocre">
-      <div class="error-main">
-        <h1 class="title">
-          ERREUR 404
-        </h1>
-        <h2 class="subtitle">
-          CodeAnon.TLD<span class="col-light"><%= reqUrl %></span> Does not exist
+<body>
+    <section class="layout col-light">
+        <h1 class="fourOfour">ERREUR 404</h1>
+        <h2>
+            CodeAnon.TLD<span><%= reqUrl %></span> n'est pas une url valide.
         </h2>
-      </div>
-    </div>
-  </body>
+        <a href="/home">
+            <button>Retour à la page d'acceuil</button>
+        </a>
+    </section>
+</body>
+
 </html>

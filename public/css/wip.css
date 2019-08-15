@@ -191,3 +191,8 @@ textarea[type=contenu] {
     min-height: 30rem;
     resize: vertical;
 }
+
+.fourOfour {
+    margin-top: 2em; 
+    font-size: 2.6em;
+}
