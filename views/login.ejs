@@ -1,36 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    
+    <link rel="stylesheet" type="text/css" href="/css/wip.css">
+
     <title>CodeAnon</title>
 </head>
 
 <body>
-</body>
-    <section class="back-dark col-light">
-            <nav class="nav fade-in-top">
-                    <ul class="menu">
-                        <li><a href="/login" class="border-bottom">Login</a></li>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/register">Register</a></li>
-                    </ul>            
-                </nav>
-        <form method="post">
-            <input type="text" name="loginUsername" placeholder="Username" autocomplete="off">
-            <br/>
-            <input type="password" name="loginPassword" placeholder="Password" autocomplete="off">
-            <br/>
-            <div class="error-msg">
-                <%= errorMsg %>
-            </div>
-            <br/>
-            <button type="submit" class="col-light">Login</button>
-        </form>
+    <section class="layout col-light fade-in-top">
+        <!--    Main    -->
+        <main>
+            <nav id="top" class="fade-in-top col-light">
+                <a href="/login" class="border-bottom">Login</a>
+                <a href="/">Home</a>
+                <a href="/register">Register</a>
+            </nav>
+
+            <form method="post" class="text-center">
+                <input type="text" name="loginUsername" placeholder="Username" autocomplete="off">
+                <br />
+                <input type="password" name="loginPassword" placeholder="Password" autocomplete="off">
+                <br />
+                <div class="error-msg">
+                    <%= errorMsg %>
+                </div>
+                <br />
+                <button type="submit">Login</button>
+            </form>
+        </main>
+        <!--    Footer  -->
+        <% include templates/footer.ejs %>
     </section>
+</body>
+
 </html>

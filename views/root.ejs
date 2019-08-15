@@ -1,38 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    
+    <link rel="stylesheet" type="text/css" href="/css/wip.css">
+
     <title>CodeAnon</title>
 </head>
 
 <body>
-    <section class="back-dark col-light">
-        <nav class="nav fade-in-top glitch">
-            <ul class="menu">
-                <li><a href="/login">Login</a></li>
-                <li><a href="/" class="border-bottom">Home</a></li>
-                <li><a href="/register">Register</a></li>
-            </ul>
-        </nav>
-        <h1 class="flicker-in glitch fs-text" data-text="CodeAnon">CodeAnon</h1>
-        <a href="#hero"><i class="fade-in-top arrow-down"></i></a>
-    </section>
-    <section id="hero">
-        <div class="bmtfck-layout">
-            <h1>Présentation</h1>
-            <p>
-                CodeAnon est une association à but non lucratif selon la loi de 1901.
-                Elle regroupe des étudiants de Toulouse autour de différents projets liés a l'informatique, le développement et la cyber-sécurité.
-            </p>
-        </div>
+    <section class="hero layout col-light" id="top">
 
+        <nav id="top" class="fade-in-top col-light">
+            <a href="/login">Login</a>
+            <a href="/" class="border-bottom">Home</a>
+            <a href="/register">Register</a>
+        </nav>
+        <main class="text-center">
+            <h1 class="glitch flicker-in margin-top" data-text="CodeAnon">CodeAnon</h1>
+            <p class="fade-in-top">
+                <a href="#down">
+                    <i class="arrow-down"></i>
+                </a>
+            </p>
+        </main>
     </section>
+    <section class="hero col-black back-light" id="down">
+        <section class="layout">
+            <h2>Présentation</h2>
+            <p>
+                    CodeAnon est une association à but non lucratif selon la loi de 1901. 
+                    Elle regroupe des étudiants de Toulouse autour de différents projets liés à l'informatique,
+                    le développement et la cyber-sécurité. 
+            </p>
+            <div class="let-go-down">
+                    <% include templates/footer.ejs %>
+            </div>
+        </section>
+    </section>
+
 </body>
 
 </html>
