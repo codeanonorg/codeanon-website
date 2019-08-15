@@ -13,6 +13,7 @@ let submit = require('./routes/submit')
 let profile = require('./routes/profile')
 let logout = require('./routes/logout')
 let admin = require('./routes/admin')
+let about = require('./routes/about')
 
 let app = express()
 
@@ -50,6 +51,7 @@ app.use('/submit', submit)
 app.use('/profile', profile)
 app.use('/logout', logout)
 app.use('/admin', admin)
+app.use('/about', about)
 
 app.get('*', (req, res) => {
     res.status(404).render('404.ejs', {
