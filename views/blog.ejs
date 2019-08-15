@@ -12,13 +12,8 @@
 
 <body>
     <section class="layout col-light">
-        <nav id="top">
-            <a href="/home">/home (logo)</a>
-            <a href="/profile" class="lol">/profile</a>
-        </nav>
-        <header>
-            <h1>[<span><%= username %></span>@CodeAnon/<span>blog</span> ~]$</h1>
-        </header>
+        <!--    Header  -->
+            <% include templates/header.ejs %>
         <!--    Main    -->
         <main>
             <h4>Tu veux écrire tes propres articles? -> <a href="/submit"> <strong>viens par ici</strong></a></h4>
@@ -62,16 +57,8 @@
                 <% } %>
             </article>
         </main>
-        <footer class="back-grey">
-            <a href="/about">
-                <h3>
-                    Mentions légales
-                </h3>
-            </a>
-        </footer>
-        <a href="#top">
-            <div class="to-top"></div>
-        </a>
+        <!--    Footer  -->
+        <% include templates/footer.ejs %>
     </section>
 </body>
 

@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
                 username: user,
                 article_list: art_by_tag,
                 article_date_list: date_array,
+                page: 'Blog'
             })
         } else if (typeof req.query['allArt'] !== 'undefined') {
             const all_art = await articleQuery.getAllArticles();
@@ -26,6 +27,7 @@ router.get('/', async (req, res) => {
                 username: user,
                 article_list: all_art,
                 article_date_list: date_array,
+                page: 'blog',
             })
         } else {
             let art_list = await articleQuery.getTenMostRecentArticles();
@@ -36,6 +38,7 @@ router.get('/', async (req, res) => {
                 username: user,
                 article_list: art_list,
                 article_date_list: date_array,
+                page: 'blog',
             })
         }
 
