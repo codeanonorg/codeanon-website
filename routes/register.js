@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
                 registerFailMsg: "username already exists"
             })
     } else {
-        await register(username, email, bcrypt.hashSync(password, saltRounds))
+        await userQuery.register(username, email, bcrypt.hashSync(password, saltRounds))
         res.redirect('/login');
     }
 })
