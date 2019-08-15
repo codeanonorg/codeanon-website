@@ -138,8 +138,9 @@ span {
     z-index: 99;
 }
 
-
-
+.text-center{
+    text-align: center;
+}
 
 input {
     background: inherit;
@@ -167,6 +168,26 @@ button:hover {
     background: #b55400;
     border-radius: 1rem;
 }
-form{
-    text-align: center;
+
+textarea[type=description]{
+    padding: 0.6em 0.6em;
+    font-size: 1.2em;
+    color: black;
+    background-color: #eeeeee; 
+    border: 2px solid #b55400;
+    border-radius: 0.5em;
+    width: 100%;
+    min-height: 10rem;
+    resize: vertical;
+}
+textarea[type=contenu] {
+    padding: 0.6em 0.6em;
+    font-size: 1.2em;
+    color: black;
+    background-color: #eeeeee; 
+    border: 2px solid #b55400;
+    border-radius: 0.5em;
+    width: 100%;
+    min-height: 30rem;
+    resize: vertical;
 }

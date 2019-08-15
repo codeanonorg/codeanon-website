@@ -5,7 +5,8 @@ const articleQuery = require('../public/js/articleQuerys')
 router.get('/', (req, res) => {
     if (req.session.user) {
         res.render('submit.ejs', {
-            username: req.session.user.username
+            username: req.session.user.username,
+            page: 'submit',
         })
     } else {
         res.redirect('/')

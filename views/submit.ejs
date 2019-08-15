@@ -1,59 +1,47 @@
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-
-    <!-- Syntax highlighting css -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/default.min.css">
-    <!-- Syntax highlighting js -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/wip.css">
 
     <title>CodeAnon</title>
 </head>
 
 <body>
-    <div class="submit-grid-container back-dark">
-        <div class="submit-head back-dark col-ocre">
-            <h1>[<%= username %>@CodeAnon ~]$</h1>
-        </div>
-        <div class="submit-right back-grey"></div>
-        <div class="submit-main back-grey">
-            <!-- ARTICLE SUBMIT FORM -->
-            <form method="POST" class="back-light">
-                <div class="submit-title">
-                    <h2>[____@CodeAnon ~]$ title:</h2>
-                    <input type="terminal" autofocus autocomplete="off" name="article_title">
+    <section class="layout col-light">
+        <!--    Header  -->
+        <% include templates/header.ejs %>
+        <!--    Main    -->
+        <main>
+            <header>
+                <p>
+                    Ecrivez votre articles ci-dessous puis envoyer le en acceptant les conditions générales
+                    d'utilisations.
+                </p>
+            </header>
+            <!--    Article Submit Form -->
+            <form method="post">
+                <h2>Titre: <input type="text" autocomplete="off" name="article_title"></h2>
+                <h2>Tags: <input type="terminal" autocomplete="off" name="article_tags"></h2>
+                <h2>Description de l'article:</h2>
+                <textarea type="description" autocomplete="off" name="article_description"></textarea>
+                <h2>Contenu de l'article:</h2>
+                <textarea type="contenu" autocomplete="off" name="article_content"></textarea>
+                <div class="text-center">
+                    <p>
+                        CGU
+                    </p>
+                    <button>Poster l'article</button>
                 </div>
-                <div class="submit-tags">
-                    <h2>[____@CodeAnon ~]$ tags:</h2>
-                    <input type="terminal" autocomplete="off" name="article_tags">
-                </div>
-                <div class="submit-description">
-                    <h2>[____@CodeAnon ~]$ description:</h2>
-                    <textarea type="description" autocomplete="off" name="article_description"></textarea>
-                </div>
-                <div class="submit-content">
-                    <h2>[____@CodeAnon ~]$ content:</h2>
-                    <textarea type="text" autocomplete="off" name="article_content"></textarea>
-                </div>
-                <div class="">
-                    <button><b>Submit</b></button>
-                </div>
+
             </form>
-            <!-- END OF THE FORM -->
-        </div>
-        <div class="submit-left back-grey">
-        </div>
-        <div class="submit-footer back-dark col-light">
-            <a href="/logout"><button class="disconnect"><b>X</b></button></a>
-            <a href="/about">
-                <h1>About us</h1>
-            </a>
-        </div>
-    </div>
+        </main>
+        <!--    Footer  -->
+        <% include templates/footer.ejs %>
+    </section>
 </body>
 
 </html>
