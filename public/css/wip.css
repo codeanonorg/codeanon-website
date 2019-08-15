@@ -104,11 +104,18 @@ span {
 }
 
 .card {
-    padding: 1em 1em;
+    padding: 0.5em 0.5em;
     background: #eeeeee;
     color: #222831;
     border-radius: 1em;
+
+    transition: transform 0.4s;
 }
+
+.card:hover {
+    transform: scale(1.05, 1.05)
+}
+
 .arrow-down {
     border: solid white;
     border-width: 0 3px 3px 0;
@@ -129,4 +136,36 @@ span {
     bottom: 1.4em;
     right: 2em;
     z-index: 99;
+}
+
+
+
+
+input {
+    background: inherit;
+    border: none;
+    border-bottom: 2px solid #eeeeee;
+    color: inherit;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    padding: 10px;
+}
+input:focus{
+    border-bottom: 2px solid #b55400;
+    color: white;
+}
+button{
+    margin: 1rem auto 0 auto;
+    font-size: 1.4rem;
+    background: inherit;
+    color: inherit;
+    border: none;
+    padding: 0.5rem;
+}
+button:hover {
+    background: #b55400;
+    border-radius: 1rem;
+}
+form{
+    text-align: center;
 }
