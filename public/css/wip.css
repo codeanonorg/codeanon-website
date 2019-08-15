@@ -159,7 +159,8 @@ button{
     font-size: 1.4rem;
     background: inherit;
     color: inherit;
-    border: none;
+    border: 2px solid #b55400;
+    border-radius: 1em;
     padding: 0.5rem;
 }
 button:hover {

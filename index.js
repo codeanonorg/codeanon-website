@@ -22,7 +22,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use(session({
-    secret: 'jaimelescookies'
+    name: 'session',
+    secret: 'jaimelescookies',
+    //  keys: new Keygrip(secret, 'SHA256', 'base64'),
+
+    //  Options
+    path: '/',
+    httpOnly: true,
+    //  secure: true, // need https rev-proxie
+    signed: true,
+    maxAge: 172800000, // 48 * 60 * 60 * 1000 = 48h
+    sameSite: 'strict',
 }))
 
 app.use(expressValidator())
