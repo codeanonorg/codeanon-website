@@ -75,6 +75,18 @@ header {
     overflow-wrap: break-word;
 }
 
+@media screen and (max-width: 550px) {
+    header h1{
+        font-size: 1.65rem;
+    }
+}
+
+@media screen and (max-width: 410px) {
+    header h1{
+        font-size: 1.4rem;
+    }
+}
+
 section {
     
     /*padding: 2rem;*/
