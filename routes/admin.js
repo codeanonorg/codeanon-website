@@ -2,10 +2,15 @@ const router = require('express').Router()
 
 /* GET admin page */
 router.get('/', (req, res) => {
-    res.render('test.ejs', {
-        username: req.session.user.username,
-        page: "test"
-    })
+    if (req.session.user) {
+        res.render('admin.ejs', {
+            username: req.session.user.username,
+            page: "admin"
+        })
+    } else {
+        res.redirect('/')
+    }
+
 })
 
 module.exports = router

@@ -43,7 +43,7 @@ module.exports = {
                     console.log("localhost:8080/article/" + String(res.insertedId))
                 }
                 // close the connection with MongoDB
-                client.close()
+                //  client.close()
             })
         })
     },
@@ -56,7 +56,7 @@ module.exports = {
             .sort({ article_date: -1 })
             .toArray();
 
-        await client.close()
+        //  await client.close()
         return await articles;
     },
 
@@ -67,7 +67,7 @@ module.exports = {
             .sort({ article_date: -1 })
             .toArray();
 
-        await client.close()
+        //  await client.close()
         return await articles_by_tag;
     },
 
@@ -78,13 +78,14 @@ module.exports = {
             .sort({ article_date: -1 })
             .toArray();
 
-        await client.close()
+        //  await client.close();
         return await articles;
     },
 
     getArticleById: async function (id) {
         const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
         const articleCollection = await client.db('CodeAnonDatabase').collection('articles');
+        await client.close();
         return await articleCollection.findOne({ _id: ObjectId(id) });
     }
 }

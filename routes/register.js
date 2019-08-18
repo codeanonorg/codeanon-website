@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const userQuery = require('../public/js/userQuerys')
+const userQuerys = require('../public/js/userQuerys')
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // increase the number to make the brutforcing harder
 
@@ -29,24 +29,18 @@ router.post('/', async (req, res) => {
     
     let username = req.body['registerUsername']
     let email = req.body['registerEmail']
-    let confirmEmail = req.body['registerConfirmEmail']
     let password = req.body['registerPassword']
     let confirmPassword = req.body['registerConfirmPassword']
 
     req.checkBody('registerEmail', 'Please enter a valid email').isEmail();
 
-    const testUser = await userQuery.testIfUserInDb(username)
-    const testEmail = await userQuery.testIfEmailInDb(email)
+    const testUser = await userQuerys.testIfUserInDb(username)
+    const testEmail = await userQuerys.testIfEmailInDb(email)
 
-    if ((username === null) || (email === null) || (confirmEmail === null) || (password === null) || (confirmPassword === null)) {
+    if ((username === null) || (email === null) ||(password === null) || (confirmPassword === null)) {
         res.render('register.ejs',
             {
                 registerFailMsg: 'please fill all fields'
-            })
-    } else if (email !== confirmEmail) {
-        res.render('register.ejs',
-            {
-                registerFailMsg: "email and confirm email are not the same"
             })
     } else if (password !== confirmPassword) {
         res.render('register.ejs',
@@ -69,7 +63,7 @@ router.post('/', async (req, res) => {
                 registerFailMsg: "username already exists"
             })
     } else {
-        await userQuery.register(username, email, bcrypt.hashSync(password, saltRounds))
+        await userQuerys.register(username, email, bcrypt.hashSync(password, saltRounds))
         res.redirect('/login');
     }
 })

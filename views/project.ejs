@@ -16,7 +16,7 @@
         <% include templates/header.ejs %>
         <!--    Main    -->
         <main>
-            <h4>Tu veux écrire tes propres articles? -> <a href="/submit"> <strong>viens par ici</strong></a></h4>
+            <h4>Tu veux proposer tes propres projets? -> <a href="/projecter"> <strong>viens par ici</strong></a></h4>
             <!--    a retravailler  -->
 
 
@@ -25,7 +25,7 @@
                 <button type="submit">Recherche...</button>
             </form>
             <form method="GET" class="text-center">
-                <button name="allArt">Afficher tout les articles</button>
+                <button name="allArt">Afficher tout les projets</button>
             </form>
 
 
@@ -40,11 +40,8 @@
                     <section class="card">
                         <header>
                             <h3><%= article_list[i].article_title %></h3>
-                            <h3>
-                                <object data="user.svg" type="image/svg+xml">
-                                <img src="/public/user.svg" alt=""></object>
-                                <span><%= article_list[i].article_author %></span> | <%= article_date_list[i] %></h3>
-                            <!--<h3><%= article_date_list[i] %></h3>-->
+                            <h3 class="col-ocre"><%= article_list[i].article_author %></h3>
+                            <h3><%= article_date_list[i] %></h3>
                             <p>
                                 <%= article_list[i].article_description.slice(0, 120) %>
 
