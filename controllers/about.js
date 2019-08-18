@@ -1,4 +1,4 @@
-exports.display = function (req, res) {
+exports.get = function (req, res) {
     let user = 'guest'
 
     if (req.session.user !== null && req.session.user !== undefined) {
