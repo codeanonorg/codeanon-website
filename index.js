@@ -1,26 +1,40 @@
+//  app.js
 const express = require('express')
 const expressValidator = require('express-validator')
 const session = require('cookie-session')
 const bodyParser = require('body-parser')
 
-let root = require('./routes/root')
-let login = require('./routes/login')
-let register = require('./routes/register')
-let home = require('./routes/home')
-let blog = require('./routes/blog')
-let article = require('./routes/article')
-let submit = require('./routes/submit')
-let profile = require('./routes/profile')
-let logout = require('./routes/logout')
-let admin = require('./routes/admin')
-let about = require('./routes/about')
+const root = require('./routes/root')
+const login = require('./routes/login')
+const register = require('./routes/register')
+const home = require('./routes/home')
+const blog = require('./routes/blog')
+const article = require('./routes/article')
+const submit = require('./routes/submit')
+const project = require('./routes/project')
+const projecter = require('./routes/projecter')
+const profile = require('./routes/profile')
+const logout = require('./routes/logout')
+const admin = require('./routes/admin')
+const about = require('./routes/about')
 
-let app = express()
+const app = express()
+
+// Set up mongodb connexion
+const mongoose = require('mongoose')
+const dbUrl = 'mongodb://localhost:27017/CodeAnonDatabase'
+const mongoDB = process.env.MONGODB_URI || dbUrl;
+
+mongoose.connect(mongoDB, {useNewUrlParser: true});
+mongoose.Promise = global.Promise;
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 
 app.use(express.static('public'))
 app.use(express.static('bower_components'))
-app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(session({
     name: 'session',
@@ -48,6 +62,8 @@ app.use('/home', home)
 app.use('/blog', blog)
 app.use('/article', article)
 app.use('/submit', submit)
+app.use('/project', project)
+app.use('/projecter', projecter)
 app.use('/profile', profile)
 app.use('/logout', logout)
 app.use('/admin', admin)
@@ -61,6 +77,11 @@ app.get('*', (req, res) => {
 
 // Routing End
 
-app.listen(8080, () => {
-    console.log('Listening on port 8080')
+const port = 8080; //process.env.PORT || 8080;
+
+app.listen(port, () => {
+    console.log('Listening on port: ' + port);
 })
+
+
+//{ useUnifiedTopology: true }

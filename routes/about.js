@@ -1,21 +1,7 @@
 const router = require('express').Router()
+const aboutController = require('../controllers/about')
 
 /* GET home page */
-router.get('/', (req, res) => {
-    let user = 'guest'
-
-    if (req.session.user !== null && req.session.user !== undefined) {
-        try {
-            user = req.session.user.username
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
-    res.render('about.ejs', {
-        username: user,
-        page: "About",
-    })
-})
+router.get('/', aboutController.display)
 
 module.exports = router
