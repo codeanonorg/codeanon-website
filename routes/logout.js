@@ -1,8 +1,9 @@
 const router = require('express').Router()
 
+const logoutController = require('../controllers/logout')
+
 /* GET logout page */
-router.get('/', (req, res) => {
-    req.session = null
-    res.redirect('/login')
-})
+
+router.get('/', logoutController.get)
+
 module.exports = router
