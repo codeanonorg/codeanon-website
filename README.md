@@ -27,8 +27,19 @@
 
 *Attention, vous devez d'abord lancer le serveur en local !!*
 
+### P.-S. Fonctionnement de l'architecture MVC
 
-### PS: Deploiement
+* MVC = Model View Controller
+
+* ```/routes/exemple.routes.js``` gère les methodes (get, post, put, delete...) et appelle le controlleur de la page concerné
+
+* ```/controllers/exemple.controller.js``` gère la 'business logic' de la page en appellant le/les modèles et en redant la page 'exemple.view.ejs'
+
+* ```/models/utilisateur.model.js``` définie le 'schéma'de l'utilisateur dans la base de donnée
+
+* ```/views/exemple.view.js``` est la page rendu par express.js et ejs dans ce cas précis
+
+### P.P.-S.: Deploiement
 * sur linux, lancer le serveur sur le port 80 avec la commande:
 
 ```$ sudo node index.js &```
