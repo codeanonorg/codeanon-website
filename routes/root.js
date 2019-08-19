@@ -1,12 +1,10 @@
 const router = require('express').Router()
 
+const rootController = require('../controllers/root')
+
+
 /* GET root page */
-router.get('/', (req, res) => {
-    if (req.session.user) {
-        res.redirect('/home')
-    } else {
-        res.render('root.ejs')
-    }
-})
+
+router.get('/', rootController.get)
 
 module.exports = router
