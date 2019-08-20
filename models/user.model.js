@@ -8,4 +8,4 @@ let UserSchema = new Schema({
 })
 
 // Export the model
-module.exports = mongoose.model('Article', ArticleSchema)
+module.exports = mongoose.model('User', UserSchema)
