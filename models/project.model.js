@@ -1,4 +1,4 @@
-
+/*
 CREATE TABLE IF NOT EXISTS projects (
     project_id      SERIAL PRIMARY KEY NOT NULL,
     title           text    NOT NULL,
@@ -32,3 +32,4 @@ CREATE TABLE IF NOT EXISTS liked_projects (
     CONSTRAINT fk_liked_projects_user_id FOREIGN KEY (user_id) REFERENCES users (user_id),
     PRIMARY KEY (project_id, user_id)
 );
+*/

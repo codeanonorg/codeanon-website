@@ -1,5 +1,5 @@
-
-const init = `
+/*
+const createTables = `
 
 CREATE TABLE IF NOT EXISTS roles (
     role_id         SERIAL PRIMARY KEY NOT NULL,
@@ -93,3 +93,5 @@ CREATE TABLE IF NOT EXISTS liked_projects (
     `;
 
 console.log(init)
+
+*/

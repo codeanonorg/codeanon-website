@@ -1,4 +1,4 @@
-
+/*
 CREATE TABLE IF NOT EXISTS articles (
     article_id      SERIAL PRIMARY KEY NOT NULL,
     title           text        NOT NULL,
@@ -29,3 +29,5 @@ CREATE TABLE IF NOT EXISTS liked_articles (
     CONSTRAINT fk_liked_projects_user_id FOREIGN KEY (user_id) REFERENCES users (user_id),
     PRIMARY KEY (article_id, user_id)
 );
+
+*/

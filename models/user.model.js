@@ -1,3 +1,5 @@
+const user = `
+
 CREATE TABLE IF NOT EXISTS roles (
     role_id         SERIAL PRIMARY KEY NOT NULL,
     name            text NOT NULL
@@ -22,3 +24,5 @@ CREATE TABLE IF NOT EXISTS users (
     CONSTRAINT fk_users_role_id FOREIGN KEY (role_id) REFERENCES roles (role_id),
     CONSTRAINT fk_users_status_id FOREIGN KEY (status_id) REFERENCES account_status (status_id)
 );
+
+`
