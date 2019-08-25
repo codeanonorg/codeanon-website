@@ -1,18 +1,5 @@
 
-const { Pool, Client } = require('pg')
-
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'catest',
-    password: '',
-    port: 5432,
-})
-
-pool.query('SELECT NOW()', (err, res) => {
-    console.log(err, res)
-    pool.end()
-})
+const { Client } = require('pg')
 
 const client = new Client({
     user: 'postgres',
@@ -120,7 +107,7 @@ CREATE TABLE IF NOT EXISTS liked_projects (
 client
     .query(createTables)
     .then(res => {
-        console.log('tables created' + res.rows[0])
+        console.log('tables created')
     })
     .catch(e => console.error(e.stack))
 
@@ -130,7 +117,7 @@ const value_ad = ['admin']
 client
     .query(role_sql, value_ad)
     .then(res => {
-        console.log('roles created' + res.rows[0])
+        console.log('roles created ' + res.rows[0])
     })
     .catch(e => console.error(e.stack))
 
@@ -142,17 +129,17 @@ const value_st = ['ok', 'kicked','banned','censored', '123456']
 client
     .query(status_sql, value_st)
     .then(res => {
-        console.log('status created' + res.rows[0])
+        console.log('status created')
     })
     .catch(e => console.error(e.stack))
 
 // Tags Init
-const tags_sql = 'INSERT INTO tags(name) VALUES ($1),($2),($3),($4),(5)'
+const tags_sql = 'INSERT INTO tags(name) VALUES ($1),($2),($3),($4),($5)'
 const tag_values = ['developpement','cybersecurite','web','serveur','theorie']
 
 client
     .query(tags_sql, tag_values)
     .then(res => {
-        console.log('tags created' + res.rows[0])
+        console.log('tags created ' + res.rows[0])
     })
     .catch(e => console.error(e.stack))
