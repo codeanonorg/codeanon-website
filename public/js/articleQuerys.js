@@ -1,13 +1,7 @@
-//  const mongo = require('mongodb').MongoClient
-const ObjectId = require('mongodb').ObjectId;
-//  const databaseUrl = 'mongodb://localhost:27017'//db' //27017 default port
+
 const MarkdownIt = require('markdown-it')
 
-
-
 const Article = require('../../models/article.model')
-
-
 
 module.exports = {
     submitArticle: async function (req, username) {

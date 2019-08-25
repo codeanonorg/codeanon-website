@@ -20,15 +20,9 @@ const about = require('./routes/about')
 
 const app = express()
 
-// Set up mongodb connexion
-const mongoose = require('mongoose')
-const dbUrl = 'mongodb://localhost:27017/CodeAnonDatabase'
-const mongoDB = process.env.MONGODB_URI || dbUrl;
+// Set up sql connexion
 
-mongoose.connect(mongoDB, {useNewUrlParser: true});
-mongoose.Promise = global.Promise;
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 
 
 app.use(express.static('public'))
@@ -82,6 +76,3 @@ const port = 8080; //process.env.PORT || 8080;
 app.listen(port, () => {
     console.log('Listening on port: ' + port);
 })
-
-
-//{ useUnifiedTopology: true }
