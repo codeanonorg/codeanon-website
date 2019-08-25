@@ -1,5 +1,7 @@
 const articleQuery = require('../public/js/articleQuerys')
-const formatDate = require('../public/js/dateHandling')
+//const formatDate = require('../public/js/dateHandling')
+
+//const Article = require('../models/article.model')
 
 exports.get = async function (req, res) {
 
@@ -8,16 +10,16 @@ exports.get = async function (req, res) {
 
     if (req.session.user) {
 
-        let art_title = articleContent.article_title;
-        let art_author = articleContent.article_author;
+        let art_title = articleContent.title;
+        let art_author = articleContent.author;
 
         // please do not modify this or you break the /blog page
-        let art_date_msec = articleContent.article_date;
+        let art_date_msec = articleContent.date;
         // get the date in milliseconds
 
-        let art_tags = articleContent.article_tags;
-        let art_description = articleContent.article_description;
-        let art_content = articleContent.article_content;
+        let art_tags = articleContent.tags;
+        let art_description = articleContent.description;
+        let art_content = articleContent.content;
 
         // convert the date in readable format
         let date = new Date(art_date_msec);

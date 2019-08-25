@@ -1,10 +1,17 @@
-const mongo = require('mongodb').MongoClient
+//  const mongo = require('mongodb').MongoClient
 const ObjectId = require('mongodb').ObjectId;
-const databaseUrl = 'mongodb://localhost:27017'//db' //27017 default port
+//  const databaseUrl = 'mongodb://localhost:27017'//db' //27017 default port
 const MarkdownIt = require('markdown-it')
+
+
+
+const Article = require('../../models/article.model')
+
+
 
 module.exports = {
     submitArticle: async function (req, username) {
+
         let md = new MarkdownIt()
         let {
             article_content,
@@ -12,15 +19,43 @@ module.exports = {
             article_tags,
             article_description,
         } = req.body
+
         let tags = article_tags.split(" ")
+
         let htmlArticle = md.render(article_content)
         //  DATE
         let date = new Date();
         let msecDate = date.getTime();
-        //let fullDate = date.getDate() + "/" +(date.getMonth() + 1)+ "/"+date.getFullYear();
-        console.log(msecDate)
+
+        console.log("date en msec" + msecDate)
         //  DATE
-        mongo.connect(databaseUrl, { useNewUrlParser: true }, (err, client) => {
+
+        // Mongoose
+        let article = new Article(
+            {
+                title: article_title,
+                author: username,
+                date: msecDate,
+                tags: tags,
+                description: article_description,
+                content: htmlArticle,
+            }
+        )
+
+        article.save(function (err) {
+            if (err) {
+                return next(err);
+            }
+            console.log("Article created successfully")
+        })
+
+        // end of mongoose
+
+        /*
+        mongo.connect(databaseUrl, 
+            { useNewUrlParser: true },
+            { useUnifiedTopology: true },
+             (err, client) => {
             const db = client.db('CodeAnonDatabase')
             const articlesCol = db.collection('articles')
             articlesCol.insertOne({
@@ -46,46 +81,78 @@ module.exports = {
                 //  client.close()
             })
         })
+        */
     },
 
-    getTenMostRecentArticles: async function () {
-        const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
-        const articles = await client.db('CodeAnonDatabase').collection('articles')
-            .find()
+    getTenMostRecentArticles: async function (callback) {
+        // mongoose start
+        return await Article.find()
             .limit(9)
-            .sort({ article_date: -1 })
-            .toArray();
+            .sort({ date: -1 })
+            .exec( function (err, blogs) {
+                callback(err, blogs)
+            })
+            //.lean()
+
+        // mongoose end
+        /*
+        const client = await mongo.connect(databaseUrl,
+            { useNewUrlParser: true },
+            { useUnifiedTopology: true });
+        const articles = await client.db('CodeAnonDatabase').collection('articles')
+        */
 
         //  await client.close()
-        return await articles;
+
+
+        //return await articles;
     },
 
     getArticlByTag: async function (tag) {
-        const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+        /*
+        const client = await mongo.connect(databaseUrl,
+            { useNewUrlParser: true },
+            { useUnifiedTopology: true });
         const articles_by_tag = await client.db('CodeAnonDatabase').collection('articles')
             .find({ article_tags: tag })
             .sort({ article_date: -1 })
             .toArray();
-
         //  await client.close()
-        return await articles_by_tag;
+            */
+        let articlesByTag = Article.find({ article_tags: tag })
+            .sort({ article_date: -1 })
+            .toArray();
+
+        return await articlesByTag;
     },
 
     getAllArticles: async function () {
-        const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+        /*
+        const client = await mongo.connect(databaseUrl,
+            { useNewUrlParser: true },
+            { useUnifiedTopology: true });
         const articles = await client.db('CodeAnonDatabase').collection('articles')
             .find()
             .sort({ article_date: -1 })
             .toArray();
 
         //  await client.close();
-        return await articles;
+        */
+        let allArticles = Article.find()
+            .sort({ article_date: -1 })
+            .toArray();
+
+        return await allArticles;
     },
 
     getArticleById: async function (id) {
-        const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
+        /*
+        const client = await mongo.connect(databaseUrl,
+            { useNewUrlParser: true },
+            { useUnifiedTopology: true });
         const articleCollection = await client.db('CodeAnonDatabase').collection('articles');
-        await client.close();
-        return await articleCollection.findOne({ _id: ObjectId(id) });
+        */
+
+        return await Article.findOne( { _id: ObjectId(id)} );
     }
 }

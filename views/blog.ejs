@@ -39,18 +39,18 @@
                 <a href="/article/<%= article_list[i]._id %> ">
                     <section class="card">
                         <header>
-                            <h3><%= article_list[i].article_title %></h3>
+                            <h3><%= article_list[i].title %></h3>
                             <h3>
                                 <object data="user.svg" type="image/svg+xml">
                                 <img src="/public/user.svg" alt=""></object>
-                                <span><%= article_list[i].article_author %></span> | <%= article_date_list[i] %></h3>
+                                <span><%= article_list[i].author %></span> | <%= article_date_list[i] %></h3>
                             <!--<h3><%= article_date_list[i] %></h3>-->
                             <p>
-                                <%= article_list[i].article_description.slice(0, 120) %>
+                                <%= article_list[i].description.slice(0, 120) %>
 
                             </p>
                             <p>
-                                <% article_list[i].article_tags.forEach( item => {%>
+                                <% article_list[i].tags.forEach( item => {%>
                                 #<%= item  %>
                                 <% }) %>
                             </p>

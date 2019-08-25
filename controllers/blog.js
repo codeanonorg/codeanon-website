@@ -9,7 +9,7 @@ exports.get = async function (req, res) {
         if (typeof req.query['tag'] !== 'undefined') {
             const art_by_tag = await articleQuery.getArticlByTag(req.query['tag']);
 
-            let date_array = formatDate(art_by_tag);
+            let date_array = formatDate.getDate(art_by_tag);
 
             res.render('blog.ejs', {
                 username: user,
@@ -20,7 +20,7 @@ exports.get = async function (req, res) {
         } else if (typeof req.query['allArt'] !== 'undefined') {
             const all_art = await articleQuery.getAllArticles();
 
-            let date_array = formatDate(all_art);
+            let date_array = formatDate.getDate(all_art);
 
             res.render('blog.ejs', {
                 username: user,
@@ -29,9 +29,16 @@ exports.get = async function (req, res) {
                 page: 'blog',
             })
         } else {
-            let art_list = await articleQuery.getTenMostRecentArticles();
+            let art_list = []
+            let query = articleQuery.getTenMostRecentArticles(function (err, blogs) {
+                if (err) {
+                    return                    
+                }
+                art_list.push(blogs)            
+            })//.toArray();
+            console.log(art_list)
             // get 9 last submited articles
-            let date_array = formatDate(art_list);
+            let date_array = formatDate.getDate(art_list);
 
             res.render('blog.ejs', {
                 username: user,
