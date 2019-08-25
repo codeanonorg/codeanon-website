@@ -21,16 +21,6 @@ const about = require('./routes/about')
 const app = express()
 
 // Set up sql connexion
-const { Pool } = require('pg')
-
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'catest',
-  password: '',
-  port: 5432,
-})
-
 
 
 app.use(express.static('public'))

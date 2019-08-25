@@ -1,46 +1,71 @@
-
+const db = require('../../db/pool')
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // increase the number to make the brutforcing harder
 
 
+
 module.exports = {
     login: async function (usernamePara) {
-        const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
-        const user = await client.db('CodeAnonDatabase').collection('users').findOne({ 'username': usernamePara })
-        //await client.close()
-        return user
+        
+        const username = [usernamePara] 
+        const sqlQuery = 'SELECT * FROM users WHERE username LIKE $1'
+        const result = await db.query(sqlQuery, username, (err, result) => {
+            if (err) {
+                return next(err)
+            }
+            console.log(result.rows[0])
+        })
+
+        return result
     },
 
-    testIfUserInDb: async function (usernamePara) {
-        const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
-        const user = await client.db('CodeAnonDatabase').collection('users').findOne({ 'username': usernamePara })
-        //await client.close()
-        return user
+    testIfUserInDb: async function (usernamePara) {       
+
+        const username = [usernamePara] 
+        const sqlQuery = 'SELECT username FROM users WHERE username LIKE $1'
+        const result = await db.query(sqlQuery, username, (err, result) => {
+            if (err) {
+                return next(err)
+            }
+            console.log(result.rows[0])
+        })
+
+        return result
     },
 
     testIfEmailInDb: async function (emailPara) {
-        const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
-        const email = await client.db('ConeAnonDatabase').collection('users').findOne({ 'email': emailPara })
-        //await client.close()
-        return email
+        
+        const email = [emailPara] 
+        const sqlQuery = 'SELECT email FROM users WHERE username LIKE $1'
+        const result = await db.query(sqlQuery, email, (err, result) => {
+            if (err) {
+                return next(err)
+            }
+            console.log(result.rows[0])
+        })
+
+        return result
     },
 
     register: async function (usernamePara, emailPara, passwordPara) {
-        const client = await mongo.connect(databaseUrl, { useNewUrlParser: true });
-        const userCollection = await client.db('CodeAnonDatabase').collection('users');
-        let user = { username: usernamePara, email: emailPara, hashedPassword: passwordPara }
-        await userCollection.insertOne(user)
-        //await client.close()
+
+        const parameters = [usernamePara, emailPara, passwordPara]
+        const sqlQuery = 'INSERT INTO users(username, real_name, email, password, timestamp, role_id, status_id) VALUES ($1, $2, $3, $4, $5, $6, $7)'
+        db.query(sqlQuery, parameters, (err, result) => {
+            if (err) {
+                return next(err)
+            }
+            console.log(result.rows[0])
+        })
     },
 
     updateUser: async function (username, newUsername, newEmail, newPassword) {
-        const client = await mongo.connect(databaseUrl, { useNewUrlParser: true })
-        const userCollection = await client.db('CodeAnonDatabase').collection('users')
-        await userCollection.updateOne(
-            { username: username }, { $set: { username: newUsername, email: newEmail, hashedPassword: bcrypt.hashSync(newPassword, saltRounds) } }
-        )
-        //await client.close()
+        //{ username: newUsername, email: newEmail, hashedPassword: bcrypt.hashSync(newPassword, saltRounds) } 
+        
+        // sql query
+        get user Object for id
+        use id to identify user and perform update 
     },
 
 }
