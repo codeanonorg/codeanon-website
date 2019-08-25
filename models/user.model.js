@@ -1,33 +1,24 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const ObjectId = mongoose.Schema.Types.ObjectId;
+CREATE TABLE IF NOT EXISTS roles (
+    role_id         SERIAL PRIMARY KEY NOT NULL,
+    name            text NOT NULL
+);
 
-let UserSchema = new Schema({
-    username: {
-        type: String, 
-    required: true,
-},
-    email: {
-        type: String,
-    },
-    hashedPassword: {
-        type: String,
-        required: true,
-    },
-    role: {
-        type: String,
-        enum: ['admin', 'moderateur','membre']
-    },
-    likedArticles: {
-        type: [ObjectId],
+CREATE TABLE IF NOT EXISTS account_status (
+    status_id       SERIAL PRIMARY KEY NOT NULL,
+    name            text NOT NULL,
+    timestamp       int  NOT NULL,
+    update_timestamp int
+);
 
-    },
-    timestamp: {
-        // quand cela a été crée
-        type: INT,
-        required: TRUE
-    }
-})
-
-// Export the model
-module.exports = mongoose.model('Users', UserSchema)
+CREATE TABLE IF NOT EXISTS users (
+    user_id         SERIAL PRIMARY KEY  NOT NULL,
+    username        text    NOT NULL,
+    real_name       text    NOT NULL,
+    email           text,
+    password        text,
+    timestamp       integer,
+    role_id         integer, -- FK
+    status_id       integer, -- FK
+    CONSTRAINT fk_users_role_id FOREIGN KEY (role_id) REFERENCES roles (role_id),
+    CONSTRAINT fk_users_status_id FOREIGN KEY (status_id) REFERENCES account_status (status_id)
+);
