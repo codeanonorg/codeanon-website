@@ -1,14 +1,34 @@
-const router = require('express').Router()
+/**
+ *
+ *  "Projecter" route
+ *
+ */
 
-const projecterController = require('../controllers/projecter')
+const { Router } = require('express')
+const projecterRoute = Router()
+
+const articleQuery = require('../public/js/articleQuerys')
 
 
-/* GET projecter page */
+projecterRoute.get = function (req, res) {
+    if (req.session.user) {
+        res.render('projecter.ejs', {
+            username: req.session.user.username,
+            page: 'Projecter',
+        })
+    } else {
+        res.redirect('/')
+    }
+}
 
-router.get('/', projecterController.get)
+exports.post = async function (req, res) {
+    if (req.session.user) {
+        //  articleQuery.submitArticle(req, req.session.user.username)
 
-/* POST projecter page */
+        //  projectQuery.submitProject(req, req.session.user.username)
+    }
+    res.redirect('/')
+}
 
-router.post('/', projecterController.post)
+module.exports = projecterRoute
 
-module.exports = router

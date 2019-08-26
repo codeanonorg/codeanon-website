@@ -1,8 +1,21 @@
-const router = require('express').Router()
+/**
+ *
+ *  "Admin" route
+ *
+ */
 
-const adminController = require('../controllers/admin')
+const { Router } = require('express')
+const adminRoute = Router()
 
-/* GET admin page */
-router.get('/', adminController.get)
+adminRoute.get(function (req, res) {
+    if (req.session.user) {
+        res.render('admin.ejs', {
+            username: req.session.user.username,
+            page: "Admin"
+        })
+    } else {
+        res.redirect('/')
+    }
+})
 
-module.exports = router
+module.exports = adminRoute
