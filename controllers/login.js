@@ -26,17 +26,86 @@ exports.get = async function (req, res) {
 }
 
 /////////////////  ERRORS FROM POST TO GET ////////////////
-exports.post = async function (req, res) {
+exports.post = function (req, res) {
+
+
     let username = req.body['loginUsername'];
     let password = req.body['loginPassword'];
 
     req.checkBody('loginUsername', 'Username is required').notEmpty();
     //req.checkBody('loginEmail', 'Please enter a valid email').isEmail();
 
+
+    const errors = req.validationErrors();
+    //promise
+
+
+    userQuery.login(username).then( credentials => {
+
+        console.log(`*** TEST *** ${0}`, credentials.rows[0].real_name)
+
+        if (errors) {
+            checkLogin = 0;
+            req.session.errors = errors;
+            res.redirect('/login');
+        } else if (credentials === null) { // if user not in database
+            req.session.errors = [{ errorMsg: 'invalid username or password' }];
+            checkLogin = 0;
+            res.redirect('/login');
+        } else if (credentials.rows[0].username === username && bcrypt.compareSync(password, credentials.rows[0].password)) // test password
+        {
+            req.session.user = {
+                'username': username,
+                'email': credentials.rows[0].email,
+            };
+            checkLogin = 1;
+            res.redirect('/home');
+        } else {    // handle errors that i haven't thougt about
+            req.session.errors = [{ errorMsg: 'invalid username or password' }];
+            checkLogin = 0;
+            res.redirect('/login');
+        }
+    }).catch(e => console.error(e.stack))
+    /*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const errors = req.validationErrors();
     const credentials = await userQuery.login(username)
 
     console.log(`*** TEST *** ${0}`, credentials[0].password)
+
+
     // get the user datas if user exist, else return 'null'
 
 
@@ -62,4 +131,5 @@ exports.post = async function (req, res) {
         checkLogin = 0;
         res.redirect('/login');
     }
+    */
 }
