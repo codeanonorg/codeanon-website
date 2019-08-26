@@ -14,6 +14,13 @@ module.exports = {
         return db.query(sqlQuery, username)
     },
 
+    register:  function (usernamePara, realName, emailPara, passwordPara, timestamp, role, status) {
+
+        const parameters = [usernamePara, realName, emailPara, passwordPara, timestamp, role, status]
+        const sqlQuery = 'INSERT INTO users(username, real_name, email, password, timestamp, role_id, status_id) VALUES ($1, $2, $3, $4, $5, $6, $7)'
+        return db.query(sqlQuery, parameters)        
+    },
+
     testIfUserInDb: function (usernamePara) {       
 
         const username = [usernamePara] 
@@ -31,40 +38,7 @@ module.exports = {
 
         return rows
     },
-
-
-
-
-
-
-
-
-
-
-
     
-    register:  function (usernamePara, realName, emailPara, passwordPara, timestamp, role, status) {
-
-        const parameters = [usernamePara, realName, emailPara, passwordPara, timestamp, role, status]
-        const sqlQuery = 'INSERT INTO users(username, real_name, email, password, timestamp, role_id, status_id) VALUES ($1, $2, $3, $4, $5, $6, $7)'
-        return db.query(sqlQuery, parameters)        
-    },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     updateUser: function (username, newUsername, newEmail, newPassword) {
         //{ username: newUsername, email: newEmail, hashedPassword: bcrypt.hashSync(newPassword, saltRounds) } 
         
