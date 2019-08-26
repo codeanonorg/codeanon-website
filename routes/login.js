@@ -17,7 +17,7 @@ const bcrypt = require('bcrypt');
 let checkLogin = 1;
 // check if login is successful or not, if not display message about the failed login attempt
 
-loginRoute.get(async function (req, res) {
+loginRoute.get('/', function (req, res) {
     if (req.session.user) {
         res.redirect('/home')
     } else {
@@ -37,7 +37,7 @@ loginRoute.get(async function (req, res) {
 
 /////////////////  ERRORS FROM POST TO GET ////////////////
 
-loginRoute.post(function (req, res) {
+loginRoute.post('/',function (req, res) {
 
     let username = req.body['loginUsername'];
     let password = req.body['loginPassword'];

@@ -7,7 +7,7 @@
 const { Router } = require('express')
 const rootRoute = Router()
 
-rootRoute.get(function (req, res) {
+rootRoute.get('/', function (req, res) {
     if (req.session.user) {
         res.redirect('/home')
     } else {

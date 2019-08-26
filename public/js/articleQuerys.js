@@ -4,7 +4,7 @@ const MarkdownIt = require('markdown-it')
 const Article = require('../../models/article.model')
 
 module.exports = {
-    submitArticle: async function (req, username) {
+    submitArticle: function (req, username) {
 
         let md = new MarkdownIt()
         let {
@@ -78,9 +78,9 @@ module.exports = {
         */
     },
 
-    getTenMostRecentArticles: async function (callback) {
+    getTenMostRecentArticles: function (callback) {
         // mongoose start
-        return await Article.find()
+        return Article.find()
             .limit(9)
             .sort({ date: -1 })
             .exec( function (err, blogs) {
@@ -102,7 +102,7 @@ module.exports = {
         //return await articles;
     },
 
-    getArticlByTag: async function (tag) {
+    getArticlByTag: function (tag) {
         /*
         const client = await mongo.connect(databaseUrl,
             { useNewUrlParser: true },
@@ -117,10 +117,10 @@ module.exports = {
             .sort({ article_date: -1 })
             .toArray();
 
-        return await articlesByTag;
+        return articlesByTag;
     },
 
-    getAllArticles: async function () {
+    getAllArticles: function () {
         /*
         const client = await mongo.connect(databaseUrl,
             { useNewUrlParser: true },
@@ -136,10 +136,10 @@ module.exports = {
             .sort({ article_date: -1 })
             .toArray();
 
-        return await allArticles;
+        return allArticles;
     },
 
-    getArticleById: async function (id) {
+    getArticleById: function (id) {
         /*
         const client = await mongo.connect(databaseUrl,
             { useNewUrlParser: true },
@@ -147,6 +147,6 @@ module.exports = {
         const articleCollection = await client.db('CodeAnonDatabase').collection('articles');
         */
 
-        return await Article.findOne( { _id: ObjectId(id)} );
+        return Article.findOne( { _id: ObjectId(id)} );
     }
 }

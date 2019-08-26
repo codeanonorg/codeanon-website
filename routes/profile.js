@@ -14,7 +14,7 @@ const userQuery = require('../public/js/userQuerys')
 const bcrypt = require('bcrypt');
 
 
-profileRoute.get(function (req, res) {
+profileRoute.get('/', function (req, res) {
     if (req.session.user) {
         res.render('profile.ejs', {
             username: req.session.user.username,
@@ -27,7 +27,7 @@ profileRoute.get(function (req, res) {
     }
 })
 
-profileRoute.post(async function (req, res) {
+profileRoute.post('/', function (req, res) {
     if (req.session.user) {
     } else {
         res.redirect('/');
@@ -37,17 +37,17 @@ profileRoute.post(async function (req, res) {
     let newPassword = req.body['changePassword'];
     let confirmPassword = req.body['ConfirmChangePassword'];
     // users
-    let dbPass = await userQuery.login(req.session.user.username);
+    let dbPass = userQuery.login(req.session.user.username);
     // chek if username or email already exists in db
-    const testUsername = await userQuery.testIfUserInDb(newUsername);
-    const testEmail = await userQuery.testIfEmailInDb(newEmail);
+    const testUsername = userQuery.testIfUserInDb(newUsername);
+    const testEmail = userQuery.testIfEmailInDb(newEmail);
     if (testUsername !== null) {
         // nope user already used
     } else if (testEmail !== null) {
         // nope email already used
     }
     if (bcrypt.compareSync(confirmPassword, dbPass.hashedPassword)) {
-        await userQuery.updateUser(req.session.user.username, newUsername, newEmail, newPassword)
+        userQuery.updateUser(req.session.user.username, newUsername, newEmail, newPassword)
         res.redirect('/logout');
     } else {
         res.render('profile.ejs', {

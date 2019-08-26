@@ -17,7 +17,7 @@ const saltRounds = 10; // increase the number to make the brutforcing harder
 let registerCheck = 1;
 
 
-registerRoute.get(function (req, res) {
+registerRoute.get('/', function (req, res) {
     if (req.session.user) {
         res.redirect('/home');
     } else if (registerCheck === 0) {
@@ -31,7 +31,7 @@ registerRoute.get(function (req, res) {
     }
 })
 
-registerRoute.post(async function (req, res) {
+registerRoute.post('/', function (req, res) {
     let username = req.body['registerUsername']
     let email = req.body['registerEmail']
     let password = req.body['registerPassword']
@@ -39,8 +39,8 @@ registerRoute.post(async function (req, res) {
 
     req.checkBody('registerEmail', 'Please enter a valid email').isEmail();
 
-    const testUser = await userQuerys.testIfUserInDb(username)
-    const testEmail = await userQuerys.testIfEmailInDb(email)
+    const testUser = userQuerys.testIfUserInDb(username)
+    const testEmail = userQuerys.testIfEmailInDb(email)
 
     if ((username === null) || (email === null) ||(password === null) || (confirmPassword === null)) {
         res.render('register.ejs',
@@ -68,7 +68,7 @@ registerRoute.post(async function (req, res) {
                 registerFailMsg: "username already exists"
             })
     } else {
-        await userQuerys.register(username, email, bcrypt.hashSync(password, saltRounds))
+        userQuerys.register(username, email, bcrypt.hashSync(password, saltRounds))
         res.redirect('/login');
     }
 })

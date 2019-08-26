@@ -13,10 +13,10 @@ const articleQuery = require('../public/js/articleQuerys')
 
 //const Article = require('../models/article.model')
 
-articleRoute.get(async function (req, res) {
+articleRoute.get('/', function (req, res) {
 
     let requestedId = req.params.ArticleId
-    let articleContent = await articleQuery.getArticleById(requestedId)
+    let articleContent = articleQuery.getArticleById(requestedId)
 
     if (req.session.user) {
 

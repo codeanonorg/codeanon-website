@@ -8,7 +8,7 @@ const { Router } = require('express')
 const homeRoute = Router()
 
 
-homeRoute.get(function (req, res) {
+homeRoute.get('/', function (req, res) {
     if (req.session.user) {
         res.render('home.ejs', {
             username: req.session.user.username,

@@ -7,7 +7,7 @@
 const { Router } = require('express')
 const aboutRoute = Router()
 
-aboutRoute.get(function (req, res) {
+aboutRoute.get('/', function (req, res) {
     let user = 'guest'
 
     if (req.session.user !== null && req.session.user !== undefined) {

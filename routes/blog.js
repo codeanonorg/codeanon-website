@@ -12,12 +12,12 @@ const articleQuery = require('../public/js/articleQuerys')
 const formatDate = require('../public/js/dateHandling')
 
 
-blogRoute.get(async function (req, res) {
+blogRoute.get('/', function (req, res) {
     if (req.session.user) {
         const user = req.session.user.username;
 
         if (typeof req.query['tag'] !== 'undefined') {
-            const art_by_tag = await articleQuery.getArticlByTag(req.query['tag']);
+            const art_by_tag = articleQuery.getArticlByTag(req.query['tag']);
 
             let date_array = formatDate.getDate(art_by_tag);
 
@@ -28,7 +28,7 @@ blogRoute.get(async function (req, res) {
                 page: 'Blog'
             })
         } else if (typeof req.query['allArt'] !== 'undefined') {
-            const all_art = await articleQuery.getAllArticles();
+            const all_art = articleQuery.getAllArticles();
 
             let date_array = formatDate.getDate(all_art);
 

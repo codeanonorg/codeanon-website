@@ -10,7 +10,7 @@ const projecterRoute = Router()
 const articleQuery = require('../public/js/articleQuerys')
 
 
-projecterRoute.get = function (req, res) {
+projecterRoute.get('/', function (req, res) {
     if (req.session.user) {
         res.render('projecter.ejs', {
             username: req.session.user.username,
@@ -19,16 +19,16 @@ projecterRoute.get = function (req, res) {
     } else {
         res.redirect('/')
     }
-}
+})
 
-exports.post = async function (req, res) {
+projecterRoute.post('/', function (req, res) {
     if (req.session.user) {
         //  articleQuery.submitArticle(req, req.session.user.username)
 
         //  projectQuery.submitProject(req, req.session.user.username)
     }
     res.redirect('/')
-}
+})
 
 module.exports = projecterRoute
 
