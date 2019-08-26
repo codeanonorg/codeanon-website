@@ -14,25 +14,25 @@ module.exports = {
         return db.query(sqlQuery, username)
     },
 
-    testIfUserInDb: async function (usernamePara) {       
+    testIfUserInDb: function (usernamePara) {       
 
         const username = [usernamePara] 
         const sqlQuery = 'SELECT username FROM users WHERE username LIKE $1'
-        const { rows } = await db.query(sqlQuery, username)
+        const { rows } = db.query(sqlQuery, username)
 
         return rows
     },
 
-    testIfEmailInDb: async function (emailPara) {
+    testIfEmailInDb: function (emailPara) {
         
         const email = [emailPara] 
         const sqlQuery = 'SELECT email FROM users WHERE username LIKE $1'
-        const { rows } = await db.query(sqlQuery, email)
+        const { rows } = db.query(sqlQuery, email)
 
         return rows
     },
 
-    register: async function (usernamePara, emailPara, passwordPara) {
+    register:  function (usernamePara, emailPara, passwordPara) {
 
         const parameters = [usernamePara, emailPara, passwordPara]
         const sqlQuery = 'INSERT INTO users(username, real_name, email, password, timestamp, role_id, status_id) VALUES ($1, $2, $3, $4, $5, $6, $7)'
@@ -40,7 +40,7 @@ module.exports = {
         
     },
 
-    updateUser: async function (username, newUsername, newEmail, newPassword) {
+    updateUser: function (username, newUsername, newEmail, newPassword) {
         //{ username: newUsername, email: newEmail, hashedPassword: bcrypt.hashSync(newPassword, saltRounds) } 
         
         // sql query
