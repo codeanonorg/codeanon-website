@@ -1,6 +1,8 @@
 
 const { Client } = require('pg')
 
+const time = require('../public/js/timeHandling')
+
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
@@ -22,8 +24,6 @@ CREATE TABLE IF NOT EXISTS roles (
 CREATE TABLE IF NOT EXISTS account_status (
     status_id       SERIAL PRIMARY KEY NOT NULL,
     name            text NOT NULL,
-    timestamp       int  NOT NULL,
-    update_timestamp int
 );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -32,9 +32,10 @@ CREATE TABLE IF NOT EXISTS users (
     real_name       text    NOT NULL,
     email           text    NOT NULL,
     password        text    NOT NULL,
-    timestamp       integer,
+    timestamp       bigint,
     role_id         integer, -- FK
     status_id       integer, -- FK
+    status_timestamp bigint,
     CONSTRAINT fk_users_role_id FOREIGN KEY (role_id) REFERENCES roles (role_id),
     CONSTRAINT fk_users_status_id FOREIGN KEY (status_id) REFERENCES account_status (status_id)
 );
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS articles (
     article_id      SERIAL PRIMARY KEY NOT NULL,
     title           text        NOT NULL,
     user_id         integer     NOT NULL, -- FK
-    timestamp       integer     NOT NULL,
+    timestamp       bigint     NOT NULL,
     description     text        NOT NULL,
     content         text        NOT NULL,
     CONSTRAINT fk_articles_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -53,7 +54,7 @@ CREATE TABLE IF NOT EXISTS projects (
     project_id      SERIAL PRIMARY KEY NOT NULL,
     title           text        NOT NULL,
     user_id         integer     NOT NULL, --  FK
-    timestamp       integer     NOT NULL,
+    timestamp       bigint     NOT NULL,
     description     text,
     content         text        NOT NULL,
     CONSTRAINT fk_projects_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -113,7 +114,7 @@ client
 
 //  Role Init
 const role_sql = 'INSERT INTO roles(name) VALUES ($1) RETURNING *'
-const value_ad = ['admin']
+const value_ad = ['admin', 'moderateur', 'prestige', 'membre']
 client
     .query(role_sql, value_ad)
     .then(res => {
@@ -123,8 +124,8 @@ client
 
 
 // Status Init
-const status_sql = 'INSERT INTO account_status(name, timestamp) VALUES ($1, $5),($2, $5),($3, $5),($4, $5)'
-const value_st = ['ok', 'kicked','banned','censored', '123456']
+const status_sql = 'INSERT INTO account_status(name) VALUES ($1),($2),($3),($4)'
+const value_st = ['ok', 'kicked','banned','censored']
 
 client
     .query(status_sql, value_st)
