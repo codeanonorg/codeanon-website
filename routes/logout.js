@@ -1,9 +1,16 @@
-const router = require('express').Router()
+/**
+ *
+ *  "Logout" route
+ *
+ */
 
-const logoutController = require('../controllers/logout')
+const { Router } = require('express')
+const logoutRoute = Router()
 
-/* GET logout page */
 
-router.get('/', logoutController.get)
+logoutRoute.get = function (req, res) {
+    req.session = null
+    res.redirect('/login')
+}
 
-module.exports = router
+module.exports = logoutRoute

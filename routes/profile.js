@@ -1,12 +1,62 @@
-const router = require('express').Router()
+/**
+ *
+ *  "Profile" route
+ *
+ */
 
-const profileController = require('../controllers/profile')
+const { Router } = require('express')
+const profileRoute = Router()
 
-/* GET profile page */
-router.get('/', profileController.get)
 
-/* POST profile page */
 
-router.post('/', profileController.post)
+const userQuery = require('../public/js/userQuerys')
 
-module.exports = router
+const bcrypt = require('bcrypt');
+
+
+profileRoute.get = function (req, res) {
+    if (req.session.user) {
+        res.render('profile.ejs', {
+            username: req.session.user.username,
+            email: req.session.user.email,
+            error: "",
+            page: 'profile',
+        })
+    } else {
+        res.redirect('/')
+    }
+}
+
+profileRoute.post = async function (req, res) {
+    if (req.session.user) {
+    } else {
+        res.redirect('/');
+    }
+    let newUsername = req.body['changeUsername'];
+    let newEmail = req.body['changeEmail'];
+    let newPassword = req.body['changePassword'];
+    let confirmPassword = req.body['ConfirmChangePassword'];
+    // users
+    let dbPass = await userQuery.login(req.session.user.username);
+    // chek if username or email already exists in db
+    const testUsername = await userQuery.testIfUserInDb(newUsername);
+    const testEmail = await userQuery.testIfEmailInDb(newEmail);
+    if (testUsername !== null) {
+        // nope user already used
+    } else if (testEmail !== null) {
+        // nope email already used
+    }
+    if (bcrypt.compareSync(confirmPassword, dbPass.hashedPassword)) {
+        await userQuery.updateUser(req.session.user.username, newUsername, newEmail, newPassword)
+        res.redirect('/logout');
+    } else {
+        res.render('profile.ejs', {
+            username: req.session.user.username,
+            email: req.session.user.email,
+            error: "incorrect password",
+            page: 'profile',
+        })
+    }
+}
+
+module.exports = profileRoute

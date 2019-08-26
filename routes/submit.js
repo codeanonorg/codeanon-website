@@ -1,14 +1,32 @@
-const router = require('express').Router()
+/**
+ *
+ *  "Submit" route
+ *
+ */
 
-const submitController = require('../controllers/submit')
+const { Router } = require('express')
+const submiteRoute = Router()
 
 
-/* GET submit page */
+const articleQuery = require('../public/js/articleQuerys')
 
-router.get('/', submitController.get)
 
-/* POST submit page */
+submiteRoute.get = function (req, res) {
+    if (req.session.user) {
+        res.render('submit.ejs', {
+            username: req.session.user.username,
+            page: 'submit',
+        })
+    } else {
+        res.redirect('/')
+    }
+}
 
-router.post('/', submitController.post)
+submitRoute.post = async function (req, res) {
+    if (req.session.user) {
+        articleQuery.submitArticle(req, req.session.user.username)
+    }
+    res.redirect('/')
+}
 
-module.exports = router
+module.exports = submitRoute
