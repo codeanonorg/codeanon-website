@@ -9,7 +9,7 @@ const profileRoute = Router()
 
 
 
-const userQuery = require('../public/js/userQuerys')
+const userQuery = require('../db/userQuerys')
 
 const bcrypt = require('bcrypt');
 

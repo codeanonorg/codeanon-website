@@ -1,7 +1,7 @@
 
 const { Client } = require('pg')
 
-const time = require('../public/js/timeHandling')
+//  const time = require('../public/js/timeHandling')
 
 const client = new Client({
     user: 'postgres',
@@ -18,19 +18,19 @@ const createTables = `
 
 CREATE TABLE IF NOT EXISTS roles (
     role_id         SERIAL PRIMARY KEY NOT NULL,
-    name            text NOT NULL
+    name            text NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS account_status (
     status_id       SERIAL PRIMARY KEY NOT NULL,
-    name            text NOT NULL,
+    name            text NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS users (
     user_id         SERIAL PRIMARY KEY  NOT NULL,
-    username        text    NOT NULL,
+    username        text    NOT NULL UNIQUE,
     real_name       text    NOT NULL,
-    email           text    NOT NULL,
+    email           text    NOT NULL UNIQUE,
     password        text    NOT NULL,
     timestamp       bigint,
     role_id         integer, -- FK
@@ -42,9 +42,9 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS articles (
     article_id      SERIAL PRIMARY KEY NOT NULL,
-    title           text        NOT NULL,
+    title           text        NOT NULL UNIQUE,
     user_id         integer     NOT NULL, -- FK
-    timestamp       bigint     NOT NULL,
+    timestamp       bigint      NOT NULL,
     description     text        NOT NULL,
     content         text        NOT NULL,
     CONSTRAINT fk_articles_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -52,9 +52,9 @@ CREATE TABLE IF NOT EXISTS articles (
 
 CREATE TABLE IF NOT EXISTS projects (
     project_id      SERIAL PRIMARY KEY NOT NULL,
-    title           text        NOT NULL,
+    title           text        NOT NULL UNIQUE,
     user_id         integer     NOT NULL, --  FK
-    timestamp       bigint     NOT NULL,
+    timestamp       bigint      NOT NULL,
     description     text,
     content         text        NOT NULL,
     CONSTRAINT fk_projects_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS projects (
 
 CREATE TABLE IF NOT EXISTS tags (
     tag_id          SERIAL PRIMARY KEY  NOT NULL,
-    name            text        NOT NULL
+    name            text        NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS article_tags (
@@ -113,12 +113,13 @@ client
     .catch(e => console.error(e.stack))
 
 //  Role Init
-const role_sql = 'INSERT INTO roles(name) VALUES ($1) RETURNING *'
+const role_sql = 'INSERT INTO roles(name) VALUES ($1), ($2), ($3), ($4) RETURNING *'
 const value_ad = ['admin', 'moderateur', 'prestige', 'membre']
+
 client
     .query(role_sql, value_ad)
     .then(res => {
-        console.log('roles created ' + res.rows[0])
+        console.log('roles created ' + res)
     })
     .catch(e => console.error(e.stack))
 

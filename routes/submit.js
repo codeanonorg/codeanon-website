@@ -8,7 +8,7 @@ const { Router } = require('express')
 const submitRoute = Router()
 
 
-const articleQuery = require('../public/js/articleQuerys')
+const articleQuery = require('../db/articleQuerys')
 
 
 submitRoute.get('/', function (req, res) {

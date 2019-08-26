@@ -7,7 +7,7 @@
 const { Router } = require('express')
 const projecterRoute = Router()
 
-const articleQuery = require('../public/js/articleQuerys')
+const articleQuery = require('../db/articleQuerys')
 
 
 projecterRoute.get('/', function (req, res) {

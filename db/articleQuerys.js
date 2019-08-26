@@ -3,6 +3,8 @@ const MarkdownIt = require('markdown-it')
 
 const Article = require('../models/article.model')
 
+const time = require('../public/js/timeHandling')
+
 module.exports = {
     submitArticle: function (req, username) {
 
@@ -17,9 +19,9 @@ module.exports = {
         let tags = article_tags.split(" ")
 
         let htmlArticle = md.render(article_content)
-        //  DATE
-        let date = new Date();
-        let msecDate = date.getTime();
+        
+        
+        let msecDate = time.newTime()
 
         console.log("date en msec" + msecDate)
         //  DATE

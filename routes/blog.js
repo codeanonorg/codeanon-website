@@ -8,8 +8,8 @@ const { Router } = require('express')
 const blogRoute = Router()
 
 
-const articleQuery = require('../public/js/articleQuerys')
-const formatDate = require('../public/js/dateHandling')
+const articleQuery = require('../db/articleQuerys')
+const formatDate = require('../public/js/timeHandling')
 
 
 blogRoute.get('/', function (req, res) {

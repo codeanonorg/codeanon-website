@@ -8,7 +8,7 @@ const { Router } = require('express')
 const articleRoute = Router()
 
 
-const articleQuery = require('../public/js/articleQuerys')
+const articleQuery = require('../db/articleQuerys')
 //const formatDate = require('../public/js/dateHandling')
 
 //const Article = require('../models/article.model')
