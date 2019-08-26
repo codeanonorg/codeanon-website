@@ -6,16 +6,12 @@ const saltRounds = 10; // increase the number to make the brutforcing harder
 
 
 module.exports = {
-    login: async function (usernamePara) {
+    login: function (usernamePara) {
         
         const username = [usernamePara] 
         const sqlQuery = 'SELECT * FROM users WHERE username LIKE $1'
 
-        const { rows } = await db.query(sqlQuery, username)
-
-        //console.log(rows[0])
-
-        return rows
+        return db.query(sqlQuery, username)
     },
 
     testIfUserInDb: async function (usernamePara) {       

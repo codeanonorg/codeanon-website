@@ -3,11 +3,13 @@
  *  "Login" route
  *
  */
+const router = require('express').Router()
 
 const { Router } = require('express')
 const loginRoute = Router()
 
 const userQuery = require('../public/js/userQuerys')
+/* GET login page */
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // increase the number to make the brutforcing harder
