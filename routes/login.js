@@ -8,7 +8,7 @@
 const { Router } = require('express')
 const loginRoute = Router()
 
-const userQuery = require('../public/js/userQuerys')
+const userQuery = require('../db/userQuerys')
 /* GET login page */
 
 const bcrypt = require('bcrypt');

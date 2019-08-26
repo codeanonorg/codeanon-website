@@ -1,4 +1,4 @@
-const db = require('../../db/pool')
+const db = require('./pool')
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // increase the number to make the brutforcing harder

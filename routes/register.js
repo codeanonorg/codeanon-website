@@ -8,7 +8,7 @@ const { Router } = require('express')
 const registerRoute = Router()
 
 
-const userQuerys = require('../public/js/userQuerys')
+const userQuerys = require('../db/userQuerys')
 
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // increase the number to make the brutforcing harder
@@ -69,7 +69,10 @@ registerRoute.post('/', function (req, res) {
             })
     } else {
         userQuerys.register(username, email, bcrypt.hashSync(password, saltRounds))
-        res.redirect('/login');
+            .then(
+                res.redirect('/login')   
+            )
+            .catch(e => console.error(e.stack))
     }
 })
 

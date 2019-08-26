@@ -1,7 +1,7 @@
 
 const MarkdownIt = require('markdown-it')
 
-const Article = require('../../models/article.model')
+const Article = require('../models/article.model')
 
 module.exports = {
     submitArticle: function (req, username) {
