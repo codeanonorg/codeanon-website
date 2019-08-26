@@ -14,7 +14,7 @@ const userQuery = require('../public/js/userQuerys')
 const bcrypt = require('bcrypt');
 
 
-profileRoute.get = function (req, res) {
+profileRoute.get(function (req, res) {
     if (req.session.user) {
         res.render('profile.ejs', {
             username: req.session.user.username,
@@ -25,9 +25,9 @@ profileRoute.get = function (req, res) {
     } else {
         res.redirect('/')
     }
-}
+})
 
-profileRoute.post = async function (req, res) {
+profileRoute.post(async function (req, res) {
     if (req.session.user) {
     } else {
         res.redirect('/');
@@ -57,6 +57,6 @@ profileRoute.post = async function (req, res) {
             page: 'profile',
         })
     }
-}
+})
 
 module.exports = profileRoute

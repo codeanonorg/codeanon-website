@@ -12,7 +12,7 @@ const articleQuery = require('../public/js/articleQuerys')
 const formatDate = require('../public/js/dateHandling')
 
 
-blogRoute.get = async function (req, res) {
+blogRoute.get(async function (req, res) {
     if (req.session.user) {
         const user = req.session.user.username;
 
@@ -61,6 +61,6 @@ blogRoute.get = async function (req, res) {
     } else {
         res.redirect('/')
     }
-}
+})
 
 module.exports = blogRoute

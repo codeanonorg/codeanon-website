@@ -13,7 +13,7 @@ const articleQuery = require('../public/js/articleQuerys')
 
 //const Article = require('../models/article.model')
 
-articleRoute.get = async function (req, res) {
+articleRoute.get(async function (req, res) {
 
     let requestedId = req.params.ArticleId
     let articleContent = await articleQuery.getArticleById(requestedId)
@@ -48,6 +48,6 @@ articleRoute.get = async function (req, res) {
     } else {
         res.redirect('/')
     }
-}
+})
 
 module.exports = articleRoute

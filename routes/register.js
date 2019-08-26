@@ -17,7 +17,7 @@ const saltRounds = 10; // increase the number to make the brutforcing harder
 let registerCheck = 1;
 
 
-registerRoute.get = function (req, res) {
+registerRoute.get(function (req, res) {
     if (req.session.user) {
         res.redirect('/home');
     } else if (registerCheck === 0) {
@@ -29,9 +29,9 @@ registerRoute.get = function (req, res) {
             registerFailMsg: ""
         });
     }
-}
+})
 
-registerRoute.post = async function (req, res) {
+registerRoute.post(async function (req, res) {
     let username = req.body['registerUsername']
     let email = req.body['registerEmail']
     let password = req.body['registerPassword']
@@ -71,6 +71,6 @@ registerRoute.post = async function (req, res) {
         await userQuerys.register(username, email, bcrypt.hashSync(password, saltRounds))
         res.redirect('/login');
     }
-}
+})
 
 module.exports = registerRoute
