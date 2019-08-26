@@ -49,11 +49,11 @@ exports.post = async function (req, res) {
         req.session.errors = [{ errorMsg: 'invalid username or password' }];
         checkLogin = 0;
         res.redirect('/login');
-    } else if (credentials.username === username && bcrypt.compareSync(password, credentials.hashedPassword)) // test password
+    } else if (credentials[0].username === username && bcrypt.compareSync(password, credentials[0].password)) // test password
     {
         req.session.user = {
             'username': username,
-            'email': credentials.email,
+            'email': credentials[0].email,
         };
         checkLogin = 1;
         res.redirect('/home');
