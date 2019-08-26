@@ -35,8 +35,12 @@ exports.post = async function (req, res) {
 
     const errors = req.validationErrors();
     const credentials = await userQuery.login(username)
-    console.log("*** TEST *** " + credentials)
+
+    console.log(`*** TEST *** ${0}`, credentials[0].password)
     // get the user datas if user exist, else return 'null'
+
+
+
     if (errors) {
         checkLogin = 0;
         req.session.errors = errors;

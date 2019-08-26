@@ -4,11 +4,13 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'catest',
-    password: '',
-    port: 5432,
-  })
+    password: 'dev',
+    port: 5555,
+})
+
 
 module.exports = {
+    /*
     query: async (text, params, callback) => {
         const start = Date.now()
         return pool.query(text, params, (err, res) => {
@@ -16,5 +18,6 @@ module.exports = {
             console.log('executed query', { text, duration, rows: res.rowCount })
             callback(err, res)
         })
-    }
+    }*/
+    query: (text, params) => pool.query(text, params)
 }

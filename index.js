@@ -22,6 +22,19 @@ const app = express()
 
 // Set up sql connexion
 
+const { Client } = require('pg')
+
+const client = new Client(
+    {
+        user: 'postgres',
+        host: 'localhost',
+        database: 'catest',
+        password: 'dev',
+        port: 5555,
+    }
+)
+
+client.connect()
 
 app.use(express.static('public'))
 app.use(express.static('bower_components'))

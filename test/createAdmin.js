@@ -7,8 +7,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'catest',
-    password: '',
-    port: 5432,
+    password: 'dev',
+    port: 5555,
 })
 
 const user_sql = 'INSERT INTO users(username, real_name, email, password, timestamp, role_id, status_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *' 
