@@ -13,6 +13,7 @@ const userQuerys = require('../db/userQuerys')
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // increase the number to make the brutforcing harder
 
+const time = require('../public/js/timeHandling')
 // ca doit dégager viteuf par contre ca
 let registerCheck = 1;
 
@@ -33,6 +34,7 @@ registerRoute.get('/', function (req, res) {
 
 registerRoute.post('/', function (req, res) {
     let username = req.body['registerUsername']
+    let realName = req.body['registerRealName']
     let email = req.body['registerEmail']
     let password = req.body['registerPassword']
     let confirmPassword = req.body['registerConfirmPassword']
@@ -41,6 +43,8 @@ registerRoute.post('/', function (req, res) {
 
     const testUser = userQuerys.testIfUserInDb(username)
     const testEmail = userQuerys.testIfEmailInDb(email)
+
+    console.log('userTest : ' + testUser + ' | emailTest : ' + testEmail)
 
     if ((username === null) || (email === null) ||(password === null) || (confirmPassword === null)) {
         res.render('register.ejs',
@@ -52,26 +56,30 @@ registerRoute.post('/', function (req, res) {
             {
                 registerFailMsg: "password are not the same"
             })
-    } else if (testUser !== null && testEmail !== null) {
+    } else if (testUser !== undefined && testEmail !== undefined) {
         res.render('register.ejs',
             {
                 registerFailMsg: "username and email already exist"
             })
-    } else if (testEmail !== null) {
+    } else if (testEmail !== undefined) {
         res.render("register.ejs",
             {
                 registerFailMsg: "email already exists"
             })
-    } else if (testUser !== null) {
+    } else if (testUser !== undefined) {
         res.render("register.ejs",
             {
                 registerFailMsg: "username already exists"
             })
     } else {
-        userQuerys.register(username, email, bcrypt.hashSync(password, saltRounds))
-            .then(
+        const timestamp = time.newTime()
+        const role = 4 //   membre
+        const status = 1 // ok
+        userQuerys.register(username, realName, email, bcrypt.hashSync(password, saltRounds), timestamp, role, status)
+            .then(result => {
+                console.log('result from register : ' + result)
                 res.redirect('/login')   
-            )
+            })
             .catch(e => console.error(e.stack))
     }
 })
