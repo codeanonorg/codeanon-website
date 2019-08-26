@@ -17,7 +17,7 @@ module.exports = {
             console.log(result.rows[0])
         })
 
-        return result
+        return await result
     },
 
     testIfUserInDb: async function (usernamePara) {       
@@ -64,8 +64,10 @@ module.exports = {
         //{ username: newUsername, email: newEmail, hashedPassword: bcrypt.hashSync(newPassword, saltRounds) } 
         
         // sql query
+        /*
         get user Object for id
         use id to identify user and perform update 
+        */
     },
 
 }

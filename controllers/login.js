@@ -25,11 +25,10 @@ exports.get = async function (req, res) {
     }
 }
 
-/////////////////  ERORS FROM POST TO GET ////////////////
+/////////////////  ERRORS FROM POST TO GET ////////////////
 exports.post = async function (req, res) {
     let username = req.body['loginUsername'];
     let password = req.body['loginPassword'];
-    //const hashedPass = await hashIt(password)
 
     req.checkBody('loginUsername', 'Username is required').notEmpty();
     //req.checkBody('loginEmail', 'Please enter a valid email').isEmail();
