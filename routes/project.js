@@ -11,6 +11,12 @@ const articleQuery = require('../db/articleQuerys')
 
 
 projectRoute.get('/', function (req, res) {
+    
+    
+    if (!req.session.user) res.redirect('/');
+
+
+
     if (req.session.user) {
         res.render('project.ejs', {
             username: req.session.user.username,
@@ -32,4 +38,3 @@ projectRoute.post('/', function (req, res) {
 })
 
 module.exports = projectRoute
-

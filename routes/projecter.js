@@ -7,7 +7,7 @@
 const { Router } = require('express')
 const projecterRoute = Router()
 
-const articleQuery = require('../db/articleQuerys')
+const projectQuery = require('../db/projectQuerys')
 
 
 projecterRoute.get('/', function (req, res) {
@@ -23,9 +23,14 @@ projecterRoute.get('/', function (req, res) {
 
 projecterRoute.post('/', function (req, res) {
     if (req.session.user) {
-        //  articleQuery.submitArticle(req, req.session.user.username)
-
-        //  projectQuery.submitProject(req, req.session.user.username)
+        
+        projectQuery
+            .submitProject()
+            .then( queryResponse => {
+                console.log('Project Created : \n' + JSON.stringify(queryResponse.rows[0]))
+                res.redirect('/project')
+            })
+            .catch(e => console.error(e.stack))
     }
     res.redirect('/')
 })
