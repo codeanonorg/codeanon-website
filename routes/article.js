@@ -33,7 +33,7 @@ articleRoute.get('/:articleId', function (req, res) {
             res.render('article.ejs', {
                 username: req.session.user.username,
                 article_title:          article.rows[0].title,
-                article_author:         article.rows[0].user_id, // need to be resolved into the actual username QUERY
+                article_author:         article.rows[0].username, // need to be resolved into the actual username QUERY
                 article_date:           time.getDate(article.rows[0].timestamp),
                 article_tags:           [article.rows[0].title], // need to be resolved into the id list /!\ QUERY
                 article_description:    article.rows[0].description,

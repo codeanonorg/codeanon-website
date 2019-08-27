@@ -32,10 +32,10 @@ module.exports = {
 
     getTenMostRecentArticles: function () {
         
-        const sqlQuery =    'SELECT articles. article_id, articles.title, users.username, articles.timestamp, articles.description, articles.content \
+        const sqlQuery =    'SELECT articles.article_id, articles.title, users.username, articles.timestamp, articles.description, articles.content \
                             FROM articles\
                             LEFT JOIN users \
-                            ON articles.user_id = users.user_id \
+                                ON articles.user_id = users.user_id \
                             ORDER BY timestamp DESC \
                             LIMIT 10;'
         return db.query(sqlQuery)
@@ -52,8 +52,10 @@ module.exports = {
     },
 
     getArticleById: function (artcleId) {
-        const sqlQuery =    'SELECT * \
+        const sqlQuery =    'SELECT articles.article_id, articles.title, users.username, articles.timestamp, articles.description, articles.content \
                             FROM articles \
+                            LEFT JOIN users \
+                                ON articles.user_id = users.user_id\
                             WHERE article_id = $1'
         const params = [artcleId]
 
