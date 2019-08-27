@@ -1,33 +1,7 @@
 
 
-
-/*
 module.exports = {
-    getDate:
-function getDate(article_list) {
-
-    let date_array = [];
-    //console.log(article_list)
-
-    article_list.forEach(element => {
-
-        let Qdate = new Date(element.date)
-        date_array.push(Qdate.getDate() + "/" + (Qdate.getMonth() + 1) + "/" + Qdate.getFullYear())
-    })
-    return date_array
-}
-
-//}
-
-module.exports.getDate = getDate
-
-
-
-*/
-
-
-module.exports = {
-    getDate: function (articleList) {
+    getDatesForArticleList: function (articleList) {
         let date_array = [];
 
 
@@ -37,6 +11,11 @@ module.exports = {
             date_array.push(Qdate.getDate() + "/" + (Qdate.getMonth() + 1) + "/" + Qdate.getFullYear())
         })
         return date_array
+    },
+
+    getDate: function (timestampInMsec) {
+        let date = new Date(art_date_msec);
+        return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
     },
 
     newTime: function () {
