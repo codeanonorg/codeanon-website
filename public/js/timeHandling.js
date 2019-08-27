@@ -13,7 +13,7 @@ module.exports = {
     },
 
     getDate: function (timestampInMsec) {
-        let date = new Date(timestampInMsec);
+        let date = new Date(parseInt(timestampInMsec, 10));
         return date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
     },
 

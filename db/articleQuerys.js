@@ -44,50 +44,19 @@ module.exports = {
     },
 
     getArticlByTag: function (tag) {
-        /*
-        const client = await mongo.connect(databaseUrl,
-            { useNewUrlParser: true },
-            { useUnifiedTopology: true });
-        const articles_by_tag = await client.db('CodeAnonDatabase').collection('articles')
-            .find({ article_tags: tag })
-            .sort({ article_date: -1 })
-            .toArray();
-        //  await client.close()
-            */
-        let articlesByTag = Article.find({ article_tags: tag })
-            .sort({ article_date: -1 })
-            .toArray();
-
-        return articlesByTag;
+        
     },
 
     getAllArticles: function () {
-        /*
-        const client = await mongo.connect(databaseUrl,
-            { useNewUrlParser: true },
-            { useUnifiedTopology: true });
-        const articles = await client.db('CodeAnonDatabase').collection('articles')
-            .find()
-            .sort({ article_date: -1 })
-            .toArray();
-
-        //  await client.close();
-        */
-        let allArticles = Article.find()
-            .sort({ article_date: -1 })
-            .toArray();
-
-        return allArticles;
+        
     },
 
-    getArticleById: function (id) {
-        /*
-        const client = await mongo.connect(databaseUrl,
-            { useNewUrlParser: true },
-            { useUnifiedTopology: true });
-        const articleCollection = await client.db('CodeAnonDatabase').collection('articles');
-        */
+    getArticleById: function (artcleId) {
+        const sqlQuery =    'SELECT * \
+                            FROM articles \
+                            WHERE article_id = $1'
+        const params = [artcleId]
 
-        return Article.findOne({ _id: ObjectId(id) });
+        return db.query(sqlQuery, params)        
     }
 }

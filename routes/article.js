@@ -13,7 +13,7 @@ const time = require('../public/js/timeHandling')
 
 //const Article = require('../models/article.model')
 
-articleRoute.get('/', function (req, res) {
+articleRoute.get('/:articleId', function (req, res) {
 
     /************
      * function that replaces `-` with ` ` (spaces)
@@ -27,9 +27,8 @@ articleRoute.get('/', function (req, res) {
 
 
     //  /!\ BY ID
-    userQuery.getArticleByName(nameOfTheArticle)
-    
-
+    articleQuery
+        .getArticleById(req.params.articleId)
         .then(article => {
             res.render('article.ejs', {
                 username: req.session.user.username,
@@ -44,48 +43,8 @@ articleRoute.get('/', function (req, res) {
         })
         .catch(e => {
             console.error(e.stack)
-            res.redirect('/')
+            res.redirect('/blog')
         })
-
-
-
-    //      WIP       ***************//
-
-    let requestedId = req.params.ArticleId
-    let articleContent = articleQuery.getArticleById(requestedId)
-
-
-
-    if (req.session.user) {
-
-        let art_title = articleContent.title;
-        let art_author = articleContent.author;
-
-        // please do not modify this or you break the /blog page
-        let art_date_msec = articleContent.date;
-        // get the date in milliseconds
-
-        let art_tags = articleContent.tags;
-        let art_description = articleContent.description;
-        let art_content = articleContent.content;
-
-        // convert the date in readable format
-        let date = new Date(art_date_msec);
-        let art_date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
-
-        res.render('article.ejs', {
-            username: req.session.user.username,
-            article_title: art_title,
-            article_author: art_author,
-            article_date: art_date,
-            article_tags: [art_tags],
-            article_description: art_description,
-            article_content: art_content,
-            page: 'Article'
-        })
-    } else {
-        res.redirect('/')
-    }
 })
 
 module.exports = articleRoute
