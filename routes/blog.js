@@ -9,17 +9,20 @@ const blogRoute = Router()
 
 
 const articleQuery = require('../db/articleQuerys')
-const formatDate = require('../public/js/timeHandling')
+const time = require('../public/js/timeHandling')
 
 
 blogRoute.get('/', function (req, res) {
+
+    // check if connected
     if (req.session.user) {
+        
         const user = req.session.user.username;
 
         if (typeof req.query['tag'] !== 'undefined') {
             const art_by_tag = articleQuery.getArticlByTag(req.query['tag']);
 
-            let date_array = formatDate.getDatesForArticleList(art_by_tag);
+            let date_array = time.getDatesForArticleList(art_by_tag);
 
             res.render('blog.ejs', {
                 username: user,
@@ -30,7 +33,7 @@ blogRoute.get('/', function (req, res) {
         } else if (typeof req.query['allArt'] !== 'undefined') {
             const all_art = articleQuery.getAllArticles();
 
-            let date_array = formatDate.getDatesForArticleList(all_art);
+            let date_array = time.getDatesForArticleList(all_art);
 
             res.render('blog.ejs', {
                 username: user,
@@ -39,24 +42,25 @@ blogRoute.get('/', function (req, res) {
                 page: 'blog',
             })
         } else {
-            let art_list = []
-            let query = articleQuery.getTenMostRecentArticles(function (err, blogs) {
-                if (err) {
-                    return                    
-                }
-                art_list.push(blogs)            
-            })//.toArray();
-            console.log(art_list)
-            // get 9 last submited articles
-            let date_array = formatDate.getDatesForArticleList(art_list);
-            // title list with 'titre-de-l'article'
+            articleQuery
+                .getTenMostRecentArticles()
+                .then(queryResponse => {
+                    console.log('articles : \n' + JSON.stringify(queryResponse.rows))
 
-            res.render('blog.ejs', {
-                username: user,
-                article_list: art_list,
-                article_date_list: date_array,
-                page: 'blog',
-            })
+                    //let art_list = queryResponse.rows
+                    let date_array = time.getDatesForArticleList(queryResponse.rows)
+
+                    res.render('blog.ejs', {
+                        username: user,
+                        article_list: queryResponse.rows,
+                        article_date_list: date_array,
+                        page: 'blog',
+                    })
+                })
+                .catch(e => {
+                    console.error(e.stack)
+                    console.log('error')
+                })                
         }
 
     } else {
@@ -65,3 +69,11 @@ blogRoute.get('/', function (req, res) {
 })
 
 module.exports = blogRoute
+/*
+
+tags
+<% article_list[i].tags.forEach( item => {%>
+    #<%= item  %>
+    <% }) %>
+
+    */

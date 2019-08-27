@@ -20,7 +20,7 @@ module.exports = {
         let md = new MarkdownIt()
         let htmlArticle = md.render(article_content)
 
-        let msecDate = time.newTime()
+        let msecDate = parseInt(time.newTime(), 10)
 
         const sqlQuery = 'INSERT INTO articles(title, user_id, timestamp, description, content) VALUES ($1, $2, $3, $4, $5) RETURNING *'
         const params = [article_title, req.session.user.user_id, msecDate, article_description, htmlArticle]
@@ -30,28 +30,17 @@ module.exports = {
 
     },
 
-    getTenMostRecentArticles: function (callback) {
-        // mongoose start
-        return Article.find()
-            .limit(9)
-            .sort({ date: -1 })
-            .exec(function (err, blogs) {
-                callback(err, blogs)
-            })
-        //.lean()
-
-        // mongoose end
-        /*
-        const client = await mongo.connect(databaseUrl,
-            { useNewUrlParser: true },
-            { useUnifiedTopology: true });
-        const articles = await client.db('CodeAnonDatabase').collection('articles')
-        */
-
-        //  await client.close()
+    getTenMostRecentArticles: function () {
+        
+        const sqlQuery =    'SELECT articles. article_id, articles.title, users.username, articles.timestamp, articles.description, articles.content \
+                            FROM articles\
+                            LEFT JOIN users \
+                            ON articles.user_id = users.user_id \
+                            ORDER BY timestamp DESC \
+                            LIMIT 10;'
+        return db.query(sqlQuery)
 
 
-        //return await articles;
     },
 
     getArticlByTag: function (tag) {

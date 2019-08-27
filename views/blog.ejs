@@ -43,16 +43,15 @@
                             <h3>
                                 <object data="user.svg" type="image/svg+xml">
                                 <img src="/public/user.svg" alt=""></object>
-                                <span><%= article_list[i].author %></span> | <%= article_date_list[i] %></h3>
+                                <span><%= article_list[i].username %></span> | <%= article_date_list[i] %></h3>
                             <!--<h3><%= article_date_list[i] %></h3>-->
                             <p>
                                 <%= article_list[i].description.slice(0, 120) %>
 
                             </p>
                             <p>
-                                <% article_list[i].tags.forEach( item => {%>
-                                #<%= item  %>
-                                <% }) %>
+                                tags
+                                
                             </p>
                         </header>
                     </section>
