@@ -24,9 +24,25 @@ submitRoute.get('/', function (req, res) {
 
 submitRoute.post('/', function (req, res) {
     if (req.session.user) {
-        articleQuery.submitArticle(req, req.session.user.username)
+
+
+        articleQuery
+            .submitArticle(req)
+            .then(queryResponse => {
+                console.log('Article Created : \n' + queryResponse.rows[0])
+                res.redirect('/blog')
+            })
+            .catch(e => console.error(e.stack))
     }
     res.redirect('/')
 })
 
 module.exports = submitRoute
+
+
+
+/**
+ * Submit: 
+ * titre, contenu, desc, time
+ * username id
+ */

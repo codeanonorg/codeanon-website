@@ -48,5 +48,10 @@ module.exports = {
         use id to identify user and perform update 
         */
     },
+    getUserId: function (username) {
+        const username = [username]
+        const sqlQuery = 'SELECT user_id FROM users WHERE username = $1'
+        return db.query(sqlQuery, username)
+    }
 
 }

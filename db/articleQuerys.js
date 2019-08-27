@@ -1,14 +1,13 @@
 
 const MarkdownIt = require('markdown-it')
 
-const Article = require('../models/article.model')
+const db = require('../db/pool')
 
 const time = require('../public/js/timeHandling')
 
 module.exports = {
-    submitArticle: function (req, username) {
+    submitArticle: function (req) {
 
-        let md = new MarkdownIt()
         let {
             article_content,
             article_title,
@@ -16,68 +15,19 @@ module.exports = {
             article_description,
         } = req.body
 
-        let tags = article_tags.split(" ")
+        //let tags = article_tags.split(" ")
 
+        let md = new MarkdownIt()
         let htmlArticle = md.render(article_content)
-        
-        
+
         let msecDate = time.newTime()
 
-        console.log("date en msec" + msecDate)
-        //  DATE
+        const sqlQuery = 'INSERT INTO articles(title, user_id, timestamp, description, content) VALUES ($1, $2, $3, $4, $5) RETURNING *'
+        const params = [article_title, req.session.user.user_id, msecDate, article_description, htmlArticle]
 
-        // Mongoose
-        let article = new Article(
-            {
-                title: article_title,
-                author: username,
-                date: msecDate,
-                tags: tags,
-                description: article_description,
-                content: htmlArticle,
-            }
-        )
+        return db.query(sqlQuery, params)
 
-        article.save(function (err) {
-            if (err) {
-                return next(err);
-            }
-            console.log("Article created successfully")
-        })
 
-        // end of mongoose
-
-        /*
-        mongo.connect(databaseUrl, 
-            { useNewUrlParser: true },
-            { useUnifiedTopology: true },
-             (err, client) => {
-            const db = client.db('CodeAnonDatabase')
-            const articlesCol = db.collection('articles')
-            articlesCol.insertOne({
-                article_title: article_title,
-                article_author: username,
-                article_date: msecDate,
-                article_tags: tags,
-                article_description: article_description,
-                article_content: htmlArticle,
-            }, (err, res) => {
-                if (err) {
-                    // on fail
-                    console.error(err)
-                } else {
-                    // pretty print informations (for debug)
-                    console.log("=== Article created ===")
-                    console.log("title  : ", article_title)
-                    console.log("author : ", username)
-                    console.log("link   : ")
-                    console.log("localhost:8080/article/" + String(res.insertedId))
-                }
-                // close the connection with MongoDB
-                //  client.close()
-            })
-        })
-        */
     },
 
     getTenMostRecentArticles: function (callback) {
@@ -85,10 +35,10 @@ module.exports = {
         return Article.find()
             .limit(9)
             .sort({ date: -1 })
-            .exec( function (err, blogs) {
+            .exec(function (err, blogs) {
                 callback(err, blogs)
             })
-            //.lean()
+        //.lean()
 
         // mongoose end
         /*
@@ -149,6 +99,6 @@ module.exports = {
         const articleCollection = await client.db('CodeAnonDatabase').collection('articles');
         */
 
-        return Article.findOne( { _id: ObjectId(id)} );
+        return Article.findOne({ _id: ObjectId(id) });
     }
 }

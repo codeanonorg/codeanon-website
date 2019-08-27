@@ -53,18 +53,23 @@ loginRoute.post('/',function (req, res) {
         console.log(`*** TEST *** ${0}`, credentials.rows[0].real_name)
 
         if (errors) {
+
             checkLogin = 0;
             req.session.errors = errors;
             res.redirect('/login');
+
         } else if (credentials === null) { // if user not in database
+
             req.session.errors = [{ errorMsg: 'invalid username or password' }];
             checkLogin = 0;
             res.redirect('/login');
-        } else if (credentials.rows[0].username === username && bcrypt.compareSync(password, credentials.rows[0].password)) // test password
-        {
+
+        } else if (credentials.rows[0].username === username && bcrypt.compareSync(password, credentials.rows[0].password)) {
+            // test password
             req.session.user = {
                 'username': username,
                 'email': credentials.rows[0].email,
+                'user_id': credentials.rows[0].user_id
             };
             checkLogin = 1;
             res.redirect('/home');

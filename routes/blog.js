@@ -19,7 +19,7 @@ blogRoute.get('/', function (req, res) {
         if (typeof req.query['tag'] !== 'undefined') {
             const art_by_tag = articleQuery.getArticlByTag(req.query['tag']);
 
-            let date_array = formatDate.getDate(art_by_tag);
+            let date_array = formatDate.getDatesForArticleList(art_by_tag);
 
             res.render('blog.ejs', {
                 username: user,
@@ -30,7 +30,7 @@ blogRoute.get('/', function (req, res) {
         } else if (typeof req.query['allArt'] !== 'undefined') {
             const all_art = articleQuery.getAllArticles();
 
-            let date_array = formatDate.getDate(all_art);
+            let date_array = formatDate.getDatesForArticleList(all_art);
 
             res.render('blog.ejs', {
                 username: user,
@@ -48,7 +48,8 @@ blogRoute.get('/', function (req, res) {
             })//.toArray();
             console.log(art_list)
             // get 9 last submited articles
-            let date_array = formatDate.getDate(art_list);
+            let date_array = formatDate.getDatesForArticleList(art_list);
+            // title list with 'titre-de-l'article'
 
             res.render('blog.ejs', {
                 username: user,
