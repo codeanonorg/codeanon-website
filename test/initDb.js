@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS users (
     timestamp       bigint,
     role_id         integer, -- FK
     status_id       integer, -- FK
-    status_timestamp bigint,
+    update_timestamp bigint,
     CONSTRAINT fk_users_role_id FOREIGN KEY (role_id) REFERENCES roles (role_id),
     CONSTRAINT fk_users_status_id FOREIGN KEY (status_id) REFERENCES account_status (status_id)
 );

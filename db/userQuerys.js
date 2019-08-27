@@ -6,10 +6,10 @@ const saltRounds = 10; // increase the number to make the brutforcing harder
 
 
 module.exports = {
-    login: function (usernamePara) {
+    getUserByUsername: function (usernamePara) {
         
         const username = [usernamePara] 
-        const sqlQuery = 'SELECT * FROM users WHERE username LIKE $1'
+        const sqlQuery = 'SELECT * FROM users WHERE username = $1'
 
         return db.query(sqlQuery, username)
     },
@@ -24,30 +24,32 @@ module.exports = {
     testIfUserInDb: function (usernamePara) {       
 
         const username = [usernamePara] 
-        const sqlQuery = 'SELECT username FROM users WHERE username LIKE $1'
-        const { rows } = db.query(sqlQuery, username)
-
-        return rows
+        const sqlQuery = 'SELECT username FROM users WHERE username = $1'
+        return db.query(sqlQuery, username)
     },
 
     testIfEmailInDb: function (emailPara) {
         
         const email = [emailPara] 
         const sqlQuery = 'SELECT email FROM users WHERE username LIKE $1'
-        const { rows } = db.query(sqlQuery, email)
-
-        return rows
+        return db.query(sqlQuery, email)
     },
     
-    updateUser: function (username, newUsername, newEmail, newPassword) {
-        //{ username: newUsername, email: newEmail, hashedPassword: bcrypt.hashSync(newPassword, saltRounds) } 
-        
-        // sql query
-        /*
-        get user Object for id
-        use id to identify user and perform update 
-        */
+    updateUser: function (newUsername, newRealName, newEmail, newPassword, updateTimestamp, username) {
+        const sqlQuery =    `UPDATE users
+                            SET username = $1,
+                                real_name = $2,
+                                email = $3,
+                                password = $4,
+                                update_timestamp = $5
+                            WHERE username = $6
+                            RETURNING *;`
+        const parameters = [newUsername, newRealName, newEmail, newPassword, updateTimestamp, username]
+
+        return db.query(sqlQuery, parameters)
+
     },
+    
     getUserId: function (username) {
         const username = [username]
         const sqlQuery = 'SELECT user_id FROM users WHERE username = $1'

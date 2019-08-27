@@ -48,7 +48,7 @@ loginRoute.post('/',function (req, res) {
     const errors = req.validationErrors();
     //promise
 
-    userQuery.login(username).then(credentials => {
+    userQuery.getUserByUsername(username).then(credentials => {
 
         console.log(`*** TEST *** ${0}`, credentials.rows[0].real_name)
 
