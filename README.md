@@ -2,26 +2,31 @@
 
 ## Pour les devs
 
-* Veillez a installer MongoDB pour pouvoir se connecter au site
-* [mongodb server](https://www.mongodb.com/download-center/community)
+* Veillez a installer Postgresql pour pouvoir se connecter au site
+* [Postgresql server](https://www.postgresql.org/download/)
+* Puis créer une base de données appellée ```catest```, les paramètres de connexion figures dans le fichier ```db/pool.js```
 
 1. Pour installer les dépendances :
 
 ```$ npm install```
 
-2. Pour creer le profil admin dans la base de données MongoDB:
+2. Pour créer les tables dans la base de données postgre:
+
+```$ node initDb.js```
+
+3. Pour créer le compte admin
 
 ```$ node createAdmin.js```
 
-3. Pour créer l'article de test
+4. Pour créer l'article de test:
 
 ```$ node createTestArticle.js```
 
-4. Pour lancer le serveur :
+5. Pour lancer le site
 
 ```$ node index.js```
 
-5. Pour essayer le site :
+6. Pour essayer le site :
 
 [cliquer ici](http://127.0.0.1:8080)
 
