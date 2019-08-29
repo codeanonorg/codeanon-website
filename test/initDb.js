@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS articles (
     title           text        NOT NULL UNIQUE,
     user_id         integer     NOT NULL, -- FK
     timestamp       bigint      NOT NULL,
+    tags            text[],
     description     text        NOT NULL,
     content         text        NOT NULL,
     CONSTRAINT fk_articles_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -55,30 +56,10 @@ CREATE TABLE IF NOT EXISTS projects (
     title           text        NOT NULL UNIQUE,
     user_id         integer     NOT NULL, --  FK
     timestamp       bigint      NOT NULL,
+    tags            text[],
     description     text,
     content         text        NOT NULL,
     CONSTRAINT fk_projects_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
-);
-
-CREATE TABLE IF NOT EXISTS tags (
-    tag_id          SERIAL PRIMARY KEY  NOT NULL,
-    name            text        NOT NULL UNIQUE
-);
-
-CREATE TABLE IF NOT EXISTS article_tags (
-    article_id      integer     NOT NULL,   --FK
-    tag_id          integer     NOT NULL,   --FK
-    CONSTRAINT fk_articles_tags_article_id FOREIGN KEY (article_id) REFERENCES articles (article_id),
-    CONSTRAINT fk_articles_tags_tag_id FOREIGN KEY (tag_id) REFERENCES tags (tag_id),
-    PRIMARY KEY (article_id, tag_id)
-);
-
-CREATE TABLE IF NOT EXISTS project_tags (
-    project_id      integer     NOT NULL, --FK
-    tag_id          integer     NOT NULL, --FK
-    CONSTRAINT fk_project_tags_project_id FOREIGN KEY (project_id) REFERENCES projects (project_id),
-    CONSTRAINT fk_project_tags_tag_id FOREIGN KEY (tag_id) REFERENCES tags (tag_id),
-    PRIMARY KEY (project_id, tag_id)
 );
 
 CREATE TABLE IF NOT EXISTS project_participants (
@@ -132,16 +113,5 @@ client
     .query(status_sql, value_st)
     .then(res => {
         console.log('status created')
-    })
-    .catch(e => console.error(e.stack))
-
-// Tags Init
-const tags_sql = 'INSERT INTO tags(name) VALUES ($1),($2),($3),($4),($5)'
-const tag_values = ['developpement','cybersecurite','web','serveur','theorie']
-
-client
-    .query(tags_sql, tag_values)
-    .then(res => {
-        console.log('tags created ' + res.rows[0])
     })
     .catch(e => console.error(e.stack))

@@ -50,6 +50,8 @@ blogRoute.get('/', function (req, res) {
                     //let art_list = queryResponse.rows
                     let date_array = time.getDatesForArticleList(queryResponse.rows)
 
+                    console.log(queryResponse.rows[0].tags)
+
                     res.render('blog.ejs', {
                         username: user,
                         article_list: queryResponse.rows,

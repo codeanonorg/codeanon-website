@@ -13,9 +13,10 @@ const articleQuery = require('../db/articleQuerys')
 
 submitRoute.get('/', function (req, res) {
     if (req.session.user) {
+        
         res.render('submit.ejs', {
             username: req.session.user.username,
-            page: 'submit',
+            page: 'Submit',
         })
     } else {
         res.redirect('/')
@@ -25,7 +26,7 @@ submitRoute.get('/', function (req, res) {
 submitRoute.post('/', function (req, res) {
 
     if (req.session.user) {
-
+        
         articleQuery
             .submitArticle(req)
             .then(queryResponse => {
@@ -33,7 +34,7 @@ submitRoute.post('/', function (req, res) {
                 res.redirect('/blog')
             })
             .catch(e => console.error(e.stack))
-
+            
     } else {
         res.redirect('/')
     }

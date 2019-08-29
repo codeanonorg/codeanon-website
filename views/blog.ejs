@@ -42,7 +42,7 @@
                             <h3><%= article_list[i].title %></h3>
                             <h3>
                                 <object data="user.svg" type="image/svg+xml">
-                                <img src="/public/user.svg" alt=""></object>
+                                    <img src="/public/user.svg" alt=""></object>
                                 <span><%= article_list[i].username %></span> | <%= article_date_list[i] %></h3>
                             <!--<h3><%= article_date_list[i] %></h3>-->
                             <p>
@@ -50,8 +50,11 @@
 
                             </p>
                             <p>
-                                tags
-                                
+                                <% if(article_list[i].tags) {%>
+                                    <% article_list[i].tags.forEach( item => {%>
+                                        #<%= item  %>
+                                    <% }) %>
+                                <% } %>
                             </p>
                         </header>
                     </section>

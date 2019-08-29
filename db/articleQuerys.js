@@ -15,6 +15,11 @@ module.exports = {
             article_description,
         } = req.body
 
+        //  tags
+        // 'on'
+        // 'undefined'
+
+
         //let tags = article_tags.split(" ")
 
         let md = new MarkdownIt()
@@ -22,8 +27,8 @@ module.exports = {
 
         let msecDate = parseInt(time.newTime(), 10)
 
-        const sqlQuery = 'INSERT INTO articles(title, user_id, timestamp, description, content) VALUES ($1, $2, $3, $4, $5) RETURNING *'
-        const params = [article_title, req.session.user.user_id, msecDate, article_description, htmlArticle]
+        const sqlQuery = 'INSERT INTO articles(title, user_id, timestamp, tags, description, content) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *'
+        const params = [article_title, req.session.user.user_id, msecDate,article_tags, article_description, htmlArticle]
 
         return db.query(sqlQuery, params)
 
@@ -32,7 +37,7 @@ module.exports = {
 
     getTenMostRecentArticles: function () {
         
-        const sqlQuery =    'SELECT articles.article_id, articles.title, users.username, articles.timestamp, articles.description, articles.content \
+        const sqlQuery =    'SELECT articles.article_id, articles.title, users.username, articles.timestamp, articles.tags ,articles.description, articles.content \
                             FROM articles\
                             LEFT JOIN users \
                                 ON articles.user_id = users.user_id \
@@ -52,7 +57,7 @@ module.exports = {
     },
 
     getArticleById: function (artcleId) {
-        const sqlQuery =    'SELECT articles.article_id, articles.title, users.username, articles.timestamp, articles.description, articles.content \
+        const sqlQuery =    'SELECT articles.article_id, articles.title, users.username, articles.timestamp, articles.tags, articles.description, articles.content \
                             FROM articles \
                             LEFT JOIN users \
                                 ON articles.user_id = users.user_id\

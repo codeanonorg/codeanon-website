@@ -16,7 +16,7 @@ module.exports = {
 
     register:  function (usernamePara, realName, emailPara, passwordPara, timestamp, role, status) {
 
-        const parameters = [usernamePara, realName, emailPara, passwordPara, timestamp, role, status]
+        const parameters = [usernamePara, realName, emailPara, bcrypt.hashSync(passwordPara, saltRounds), timestamp, role, status]
         const sqlQuery = 'INSERT INTO users(username, real_name, email, password, timestamp, role_id, status_id) VALUES ($1, $2, $3, $4, $5, $6, $7)'
         return db.query(sqlQuery, parameters)        
     },
@@ -44,7 +44,7 @@ module.exports = {
                                 update_timestamp = $5
                             WHERE username = $6
                             RETURNING *;`
-        const parameters = [newUsername, newRealName, newEmail, newPassword, updateTimestamp, username]
+        const parameters = [newUsername, newRealName, newEmail, bcrypt.hashSync(newPassword, saltRounds), updateTimestamp, username]
 
         return db.query(sqlQuery, parameters)
 

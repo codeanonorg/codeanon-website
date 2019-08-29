@@ -27,9 +27,11 @@
                         @CodeAnon ~ <%= article_date %>
                     </p>
                     <p>
-                        <% article_tags.forEach( item => {%>
-                        #<%= item  %>
-                        <% }) %>
+                        <% if(article_tags) {%>
+                            <% article_tags.forEach( item => {%>
+                                #<%= item  %>
+                            <% }) %>
+                        <% } %>
                     </p>
                     <p>
                         <%= article_description %>

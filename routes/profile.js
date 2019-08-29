@@ -41,26 +41,26 @@ profileRoute.post('/', function (req, res) {
 
     userQuery
         .getUserByUsername(req.session.user.username)
-        .then( userResponse => {
+        .then(userResponse => {
             console.log('password: ' + JSON.stringify(userResponse.rows[0].password))
 
             if (bcrypt.compareSync(confirmPassword, userResponse.rows[0].password)) checker += 1;
             console.log('checker pass: ' + checker)
-            
+
             return userQuery.testIfUserInDb(newUsername)
-        })  
-        .then( queryResponse => {
+        })
+        .then(queryResponse => {
             console.log('user check ' + JSON.stringify(queryResponse.rows[0]))
 
-            if (queryResponse.rows[0] === undefined) checker +=1;
+            if (queryResponse.rows[0] === undefined) checker += 1;
             console.log('checker user check: ' + checker)
 
             return userQuery.testIfEmailInDb(newEmail)
-        })    
-        .then( queryResponse => {
+        })
+        .then(queryResponse => {
             console.log('email check  ' + JSON.stringify(queryResponse.rows[0]))
 
-            if (queryResponse.rows[0] === undefined) checker +=1;
+            if (queryResponse.rows[0] === undefined) checker += 1;
             console.log('checker email check: ' + checker)
 
         })
@@ -73,19 +73,21 @@ profileRoute.post('/', function (req, res) {
                 error: "Try again ...",
                 page: 'Profile',
             })
-        });
+        })
+        .then(queryResponse => {
+            console.log('checker : ' + checker)
 
-        console.log('checker : ' + checker)
-        
-        if (checker === 3) {
-            const updateTimestamp = time.newTime()
-            userQuery
-                .updateUser(newUsername, newRealName, newEmail, newPassword, updateTimestamp, username)
-                .then(queryResponse => [
-                    console.log('modified correctly : ' + JSON.stringify(queryResponse))
-                ])
-                .catch(e => console.error(e.stack))
-        }
+            if (checker === 3) {
+                const updateTimestamp = time.newTime()
+                return userQuery.updateUser(newUsername, newRealName, newEmail, newPassword, updateTimestamp, req.session.user.username)
+            }
+        })
+        .then(queryResponse => {
+            console.log('modified correctly : ' + JSON.stringify(queryResponse))
+            
+        })
+        .catch(e => console.error(e.stack))
+        res.redirect('/logout')
 })
 
 module.exports = profileRoute
