@@ -25,14 +25,44 @@ module.exports = {
 
         const username = [usernamePara] 
         const sqlQuery = 'SELECT username FROM users WHERE username = $1'
-        return db.query(sqlQuery, username)
+        return new Promise((resolve, reject) => {
+            db.query(sqlQuery, username)
+            .then( result => {
+                if (result.rows.length > 0) {
+                    // USERNAME already taken
+                    reject('invalid_username')
+                } else {
+                    // USERNAME availiable
+                    resolve()
+                }
+            })
+            // Query Error 
+            .catch( error => {
+                console.error('Unable to test Username because : ' + error)
+            })
+        })
     },
 
     testIfEmailInDb: function (emailPara) {
         
         const email = [emailPara] 
         const sqlQuery = 'SELECT email FROM users WHERE username LIKE $1'
-        return db.query(sqlQuery, email)
+        return new Promise( (resolve, reject) => {
+            db.query(sqlQuery, email)
+            .then( result => {
+                if (result.rows.length > 0) {
+                    // EMAIL already taken
+                    reject('invalid_email')
+                } else {
+                    // EMAIL availiable
+                    resolve()
+                }
+            })
+            // Query Error 
+            .catch( error => {
+                console.error('Unable to test Email because : ' + error)
+            })
+        })
     },
     
     updateUser: function (newUsername, newRealName, newEmail, newPassword, updateTimestamp, username) {

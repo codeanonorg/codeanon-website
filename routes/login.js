@@ -18,71 +18,68 @@ let checkLogin = 1;
 // check if login is successful or not, if not display message about the failed login attempt
 
 loginRoute.get('/', function (req, res) {
-    if (req.session.user) {
-        res.redirect('/home')
-    } else {
-        if (checkLogin === 0) {
-            res.render('login.ejs', {
-                errorMsg: "invalid username or password",
-                errors: req.session.errors
-            })
-        } else {
-            res.render('login.ejs', {
-                errors: req.session.errors,
-                errorMsg: ""
-            });
-        }
-    }
+
+    if (!req.session) res.redirect('/home')
+    
+    res.render('login.ejs', {
+        errorMsg: ''
+    })
 })
 
 /////////////////  ERRORS FROM POST TO GET ////////////////
 
 loginRoute.post('/',function (req, res) {
 
-    let username = req.body['loginUsername'];
-    let password = req.body['loginPassword'];
+    let username = req.body.loginUsername;
+    let password = req.body.loginPassword;
+
+    const errorResponse = 'invalid username or password'
 
     req.checkBody('loginUsername', 'Username is required').notEmpty();
     //req.checkBody('loginEmail', 'Please enter a valid email').isEmail();
 
     const errors = req.validationErrors();
-    //promise
 
     userQuery.getUserByUsername(username).then(credentials => {
 
-        console.log(`*** TEST *** ${0}`, credentials.rows[0].real_name)
 
         if (errors) {
+            
+            res.render('login.ejs', {
+                errorMsg: errors
+            });
 
-            checkLogin = 0;
-            req.session.errors = errors;
-            res.redirect('/login');
+        } else if (!credentials.rows[0]) { // if user not in database
 
-        } else if (credentials === null) { // if user not in database
-
-            req.session.errors = [{ errorMsg: 'invalid username or password' }];
-            checkLogin = 0;
-            res.redirect('/login');
+            res.render('login.ejs', {
+                errorMsg: errorResponse
+            });
 
         } else if (credentials.rows[0].username === username && bcrypt.compareSync(password, credentials.rows[0].password)) {
+
+            console.log
+
             // test password
             req.session.user = {
                 'username': username,
                 'email': credentials.rows[0].email,
                 'user_id': credentials.rows[0].user_id
             };
+
             checkLogin = 1;
             res.redirect('/home');
+
         } else {    // handle errors that i haven't thougt about
-            req.session.errors = [{ errorMsg: 'invalid username or password' }];
-            checkLogin = 0;
-            res.redirect('/login');
+
+            console.log("here")
+            res.render('login.ejs', {
+                errorMsg: errorResponse
+            });
+
         }
     }).catch(e => console.error(e.stack))
     
 })
 
 
-
 module.exports = loginRoute
-

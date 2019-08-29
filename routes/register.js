@@ -10,8 +10,6 @@ const registerRoute = Router()
 
 const userQuerys = require('../db/userQuerys')
 
-const bcrypt = require('bcrypt');
-const saltRounds = 10; // increase the number to make the brutforcing harder
 
 const time = require('../public/js/timeHandling')
 // ca doit dégager viteuf par contre ca
@@ -33,55 +31,55 @@ registerRoute.get('/', function (req, res) {
 })
 
 registerRoute.post('/', function (req, res) {
-    let username = req.body['registerUsername']
-    let realName = req.body['registerRealName']
-    let email = req.body['registerEmail']
-    let password = req.body['registerPassword']
+    let username    = req.body['registerUsername']
+    let realName    = req.body['registerRealName']
+    let email       = req.body['registerEmail']
+    let password    = req.body['registerPassword']
     let confirmPassword = req.body['registerConfirmPassword']
 
     req.checkBody('registerEmail', 'Please enter a valid email').isEmail();
 
-    const testUser = userQuerys.testIfUserInDb(username)
-    const testEmail = userQuerys.testIfEmailInDb(email)
+    userQuerys.testIfUserInDb(username)
+        
+        // test if USERNAME is availiable
+        .then( () => {
+            console.log(`user test : ${username}`)
+            return userQuerys.testIfEmailInDb(email)
+        })
+        
+        // if email is valid
+        .then( () => {
+            console.log(`email test : ${email}`)
+            
+            if ((username === null) || (email === null) ||(password === null) || (confirmPassword === null)) {
+                throw 'please fill all fields'
+            } else if (password !== confirmPassword) {
+                throw 'password are not the same'
+            }
+        })
 
-    console.log('userTest : ' + testUser + ' | emailTest : ' + testEmail)
+        // form is valid
+        .then( () => {
+            const timestamp = time.newTime()
+            const role = 4 //   membre
+            const status = 1 // ok
 
-    if ((username === null) || (email === null) ||(password === null) || (confirmPassword === null)) {
-        res.render('register.ejs',
-            {
-                registerFailMsg: 'please fill all fields'
+            // registering new user
+            return userQuerys.register(username, realName, email, password, timestamp, role, status)
+        })
+        
+        // everything went ok
+        .then(result => {
+            console.log('result from register : ' + result)
+            res.redirect('/login')
+        })
+        
+        // error during registration
+        .catch( error => {
+            res.render("register.ejs", {
+                registerFailMsg: error
             })
-    } else if (password !== confirmPassword) {
-        res.render('register.ejs',
-            {
-                registerFailMsg: "password are not the same"
-            })
-    } else if (testUser !== undefined && testEmail !== undefined) {
-        res.render('register.ejs',
-            {
-                registerFailMsg: "username and email already exist"
-            })
-    } else if (testEmail !== undefined) {
-        res.render("register.ejs",
-            {
-                registerFailMsg: "email already exists"
-            })
-    } else if (testUser !== undefined) {
-        res.render("register.ejs",
-            {
-                registerFailMsg: "username already exists"
-            })
-    } else {
-        const timestamp = time.newTime()
-        const role = 4 //   membre
-        const status = 1 // ok
-        userQuerys.register(username, realName, email, bcrypt.hashSync(password, saltRounds), timestamp, role, status)
-            .then(result => {
-                console.log('result from register : ' + result)
-                res.redirect('/login')   
-            })
-            .catch(e => console.error(e.stack))
-    }
+        })
 })
 
 module.exports = registerRoute
