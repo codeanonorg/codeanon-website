@@ -17,7 +17,7 @@ const profile   = require('./routes/profile')
 const logout    = require('./routes/logout')
 const admin     = require('./routes/admin')
 const about     = require('./routes/about')
-
+const resources = require('./routes/resources')
 const app = express()
 
 // Set up sql connexion
@@ -73,6 +73,7 @@ app.use('/profile', profile)
 app.use('/logout', logout)
 app.use('/admin', admin)
 app.use('/about', about)
+app.use('/resources', resources)
 
 app.get('*', (req, res) => {
     res.status(404).render('404.ejs', {
