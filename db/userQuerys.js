@@ -47,7 +47,7 @@ module.exports = {
         
         const email = [emailPara] 
         const sqlQuery = 'SELECT email FROM users WHERE username LIKE $1'
-        return new Promise( () => {
+        return new Promise( (resolve, reject) => {
             db.query(sqlQuery, email)
             .then( result => {
                 if (result.rows.length > 0) {
