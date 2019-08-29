@@ -7,26 +7,62 @@
 const { Router } = require('express')
 const projectRoute = Router()
 
-const articleQuery = require('../db/articleQuerys')
+const projectQuery = require('../db/projectQuerys')
 
+const time = require('../public/js/timeHandling')
 
 projectRoute.get('/', function (req, res) {
-    
-    
+
+
     if (!req.session.user) res.redirect('/');
 
 
+    projectQuery
+        .getTenMostRecentProjects()
+        .then(queryResponse => {
 
-    if (req.session.user) {
-        res.render('project.ejs', {
-            username: req.session.user.username,
-            page: 'Project',
+            let date_array = time.getDatesForArticleList(queryResponse.rows)
+
+            res.render('projectHub.ejs', {
+                username: req.session.user.username,
+                project_list: queryResponse.rows,
+                project_date_list: date_array,
+                page: 'ProjectHub',
+            })
         })
-    } else {
-        res.redirect('/')
-    }
+        .catch(e => {
+            console.error(e.stack)
+            console.log('error')
+        })
+
+
 })
 
+projectRoute.get('/:projectId', function (req, res) {
+    projectQuery
+        .getProjectById(req.params.projectId)
+        .then(project => {
+            if (project.rows[0]) {
+                res.render('project.ejs', {
+                    username: req.session.user.username,
+                    project_title: project.rows[0].title,
+                    project_author: project.rows[0].username, // need to be resolved into the actual username QUERY
+                    project_date: time.getDate(project.rows[0].timestamp),
+                    project_tags: project.rows[0].tags, // need to be resolved into the id list /!\ QUERY
+                    project_description: project.rows[0].description,
+                    project_content: project.rows[0].content,
+                    page: 'Article'
+                })
+            } else {
+                res.redirect('/project')
+            }
+        })
+        .catch(e => {
+            console.error(e.stack)
+            res.redirect('/project')
+        })
+
+})
 
 projectRoute.post('/', function (req, res) {
     if (req.session.user) {

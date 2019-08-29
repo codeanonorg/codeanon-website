@@ -84,10 +84,10 @@ profileRoute.post('/', function (req, res) {
         })
         .then(queryResponse => {
             console.log('modified correctly : ' + JSON.stringify(queryResponse))
-            
+
+            res.redirect('/logout')
         })
         .catch(e => console.error(e.stack))
-        res.redirect('/logout')
 })
 
 module.exports = profileRoute

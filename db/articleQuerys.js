@@ -14,13 +14,7 @@ module.exports = {
             article_tags,
             article_description,
         } = req.body
-
-        //  tags
-        // 'on'
-        // 'undefined'
-
-
-        //let tags = article_tags.split(" ")
+        
 
         let md = new MarkdownIt()
         let htmlArticle = md.render(article_content)

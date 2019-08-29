@@ -12,52 +12,40 @@
 
 <body>
     <section class="layout col-light">
-        <!--    Header  -->
         <% include templates/header.ejs %>
-        <!--    Main    -->
+
         <main>
-            <h4>Tu veux proposer tes propres projets? -> <a href="/projecter"> <strong>viens par ici</strong></a></h4>
-            <!--    a retravailler  -->
-
-
-            <form method="GET" class="text-center">
-                <input type="text" name="tag" placeholder="Recherche par tags">
-                <button type="submit">Recherche...</button>
-            </form>
-            <form method="GET" class="text-center">
-                <button name="allArt">Afficher tout les projets</button>
-            </form>
-
-
-            <form method="GET">
-
-            </form>
-            <!--    Jusqu'ici   -->
             <article>
-
-                <% for (let i = 0; i < project_list.length; i++) {%>
-                <a href="/article/<%= article_list[i]._id %> ">
-                    <section class="card">
-                        <header>
-                            <h3><%= article_list[i].article_title %></h3>
-                            <h3 class="col-ocre"><%= article_list[i].article_author %></h3>
-                            <h3><%= article_date_list[i] %></h3>
-                            <p>
-                                <%= article_list[i].article_description.slice(0, 120) %>
-
-                            </p>
-                            <p>
-                                <% article_list[i].article_tags.forEach( item => {%>
+                <header>
+                    <h1>
+                        <%= project_title %>
+                    </h1>
+                    <h2 class="col-ocre">
+                        <a href="/profile/<%= project_author %>"></a><%= project_author %>
+                    </h2>
+                    <p>
+                        @CodeAnon ~ <%= project_date %>
+                    </p>
+                    <p>
+                        <% if(project_tags) {%>
+                            <% project_tags.forEach( item => {%>
                                 #<%= item  %>
-                                <% }) %>
-                            </p>
-                        </header>
-                    </section>
-                </a>
-                <% } %>
+                            <% }) %>
+                        <% } %>
+                    </p>
+                    <p>
+                        <%= project_description %>
+                    </p>
+                </header>
+                <main>
+                    <p>
+                        <%- project_content %>
+                    </p>
+                </main>
             </article>
         </main>
-        <!--    Footer  -->
+
+
         <% include templates/footer.ejs %>
     </section>
 </body>

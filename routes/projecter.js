@@ -25,14 +25,15 @@ projecterRoute.post('/', function (req, res) {
     if (req.session.user) {
         
         projectQuery
-            .submitProject()
+            .submitProject(req)
             .then( queryResponse => {
                 console.log('Project Created : \n' + JSON.stringify(queryResponse.rows[0]))
                 res.redirect('/project')
             })
             .catch(e => console.error(e.stack))
+    } else {
+        res.redirect('/')
     }
-    res.redirect('/')
 })
 
 module.exports = projecterRoute
