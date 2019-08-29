@@ -1,7 +1,7 @@
 {
   "name": "ca-website",
   "version": "1.0.0",
-  "description": "",
+  "description": "Website for the CodeAnon Student Organisation",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
