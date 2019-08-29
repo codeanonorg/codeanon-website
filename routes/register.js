@@ -10,8 +10,6 @@ const registerRoute = Router()
 
 const userQuerys = require('../db/userQuerys')
 
-const bcrypt = require('bcrypt');
-const saltRounds = 10; // increase the number to make the brutforcing harder
 
 const time = require('../public/js/timeHandling')
 // ca doit dégager viteuf par contre ca
@@ -67,7 +65,7 @@ registerRoute.post('/', function (req, res) {
             const status = 1 // ok
 
             // registering new user
-            return userQuerys.register(username, realName, email, bcrypt.hashSync(password, saltRounds), timestamp, role, status)
+            return userQuerys.register(username, realName, email, password, timestamp, role, status)
         })
         
         // everything went ok

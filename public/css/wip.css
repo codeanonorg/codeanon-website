@@ -125,7 +125,7 @@ span {
     background: #eeeeee;
     color: #222831;
     border-radius: 1em;
-
+    box-shadow: 4px 5px 5px 0px rgba(0,0,0,0.37);
     transition: transform 0.4s;
 }
 
@@ -225,6 +225,14 @@ textarea[type=contenu] {
 
 /*** login / home / register ***/
 
+.error-msg {
+    background: #b55400;
+    margin: 1rem auto 0 auto;
+    width: 350px;
+    border-radius: 0.6rem;
+    box-shadow: 8px 10px 5px 0px rgba(0,0,0,0.37);
+}
+
 .border-bottom{
     border-bottom: 1px solid white;
 }
@@ -240,6 +248,10 @@ textarea[type=contenu] {
     left: 50%;
     margin: -100px 0 0 -135px;
     /* pretty shitty */
+}
+
+.borderized{
+    box-shadow: 4px 5px 5px 0px rgba(0,0,0,0.37);
 }
 
 /*** Animation ***/
