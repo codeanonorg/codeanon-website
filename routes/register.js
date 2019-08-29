@@ -45,13 +45,13 @@ registerRoute.post('/', function (req, res) {
         
         // test if USERNAME is availiable
         .then( () => {
-            console.log('user test : ' + queryResult)
+            console.log(`user test : ${username}`)
             return userQuerys.testIfEmailInDb(email)
         })
         
         // if email is valid
         .then( () => {
-            console.log('email test : ' + queryResult)
+            console.log(`email test : ${email}`)
             
             if ((username === null) || (email === null) ||(password === null) || (confirmPassword === null)) {
                 throw 'please fill all fields'
