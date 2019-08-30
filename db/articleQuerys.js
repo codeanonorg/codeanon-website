@@ -38,16 +38,32 @@ module.exports = {
                             ORDER BY timestamp DESC \
                             LIMIT 10;'
         return db.query(sqlQuery)
-
-
     },
 
     getArticlByTag: function (tag) {
+        //      SQL injection possible?? 
+        //      shity driver did not give a better solution
+        //      (or i did not find it until this day)
+        const params = tag
+
+        const sqlQuery =    `SELECT * FROM articles \
+                            WHERE tags @> '{"${params}"}'`
+
+        return db.query(sqlQuery)
+        /**
+         * add """AND tags @> '{"language"}';""" at the end for dynamic querys
+         * for each tag separated by a coma "," add the string with the requested parameter
+         */
         
     },
 
     getAllArticles: function () {
-        
+        const sqlQuery =    'SELECT articles.article_id, articles.title, users.username, articles.timestamp, articles.tags ,articles.description, articles.content \
+                            FROM articles\
+                            LEFT JOIN users \
+                                ON articles.user_id = users.user_id \
+                            ORDER BY timestamp DESC;'
+        return db.query(sqlQuery)
     },
 
     getArticleById: function (artcleId) {
