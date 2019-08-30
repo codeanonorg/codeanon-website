@@ -3,6 +3,8 @@ const express           = require('express')
 const expressValidator  = require('express-validator')
 const session           = require('cookie-session')
 const bodyParser        = require('body-parser')
+const favicon           = require('serve-favicon')
+const path              = require('path')
 
 const root      = require('./routes/root')
 const login     = require('./routes/login')
@@ -18,6 +20,7 @@ const logout    = require('./routes/logout')
 const admin     = require('./routes/admin')
 const about     = require('./routes/about')
 const resources = require('./routes/resources')
+
 const app = express()
 
 // Set up sql connexion
@@ -35,6 +38,8 @@ const client = new Client(
 )
 
 client.connect()
+
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.use(express.static('public'))
 app.use(express.static('bower_components'))
