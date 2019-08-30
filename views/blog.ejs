@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="/css/wip.css">
+    <link rel="stylesheet" type="text/css" href="./css/wip.css">
 
     <title>CodeAnon</title>
 </head>
@@ -21,11 +21,11 @@
 
 
             <form method="GET" class="text-center">
-                <input type="text" name="tag" placeholder="Recherche par tags">
+                <input type="text" name="tags" placeholder="Recherche par tag">
                 <button type="submit">Recherche...</button>
             </form>
             <form method="GET" class="text-center">
-                <button name="allArt">Afficher tout les articles</button>
+                <button name="allArt" value="allArt">Afficher tout les articles</button>
             </form>
 
 
@@ -42,7 +42,8 @@
                             <h3><%= article_list[i].title %></h3>
                             <h3>
                                 <object data="user.svg" type="image/svg+xml">
-                                    <img src="/public/user.svg" alt=""></object>
+                                    <img src="/public/user.svg" alt="">
+                                </object>
                                 <span><%= article_list[i].username %></span> | <%= article_date_list[i] %>
                             </h3>
                             
