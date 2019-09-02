@@ -5,59 +5,82 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-
-    <!-- main script -->
-    <script type="text/javascript" src="js/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/wip.css">
 
     <title>CodeAnon</title>
 </head>
 
 <body>
+    <section class="layout col-light">
+        <!--    Header  -->
+        <% include templates/header.ejs %>
+        <!--    Main    -->
+        <main>
+            <article>
+                <header>
+                    <h3>
+                        Bienvenue sur la page d'acceuil de CodeAnon
+                    </h3>
+                </header>
+                <a href="/blog" title="Direction le blog de CodeAnon">
+                    <section class="card">
+                        <h3>
+                            /Blog
+                        </h3>
+                        <p class="marg-left">
+                            Un blog communautaire où tout le monde peut proposer des articles et les consulter.
+                        </p>
 
+                    </section>
+                </a>
+                <a href="/submit" title="Accès à la page submit">
+                    <section class="card">
+                        <h3>
+                            /Submit
+                        </h3>
+                        <p class="marg-left">
+                            Le formulaire permettant de poster des articles sur le blog.
+                        </p>
 
+                    </section>
+                </a>
+                <a href="/project">
+                    <section class="card">
+                        <h3>
+                            /Project Hub
+                        </h3>
+                        <p>
+                            L'endroit ou les projets prennent vies. Vous pouvez vous informer sur les différents projets et y participer.
+                        </p>
+                    </section>
+                </a>
+                <a href="/projecter">
+                    <section class="card">
+                        <h3>
+                            /Projecter
+                        </h3>
+                        <p>
+                            Soumettez vos projets.
+                        </p>
+                    </section>
+                </a>
+                <a href="https://git.codeanon.org/">
+                    <section class="card">
+                        <h3>
+                            AnonGit
+                        </h3>
+                        <p class="marg-left">
+                            Une plateforme git decentralisé et auto-hébergé par CodeAnon permettant de collaborer sur
+                            les différents projets.
+                        </p>
+                    </section>
+                </a>
 
-    <div class="home-grid-container back-dark col-light">
-        <div class="home-header back-dark ">
-            <h1>Welcome @ CodeAnon [<span class="col-ocre"><%= msg %></span>]</h1>
-            <h2>Where do you wan't to go?</h2>
-        </div>
-        <div class="home-main ">
-            <a href="/blog">
-
-                <div class="card">
-                    <h1 class="col-dark">Blog</h1>
-                    <p>A community driven blog, made by students for students</p>
-                </div>
-            </a>
-            <a href="/submit">
-                <div class="card back-grey">
-                    <h1 class="col-light">Submit</h1>
-                    <p class="col-ocre">
-                        A place where you can write and submit your own article
-                    </p>
-                </div>
-            </a>
-            <a href="/profile">
-            
-            <div class="card back-light">
-                <h1 class="col-ocre">Profile</h1>
-                <p class="col-grey">
-                    Just your profile page with some information
-                </p>
-            </div>
-            </a>
-            <div class="card back-grey">
-                <h1 class="col-ocre"> Git platform</h1>
-                <p>Incomming git platform allowing you to push project to a decentralized network controled by us</p>
-            </div>
-        </div>
-        <div class="home-footer back-dark">
-            <a href="/logout"><button class="disconnect"><b>X</b></button></a>
-            <a href="/about"><h1>About us</h1></a>
-        </div>
-    </div>
+            </article>
+        </main>
+        <!--    Footer  -->
+        <% include templates/footer.ejs %>
+    </section>
 </body>
 
 </html>
-<!-- <a href="" style="display:block;width:100vh;height:100vh;"> -->

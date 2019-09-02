@@ -1,39 +1,24 @@
-function getData() {
-    let pass = document.getElementById('pass').value
-    let name = document.getElementById('email').value
-    return {
-        email: name,
-        password: CryptoJS.SHA256(pass).toString()
-    }
-};
-
-function login() {
-    let data = getData()
-    return fetch('/', {
-        method: "POST",
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        body: JSON.stringify(data)
-    })
-};
-
-
-function submit() {
-    login()
-    return false
-};
-
-
 function toggle(elementId) {
 	let element = document.getElementById(elementId);
-	if(element.style.display == "block") {
-    		element.style.display = "none";
-  	}
+	if (element.style.display == "block") {
+		element.style.display = "none";
+	}
 	else {
 		element.style.display = "block";
 	}
-} 
+}
+
+let coll = document.getElementsByClassName("collapsible");
+let i;
+
+for (i = 0; i < coll.length; i++) {
+	coll[i].addEventListener("click", function () {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.maxHeight) {
+			content.style.maxHeight = null;
+		} else {
+			content.style.maxHeight = content.scrollHeight + "px";
+		}
+	});
+}

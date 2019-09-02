@@ -1,36 +1,33 @@
 {
   "name": "ca-website",
   "version": "1.0.0",
-  "description": "",
+  "description": "Website for the CodeAnon Student Organisation",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jdrprod/ca-website.git"
+    "url": "git+https://github.com/codeanonorg/codeanon-website"
   },
   "author": "Codeanon",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jdrprod/ca-website/issues"
+    "url": "https://github.com/codeanonorg/codeanon-website/issues"
   },
-  "homepage": "https://github.com/jdrprod/ca-website#readme",
+  "homepage": "https://github.com/codeanonorg/codeanon-website#readme",
   "dependencies": {
     "bcrypt": "^3.0.6",
-    "body-parser": "^1.18.3",
-    "cookie-parser": "^1.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
     "cookie-session": "^2.0.0-beta.3",
-    "crypto-js": "^3.1.9-1",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
     "express-validator": "^5.3.1",
     "markdown-it": "^8.4.2",
-    "mongodb": "^3.2.4"
+    "pg": "^7.12.1",
+    "serve-favicon": "^2.5.0"
   },
-  "devDependencies": {
-    "nodemon": "^1.18.9"
-  }
+  "devDependencies": {}
 }
