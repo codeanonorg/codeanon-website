@@ -47,4 +47,28 @@ module.exports = {
 
         return db.query(sqlQuery, params)        
     },
+
+    getProjectByTag: function (projectTag) {
+        //      SQL injection possible?? 
+        //      shity driver did not give a better solution
+        //      (or i did not find it until this day)
+        const params = projectTag
+
+        const sqlQuery =    `SELECT * FROM projects \
+                            WHERE tags @> '{"${params}%"}'`
+
+        return db.query(sqlQuery)
+        /**
+         * add """AND tags @> '{"language"}';""" at the end for dynamic querys
+         * for each tag separated by a coma "," add the string with the requested parameter
+         */
+    },
+    getAllProjects: function() {
+        const sqlQuery =    'SELECT projects.project_id, projects.title, users.username, projects.timestamp, projects.tags ,projects.description, projects.content \
+                            FROM projects\
+                            LEFT JOIN users \
+                                ON projects.user_id = users.user_id \
+                            ORDER BY timestamp DESC;'
+        return db.query(sqlQuery)
+    }
 }

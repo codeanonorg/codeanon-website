@@ -80,8 +80,8 @@ module.exports = {
 
     },
     
-    getUserId: function (username) {
-        const username = [username]
+    getUserId: function (usernameParameter) {
+        const username = [usernameParameter]
         const sqlQuery = 'SELECT user_id FROM users WHERE username = $1'
         return db.query(sqlQuery, username)
     }

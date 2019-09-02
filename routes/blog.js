@@ -20,6 +20,7 @@ blogRoute.get('/', function (req, res) {
         const user = req.session.user.username;
 
         if (typeof req.query.tags !== 'undefined') {
+            // by tags
 
             let dateArray;
             let articleList;
@@ -45,24 +46,10 @@ blogRoute.get('/', function (req, res) {
                     })
                 })
                 .catch(e => console.error(e))
-            /*
-            const art_by_tag = articleQuery.getArticlByTag(req.query['tag']);
-
-            let date_array = time.getDatesForArticleList(art_by_tag);
-
-            res.render('blog.ejs', {
-                username: user,
-                article_list: art_by_tag,
-                article_date_list: date_array,
-                page: 'Blog'
-            })
-
-            */
-
-
-
 
         } else if (req.query.allArt === 'allArt') {
+
+            // all articles
 
             articleQuery
                 .getAllArticles()
