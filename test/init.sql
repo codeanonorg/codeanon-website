@@ -69,3 +69,7 @@ CREATE TABLE IF NOT EXISTS liked_projects (
     CONSTRAINT fk_liked_projects_user_id FOREIGN KEY (user_id) REFERENCES users (user_id),
     PRIMARY KEY (project_id, user_id)
 );
+
+INSERT INTO roles(name) VALUES ('admin'), ('moderateur'), ('prestige'), ('membre');
+
+INSERT INTO account_status(name) VALUES ('ok'), ('kicked'), ('banned'), ('censored');
