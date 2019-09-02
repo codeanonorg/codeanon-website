@@ -16,27 +16,85 @@ projectRoute.get('/', function (req, res) {
 
     if (!req.session.user) res.redirect('/');
 
+    if (req.query.tag) {
 
-    projectQuery
-        .getTenMostRecentProjects()
-        .then(queryResponse => {
+        console.log('tag')
 
-            let date_array = time.getDatesForArticleList(queryResponse.rows)
+        let dateArray;
+        let projectList;
 
-            res.render('projectHub.ejs', {
-                username: req.session.user.username,
-                project_list: queryResponse.rows,
-                project_date_list: date_array,
-                page: 'ProjectHub',
+        projectQuery
+            .getProjectByTag(req.query.tag)
+            .then(projects => {
+
+                if (projects.rows[0]) {
+
+                    dateArray = time.getDatesForArticleList(projects)
+                    projectList = projects.rows
+
+                } else {
+                    dateArray = []
+                    projectList = []
+                }
+                res.render('projectHub.ejs', {
+                    username: req.session.user.username,
+                    project_list: projectList,
+                    project_date_list: dateArray,
+                    page: 'Project Hub',
+                })
             })
-        })
-        .catch(e => {
-            console.error(e.stack)
-            console.log('error')
-        })
+            .catch(e => console.error(e))
+    } else if (req.query.allArt === 'allArt') {
+        console.log('all art')
+
+        let dateArray;
+        let projectList;
 
 
+        projectQuery
+            .getAllProjects()
+            .then(projects => {
+
+                if (projects.rows[0]) {
+
+                    dateArray = time.getDatesForArticleList(projects)
+                    projectList = projects.rows
+
+                } else {
+                    dateArray = []
+                    projectList = []
+                }
+
+                res.render('projectHub.ejs', {
+                    username: req.session.user.username,
+                    project_list: projectList,
+                    project_date_list: dateArray,
+                    page: 'Project Hub',
+                })
+            })
+            .catch(e => console.error(e))
+    } else {
+        projectQuery
+            .getTenMostRecentProjects()
+            .then(queryResponse => {
+
+                let date_array = time.getDatesForArticleList(queryResponse.rows)
+
+                res.render('projectHub.ejs', {
+                    username: req.session.user.username,
+                    project_list: queryResponse.rows,
+                    project_date_list: date_array,
+                    page: 'ProjectHub',
+                })
+            })
+            .catch(e => {
+                console.error(e.stack)
+                console.log('error')
+            })
+    }
 })
+
+
 
 projectRoute.get('/:projectId', function (req, res) {
     projectQuery
@@ -64,23 +122,5 @@ projectRoute.get('/:projectId', function (req, res) {
 
 })
 
-projectRoute.post('/', function (req, res) {
-    if (req.session.user) {
-        //  articleQuery.submitArticle(req, req.session.user.username)
-
-        //  projectQuery.submitProject(req, req.session.user.username)
-    }
-    res.redirect('/')
-})
-
-projectRoute.post('/perTag', function (req, res) {
-    if (!req.session.user) res.redirect('/')
-    console.log('perTag')
-})
-
-projectRoute.post('/allArt', function (req, res) {
-    if (!req.session.user) res.redirect('/')
-    console.log('allArt')
-})
 
 module.exports = projectRoute
