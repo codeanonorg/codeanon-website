@@ -73,4 +73,14 @@ projectRoute.post('/', function (req, res) {
     res.redirect('/')
 })
 
+projectRoute.post('/perTag', function (req, res) {
+    if (!req.session.user) res.redirect('/')
+    console.log('perTag')
+})
+
+projectRoute.post('/allArt', function (req, res) {
+    if (!req.session.user) res.redirect('/')
+    console.log('allArt')
+})
+
 module.exports = projectRoute

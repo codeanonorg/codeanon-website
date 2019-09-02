@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
 
 const { Client } = require('pg')
 
@@ -8,7 +10,7 @@ const client = new Client({
     host: 'localhost',
     database: 'catest',
     password: 'dev',
-    port: 5555,
+    port: 5432,
 })
 
 client.connect()
@@ -107,7 +109,7 @@ client
 
 // Status Init
 const status_sql = 'INSERT INTO account_status(name) VALUES ($1),($2),($3),($4)'
-const value_st = ['ok', 'kicked','banned','censored']
+const value_st = ['ok', 'kicked', 'banned', 'censored']
 
 client
     .query(status_sql, value_st)
@@ -115,3 +117,36 @@ client
         console.log('status created')
     })
     .catch(e => console.error(e.stack))
+
+const user_sql = 'INSERT INTO users(username, real_name, email, password, timestamp, role_id, status_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *'
+const pass = bcrypt.hashSync("admin", saltRounds)
+const value_user = ['admin', 'realAdmin', 'admin@codeanon.org', pass, '123455', 1, '1']
+
+client
+    .query(user_sql, value_user)
+    .then(res => {
+        console.log("admin created ")
+    })
+    .catch(e => console.error(e.stack))
+
+let article = {
+    title: `Titre de L'article`,
+    user_id: 1,
+    timestamp: 1560856149011,
+    tags: ["tag1", "tag2"],
+    description: `description de l'article (~200 caractères)`,
+    content: `<h1>test article</h1><p>la paragraaphe</p>`
+}
+
+
+
+const sqlQuery = 'INSERT INTO articles(title, user_id, timestamp, description, content) VALUES ($1, $2, $3, $4, $5) RETURNING *'
+const params = [article.title, article.user_id, article.timestamp, article.description, article.content]
+
+
+client
+    .query(sqlQuery, params)
+    .then(res => {
+        console.log('article, created')
+        console.log(res.rows[0])
+    }).catch(e => console.error(e.stack))

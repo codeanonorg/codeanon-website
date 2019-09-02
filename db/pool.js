@@ -5,7 +5,7 @@ const pool = new Pool({
     host: 'localhost',
     database: 'catest',
     password: 'dev',
-    port: 5555,
+    port: 5432,
 })
 
 

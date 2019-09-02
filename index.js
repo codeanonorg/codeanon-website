@@ -33,7 +33,7 @@ const client = new Client(
         host: 'localhost',
         database: 'catest',
         password: 'dev',
-        port: 5555,
+        port: 5432,
     }
 )
 
