@@ -12,42 +12,39 @@
 
 <body>
     <section class="layout col-light">
-        
-        <!--    Header  -->
         <% include templates/header.ejs %>
-        
-        <!--    Main  -->
+
         <main>
             <article>
                 <header>
                     <h1>
-                        <%= article_title %>
+                        <%= project_title %>
                     </h1>
                     <h2 class="col-ocre">
-                        <a href="/profile/<%= article_author %>"></a><%= article_author %>
+                        <a href="/profile/<%= project_author %>"></a><%= project_author %>
                     </h2>
                     <p>
-                        @CodeAnon ~ <%= article_date %>
+                        @CodeAnon ~ <%= project_date %>
                     </p>
                     <p>
-                        <% if(article_tags) {%>
-                            <% article_tags.forEach( item => {%>
+                        <% if(project_tags) {%>
+                            <% project_tags.forEach( item => {%>
                                 #<%= item  %>
                             <% }) %>
                         <% } %>
                     </p>
                     <p>
-                        <%= article_description %>
+                        <%= project_description %>
                     </p>
                 </header>
                 <main>
                     <p>
-                        <%- article_content %>
+                        <%- project_content %>
                     </p>
                 </main>
             </article>
         </main>
-        <!--    Footer  -->
+
 
         <% include templates/footer.ejs %>
     </section>
