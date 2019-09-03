@@ -20,5 +20,15 @@ module.exports = {
         const param = [key]
 
         return db.query(sqlQuery, param)        
+    },
+
+    updateCodaKey: function (key, user_id) {
+        
+        const sqlQuery =    `UPDATE codakeys \
+                            SET user_id = $2 \
+                            WHERE key_text = $1;`
+        const params = [key, user_id]
+        
+        return db.query(sqlQuery, params)
     }
 }

@@ -17,7 +17,7 @@ module.exports = {
     register:  function (usernamePara, realName, emailPara, passwordPara, timestamp, role, status) {
 
         const parameters = [usernamePara, realName, emailPara, bcrypt.hashSync(passwordPara, saltRounds), timestamp, role, status]
-        const sqlQuery = 'INSERT INTO users(username, real_name, email, password, timestamp, role_id, status_id) VALUES ($1, $2, $3, $4, $5, $6, $7)'
+        const sqlQuery = 'INSERT INTO users(username, real_name, email, password, timestamp, role_id, status_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *'
         return db.query(sqlQuery, parameters)        
     },
 
