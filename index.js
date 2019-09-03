@@ -1,24 +1,24 @@
 //  app.js
-const express           = require('express')
-const expressValidator  = require('express-validator')
-const session           = require('cookie-session')
-const bodyParser        = require('body-parser')
-const favicon           = require('serve-favicon')
-const path              = require('path')
+const express = require('express')
+const expressValidator = require('express-validator')
+const session = require('cookie-session')
+const bodyParser = require('body-parser')
+const favicon = require('serve-favicon')
+const path = require('path')
 
-const root      = require('./routes/root')
-const login     = require('./routes/login')
-const register  = require('./routes/register')
-const home      = require('./routes/home')
-const blog      = require('./routes/blog')
-const article   = require('./routes/article')
-const submit    = require('./routes/submit')
-const project   = require('./routes/project')
+const root = require('./routes/root')
+const login = require('./routes/login')
+const register = require('./routes/register')
+const home = require('./routes/home')
+const blog = require('./routes/blog')
+const article = require('./routes/article')
+const submit = require('./routes/submit')
+const project = require('./routes/project')
 const projecter = require('./routes/projecter')
-const profile   = require('./routes/profile')
-const logout    = require('./routes/logout')
-const admin     = require('./routes/admin')
-const about     = require('./routes/about')
+const profile = require('./routes/profile')
+const logout = require('./routes/logout')
+const admin = require('./routes/admin')
+const about = require('./routes/about')
 const resources = require('./routes/resources')
 
 const app = express()
@@ -29,8 +29,15 @@ const { Client } = require('pg')
 
 const client = new Client(
     {
+        user: 'postgres',
+        host: 'localhost',
+        database: 'catest',
+        password: 'dev',
+        port: 5432,
+        /*
         connectionString: process.env.DATABASE_URL,
         ssl: true,
+        */
     }
 )
 
@@ -85,7 +92,7 @@ app.get('*', (req, res) => {
 
 // Routing End
 
-const port = process.env.PORT;
+const port = 8080//process.env.PORT;
 
 app.listen(port, () => {
     console.log('Listening on port: ' + port);

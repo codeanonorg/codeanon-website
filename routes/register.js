@@ -9,7 +9,7 @@ const registerRoute = Router()
 
 
 const userQuerys = require('../db/userQuerys')
-
+const codakeyQuerys = require('../db/codakeyQuerys')
 
 const time = require('../public/js/timeHandling')
 // ca doit dégager viteuf par contre ca
@@ -31,16 +31,25 @@ registerRoute.get('/', function (req, res) {
 })
 
 registerRoute.post('/', function (req, res) {
-    let username    = req.body['registerUsername']
-    let realName    = req.body['registerRealName']
-    let email       = req.body['registerEmail']
-    let password    = req.body['registerPassword']
-    let confirmPassword = req.body['registerConfirmPassword']
+    let username    = req.body.registerUsername
+    let realName    = req.body.registerRealName
+    let email       = req.body.registerEmail
+    let password    = req.body.registerPassword
+    let confirmPassword = req.body.registerConfirmPassword
+    let codaKey     = req.body.registerCodakey
 
     req.checkBody('registerEmail', 'Please enter a valid email').isEmail();
 
-    userQuerys.testIfUserInDb(username)
-        
+    // test
+    codakeyQuerys
+        .testIfKeyInDb(codaKey)
+        .then( queryResponse => {
+            if (queryResponse.rows[0].user_id) {
+                throw 'CodaKey déjà utilisée'
+            } else {
+                return userQuerys.testIfUserInDb(username)
+            }
+        })        
         // test if USERNAME is availiable
         .then( () => {
             console.log(`user test : ${username}`)
@@ -70,10 +79,13 @@ registerRoute.post('/', function (req, res) {
         
         // everything went ok
         .then(result => {
-            console.log('result from register : ' + result)
+            console.log('result from register : ' + result.rows[0])
+            
+            return codakeyQuerys.updateCodaKey(codaKey, result.rows[0].user_id)
+        })
+        .then( () => {
             res.redirect('/login')
         })
-        
         // error during registration
         .catch( error => {
             res.render("register.ejs", {

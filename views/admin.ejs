@@ -11,27 +11,26 @@
 </head>
 
 <body>
-    <header>
 
-    </header>
-    <section class="layout">
-        <nav class="back-dark col-light">
+    <section class="layout col-light">
+        <!-- Header-->
+        <% include templates/header.ejs %>
+        <main>
             <h1>
                 Admin Panel
             </h1>
             <h2>
-                Welcome <%= username %> @ <%= page %>
+                Bienvenue <span><%= username %></span> @ <%= page %> panel
             </h2>
             <ul>
+                <a href="/admin/codakey" target="_blank" rel="noopener noreferrer"><li>CodaKey Param</li></a>
                 <li>Vérification articles</li>
                 <li>Vérificitaion Projets</li>
-                <li>CodaKey Param</li>
                 <li>userlist, roles, last login(link to profile pages)</li>
             </ul>
-        </nav>
-        <div class="back-ocre col-light">
-            {{ DISPLAY }}
-        </div>
+        </main>
+        <!-- Footer-->
+        <% include templates/footer.ejs %>
     </section>
 </body>
 
