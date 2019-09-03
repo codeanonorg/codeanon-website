@@ -31,13 +31,19 @@ registerRoute.get('/', function (req, res) {
 })
 
 registerRoute.post('/', function (req, res) {
-    let username    = req.body['registerUsername']
-    let realName    = req.body['registerRealName']
-    let email       = req.body['registerEmail']
-    let password    = req.body['registerPassword']
-    let confirmPassword = req.body['registerConfirmPassword']
+    let username    = req.body.registerUsername
+    let realName    = req.body.registerRealName
+    let email       = req.body.registerEmail
+    let password    = req.body.registerPassword
+    let confirmPassword = req.body.registerConfirmPassword
+    let codaKey     = req.body.registerCodakey
 
     req.checkBody('registerEmail', 'Please enter a valid email').isEmail();
+
+
+    
+
+
 
     userQuerys.testIfUserInDb(username)
         
