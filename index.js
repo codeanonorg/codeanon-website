@@ -94,7 +94,7 @@ app.get('*', (req, res) => {
 
 // Routing End
 
-const port = 8080//process.env.PORT;
+const port = process.env.PORT;
 
 app.listen(port, () => {
     console.log('Listening on port: ' + port);
