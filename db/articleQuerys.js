@@ -75,5 +75,16 @@ module.exports = {
         const params = [artcleId]
 
         return db.query(sqlQuery, params)        
+    },
+
+    getArticlesByVerificationStatus: function (status) {
+        const sqlQuery =    'SELECT articles.article_id, articles.title, users.username, articles.timestamp, articles.tags, articles.description, articles.content, articles.verified \
+                            FROM articles \
+                            LEFT JOIN users \
+                                ON articles.user_id = users.user_id \
+                            WHERE verified = $1'
+        const param = [status]
+
+        return db.query(sqlQuery, param)
     }
 }

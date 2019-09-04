@@ -29,16 +29,16 @@ const { Client } = require('pg')
 
 const client = new Client(
     {
-        /*
+        
         user: 'postgres',
         host: 'localhost',
         database: 'catest',
         password: 'dev',
         port: 5432,
-        */
         
-        connectionString: process.env.DATABASE_URL,
-        ssl: true,
+        
+        //  connectionString: process.env.DATABASE_URL,
+        //  ssl: true,
         
     }
 )
@@ -94,7 +94,7 @@ app.get('*', (req, res) => {
 
 // Routing End
 
-const port = process.env.PORT;
+const port = 8080//process.env.PORT;
 
 app.listen(port, () => {
     console.log('Listening on port: ' + port);

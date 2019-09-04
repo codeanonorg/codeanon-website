@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS articles (
     tags            text[],
     description     text        NOT NULL,
     content         text        NOT NULL,
+    verified        boolean     NOT NULL DEFAULT false,
     CONSTRAINT fk_articles_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
@@ -50,6 +51,7 @@ CREATE TABLE IF NOT EXISTS projects (
     tags            text[],
     description     text,
     content         text        NOT NULL,
+    verified        boolean     NOT NULL DEFAULT false,
     CONSTRAINT fk_projects_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
