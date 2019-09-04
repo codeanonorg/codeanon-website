@@ -46,6 +46,14 @@ app.use(session({
 
 app.use(expressValidator())
 
+app.use((req, res, next) => {
+    if (req.session.user) {
+        next(req, res)
+    } else {
+        res.redirect('/login')
+    }
+})
+
 
 //  Routing Start
 
