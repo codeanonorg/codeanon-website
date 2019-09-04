@@ -41,11 +41,3 @@ submitRoute.post('/', function (req, res) {
 })
 
 module.exports = submitRoute
-
-
-
-/**
- * Submit: 
- * titre, contenu, desc, time
- * username id
- */

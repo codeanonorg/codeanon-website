@@ -143,7 +143,7 @@ adminRoute.get('/unverifiedArticles', function (req, res) {
 
             if (queryResponse.rows[0]) {
 
-                dateArray = time.getDatesForArticleList(queryResponse)
+                dateArray = time.getDatesForArticleList(queryResponse.rows)
                 articleList = queryResponse.rows
 
             } else {

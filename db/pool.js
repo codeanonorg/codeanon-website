@@ -6,7 +6,7 @@ const pool = new Pool({
     host: 'localhost',
     database: 'catest',
     password: 'dev',
-    port: 5432,
+    port: 5555,
     
     
     //  connectionString: process.env.DATABASE_URL,

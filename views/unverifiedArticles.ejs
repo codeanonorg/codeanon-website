@@ -21,37 +21,49 @@
             <article>
 
                 <% for (let i = 0; i < article_list.length; i++) {%>
-                <a href="/article/<%= article_list[i].article_id %> ">
-                    <section class="card">
-                        <header>
-                            <h3><%= article_list[i].title %></h3>
-                            <h3>
-                                <object data="user.svg" type="image/svg+xml">
-                                    <img src="/user.svg" alt="">
-                                </object>
-                                <span><%= article_list[i].username %></span> | <%= article_date_list[i] %>
-                            </h3>
 
-                            <p>
-                                <%= article_list[i].description.slice(0, 120) %>
+                <div class="container">
+                    <a href="/article/<%= article_list[i].article_id %> ">
 
-                            </p>
-                            <p>
-                                <% if(article_list[i].tags) {%>
-                                <% article_list[i].tags.forEach( item => {%>
-                                #<%= item  %>
-                                <% }) %>
-                                <% } %>
-                            </p>
-                        </header>
+
+                        <section class="card-flex">
+                            <header>
+                                <h3><%= article_list[i].title %></h3>
+                                <h3>
+                                    <object data="user.svg" type="image/svg+xml">
+                                        <img src="../../public/user.svg" alt="">
+                                    </object>
+                                    <span><%= article_list[i].username %></span> | <%= article_date_list[i] %>
+                                </h3>
+
+                                <p>
+                                    <%= article_list[i].description.slice(0, 120) %>
+
+                                </p>
+                                <p>
+                                    <% if(article_list[i].tags) {%>
+                                    <% article_list[i].tags.forEach( item => {%>
+                                    #<%= item  %>
+                                    <% }) %>
+                                    <% } %>
+                                </p>
+                            </header>
+                        </section>
+                    </a>
+                    <section class="side-card-flex">
+                        <form action="/article/<%= article_list[i].article_id %>/delete" method="get">
+                            <button class="danger" id="test">Delete Article</button>
+                        </form>
+
                     </section>
-                </a>
+                </div>
                 <% } %>
             </article>
         </main>
         <!-- Footer-->
         <% include templates/footer.ejs %>
     </section>
+
 </body>
 
 </html>

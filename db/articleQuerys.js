@@ -15,6 +15,9 @@ module.exports = {
             article_description,
         } = req.body
         
+        if (typeof article_tags !== Object) {
+            article_tags = [article_tags]
+        }
 
         let md = new MarkdownIt()
         let htmlArticle = md.render(article_content)
@@ -82,9 +85,21 @@ module.exports = {
                             FROM articles \
                             LEFT JOIN users \
                                 ON articles.user_id = users.user_id \
-                            WHERE verified = $1'
+                            WHERE verified = $1 \
+                            ORDER BY timestamp DESC;'
         const param = [status]
 
         return db.query(sqlQuery, param)
+    },
+
+    deleteArticleById: function (article_id) {
+        console.log('id : ' + article_id)
+
+        const sqlQuery =    'DELETE FROM articles \
+                            WHERE articles.article_id = $1;'
+        const param = [article_id]
+
+        return  db.query(sqlQuery, param)
     }
 }
+
