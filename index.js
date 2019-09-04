@@ -46,16 +46,13 @@ app.use(session({
 
 app.use(expressValidator())
 
-app.use((req, res, next) => {
-    if (req.session.user 
-        || req.path === '/login' 
-        || req.path === '/register' 
-        || req.path === '/home'
+let check = (req, res, next) => {
+    if (req.session.user) {
         next(req, res)
     } else {
         res.redirect('/login')
     }
-})
+}
 
 
 //  Routing Start
@@ -63,17 +60,17 @@ app.use((req, res, next) => {
 app.use('/', root)
 app.use('/login', login)
 app.use('/register', register)
-app.use('/home', home)
-app.use('/blog', blog)
-app.use('/article', article)
-app.use('/submit', submit)
-app.use('/project', project)
-app.use('/projecter', projecter)
-app.use('/profile', profile)
-app.use('/logout', logout)
-app.use('/admin', admin)
-app.use('/about', about)
-app.use('/resources', resources)
+app.use('/home', check, home)
+app.use('/blog', check, blog)
+app.use('/article', check, article)
+app.use('/submit', check, submit)
+app.use('/project', check, project)
+app.use('/projecter', check, projecter)
+app.use('/profile', check, profile)
+app.use('/logout', check, logout)
+app.use('/admin', check, admin)
+app.use('/about', check, about)
+app.use('/resources', check, resources)
 
 app.get('*', (req, res) => {
     res.status(404).render('404.ejs', {
