@@ -23,28 +23,6 @@ const resources = require('./routes/resources')
 
 const app = express()
 
-// Set up sql connexion
-
-const { Client } = require('pg')
-
-const client = new Client(
-    {
-        /*
-        user: 'postgres',
-        host: 'localhost',
-        database: 'catest',
-        password: 'dev',
-        port: 5432,
-        */
-        
-        connectionString: process.env.DATABASE_URL,
-        ssl: true,
-        
-    }
-)
-
-client.connect()
-
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.use(express.static('public'))
@@ -54,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(session({
     name: 'session',
-    secret: 'jaimelescookies',
+    secret: process.env.SECRET || "jaimeleschats",
     //  keys: new Keygrip(secret, 'SHA256', 'base64'),
 
     //  Options
