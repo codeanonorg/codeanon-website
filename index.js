@@ -46,9 +46,11 @@ app.use(session({
 
 app.use(expressValidator())
 
+
 let check = (req, res, next) => {
     if (req.session.user) {
-        next(req, res)
+        next()
+    
     } else {
         res.redirect('/login')
     }
@@ -57,8 +59,8 @@ let check = (req, res, next) => {
 
 //  Routing Start
 
-app.use('/', root)
 app.use('/login', login)
+app.use('/', root)
 app.use('/register', register)
 app.use('/home', check, home)
 app.use('/blog', check, blog)
@@ -80,7 +82,7 @@ app.get('*', (req, res) => {
 
 // Routing End
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
     console.log('Listening on port: ' + port);
