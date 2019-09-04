@@ -5,6 +5,7 @@ const session = require('cookie-session')
 const bodyParser = require('body-parser')
 const favicon = require('serve-favicon')
 const path = require('path')
+const userQuery = require('./db/userQuerys')
 
 const root = require('./routes/root')
 const login = require('./routes/login')
@@ -50,10 +51,25 @@ app.use(expressValidator())
 let check = (req, res, next) => {
     if (req.session.user) {
         next()
-    
+
     } else {
         res.redirect('/login')
     }
+}
+
+let adminCheck = (req, res, next) => {
+    userQuery
+        .getUserByUsername(req.session.user.username)
+        .then(queryResponse => {
+
+            if (queryResponse.role_id !== 1) {
+
+                res.redirect('/home')
+
+            } else {
+                next()
+            }
+        }).catch(e => console.error(e))
 }
 
 
@@ -70,7 +86,7 @@ app.use('/project', check, project)
 app.use('/projecter', check, projecter)
 app.use('/profile', check, profile)
 app.use('/logout', check, logout)
-app.use('/admin', check, admin)
+app.use('/admin', check, adminCheck, admin)
 app.use('/about', check, about)
 app.use('/resources', check, resources)
 

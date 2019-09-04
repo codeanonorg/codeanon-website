@@ -9,6 +9,7 @@ const articleRoute = Router()
 
 
 const articleQuery = require('../db/articleQuerys')
+const userQuery = require('../db/userQuerys')
 const time = require('../public/js/timeHandling')
 
 //const Article = require('../models/article.model')
@@ -45,6 +46,26 @@ articleRoute.get('/:articleId', function (req, res) {
             console.error(e.stack)
             res.redirect('/blog')
         })
+})
+
+articleRoute.get('/:articleId/delete', (req, res) => {
+    userQuery
+        .getUserByUsername(req.session.user.username)
+        .then(queryResponse => {
+
+            if (queryResponse.role_id !== 1) {
+
+                res.redirect('/home')
+
+            } else {
+                return articleQuery.deleteArticleById(req.params.articleId)
+            }
+        }).then(queryResponse => {
+            console.log('Article Deleted Successfully')
+            res.redirect('/admin/unverifiedArticles')
+        })
+        .catch(e => console.error(e))
+
 })
 
 module.exports = articleRoute
