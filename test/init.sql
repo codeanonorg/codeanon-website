@@ -10,13 +10,6 @@ CREATE TABLE IF NOT EXISTS account_status (
     name            text NOT NULL UNIQUE
 );
 
-CREATE TABLE IF NOT EXISTS codakeys (
-    key_id          SERIAL PRIMARY KEY NOT NULL,
-    key_text        text NOT NULL UNIQUE,
-    user_id         integer, -- FK
-    CONSTRAINT fk_codakeys_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
-);
-
 CREATE TABLE IF NOT EXISTS users (
     user_id         SERIAL PRIMARY KEY  NOT NULL,
     username        text    NOT NULL UNIQUE,
@@ -29,6 +22,13 @@ CREATE TABLE IF NOT EXISTS users (
     update_timestamp bigint,
     CONSTRAINT fk_users_role_id FOREIGN KEY (role_id) REFERENCES roles (role_id),
     CONSTRAINT fk_users_status_id FOREIGN KEY (status_id) REFERENCES account_status (status_id)
+);
+
+CREATE TABLE IF NOT EXISTS codakeys (
+    key_id          SERIAL PRIMARY KEY NOT NULL,
+    key_text        text NOT NULL UNIQUE,
+    user_id         integer, -- FK
+    CONSTRAINT fk_codakeys_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
 CREATE TABLE IF NOT EXISTS articles (
