@@ -15,6 +15,9 @@ module.exports = {
             article_description,
         } = req.body
         
+        if (typeof article_tags !== Object) {
+            article_tags = [article_tags]
+        }
 
         let md = new MarkdownIt()
         let htmlArticle = md.render(article_content)
