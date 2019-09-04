@@ -23,28 +23,6 @@ const resources = require('./routes/resources')
 
 const app = express()
 
-// Set up sql connexion
-
-const { Client } = require('pg')
-
-const client = new Client(
-    {
-        
-        user: 'postgres',
-        host: 'localhost',
-        database: 'catest',
-        password: 'dev',
-        port: 5432,
-        
-        
-        //  connectionString: process.env.DATABASE_URL,
-        //  ssl: true,
-        
-    }
-)
-
-client.connect()
-
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.use(express.static('public'))
@@ -54,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(session({
     name: 'session',
-    secret: 'jaimelescookies',
+    secret: process.env.SECRET || "jaimeleschats",
     //  keys: new Keygrip(secret, 'SHA256', 'base64'),
 
     //  Options
@@ -69,22 +47,32 @@ app.use(session({
 app.use(expressValidator())
 
 
+let check = (req, res, next) => {
+    if (req.session.user) {
+        next()
+    
+    } else {
+        res.redirect('/login')
+    }
+}
+
+
 //  Routing Start
 
-app.use('/', root)
 app.use('/login', login)
+app.use('/', root)
 app.use('/register', register)
-app.use('/home', home)
-app.use('/blog', blog)
-app.use('/article', article)
-app.use('/submit', submit)
-app.use('/project', project)
-app.use('/projecter', projecter)
-app.use('/profile', profile)
-app.use('/logout', logout)
-app.use('/admin', admin)
-app.use('/about', about)
-app.use('/resources', resources)
+app.use('/home', check, home)
+app.use('/blog', check, blog)
+app.use('/article', check, article)
+app.use('/submit', check, submit)
+app.use('/project', check, project)
+app.use('/projecter', check, projecter)
+app.use('/profile', check, profile)
+app.use('/logout', check, logout)
+app.use('/admin', check, admin)
+app.use('/about', check, about)
+app.use('/resources', check, resources)
 
 app.get('*', (req, res) => {
     res.status(404).render('404.ejs', {
@@ -94,7 +82,7 @@ app.get('*', (req, res) => {
 
 // Routing End
 
-const port = 8080//process.env.PORT;
+const port = process.env.PORT || 8080
 
 app.listen(port, () => {
     console.log('Listening on port: ' + port);

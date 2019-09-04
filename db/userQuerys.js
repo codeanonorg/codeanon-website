@@ -8,10 +8,22 @@ const saltRounds = 10; // increase the number to make the brutforcing harder
 module.exports = {
     getUserByUsername: function (usernamePara) {
         
-        const username_ = [usernamePara] 
+        const username_ = [usernamePara]
         const sqlQuery = 'SELECT * FROM users WHERE username = $1'
 
-        return db.query(sqlQuery, username_)
+        return new Promise((resolve, reject) => {
+            db.query(sqlQuery, username_)
+            .then( data => {
+                if (data.rows.length == 0) {
+                    reject(`no user ${username_} in db`)
+                } else {
+                    resolve(data.rows[0])
+                }
+            })
+            .catch( err => {
+                reject('[db] server side error')
+            })
+        })
     },
 
     register:  function (usernamePara, realName, emailPara, passwordPara, timestamp, role, status) {

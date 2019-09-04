@@ -14,6 +14,7 @@ const articleQuery  = require('../db/articleQuerys')
 const time          = require('../public/js/timeHandling')
 
 adminRoute.get('/', function (req, res) {
+
     if (!req.session.user) {
         console.log('redirect empty')
         res.redirect('/')
@@ -39,6 +40,7 @@ adminRoute.get('/', function (req, res) {
 })
 
 adminRoute.get('/codakey', function (req, res) {
+
     if (!req.session.user) {
         res.redirect('/')
     } else {
@@ -73,7 +75,7 @@ adminRoute.post('/codakey', function (req, res) {
     userQuery
         .getUserByUsername(req.session.user.username)
         .then(queryResponse => {
-            if (queryResponse.rows[0].role_id !== 1) {
+            if (queryResponse.role_id !== 1) {
                 res.redirect('/home')
             }
 
