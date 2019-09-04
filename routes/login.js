@@ -13,11 +13,12 @@ const bcrypt = require('bcrypt');
 
 loginRoute.get('/', function (req, res) {
 
-    if (req.session) res.redirect('/home')
+    if (req.session.user) {
+        res.redirect('/home')
+    } else {
+        res.render('login.ejs', { errorMsg: '' })
+    }
     
-    res.render('login.ejs', {
-        errorMsg: ''
-    })
 })
 
 /////////////////  ERRORS FROM POST TO GET ////////////////
@@ -38,7 +39,8 @@ loginRoute.post('/',function (req, res) {
                 'username'  : username,
                 'email'     : credentials.email,
                 'user_id'   : credentials.user_id
-            };
+            }
+            
             res.redirect('/home')
 
         } else {    
@@ -51,7 +53,7 @@ loginRoute.post('/',function (req, res) {
     })
     .catch(e => {
         console.error(e)
-        res.render('login.ejs', { errorMsg : errorResponse })
+        // res.render('login.ejs', { errorMsg : errorResponse })
     })
     
 })
