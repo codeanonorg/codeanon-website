@@ -14,51 +14,57 @@ const articleQuery  = require('../db/articleQuerys')
 const time          = require('../public/js/timeHandling')
 
 adminRoute.get('/', function (req, res) {
-    if (!req.session.user) res.redirect('/')
+    if (!req.session.user) {
+        console.log('redirect empty')
+        res.redirect('/')
+    } else {
+        userQuery
+            .getUserByUsername(req.session.user.username)
+            .then(queryResponse => {
 
-    userQuery
-        .getUserByUsername(req.session.user.username)
-        .then(queryResponse => {
-
-            if (queryResponse.rows[0].role_id !== 1) {
+                if (queryResponse.rows[0].role_id !== 1) {
+                    res.redirect('/home')
+                } else {
+                    res.render('admin.ejs', {
+                        username: req.session.user.username,
+                        page: 'Panel Admin'
+                    })
+                }
+            })
+            .catch(e => {
                 res.redirect('/home')
-            } else {
-                res.render('admin.ejs', {
-                    username: req.session.user.username,
-                    page: 'Panel Admin'
-                })
-            }
-        })
-        .catch(e => {
-            res.redirect('/home')
-            console.log(e)
-        })
+                console.log(e)
+            })
+    }
 })
 
 adminRoute.get('/codakey', function (req, res) {
-    if (!req.session.user) res.redirect('/')
+    if (!req.session.user) {
+        res.redirect('/')
+    } else {
+        userQuery
+            .getUserByUsername(req.session.user.username)
+            .then(queryResponse => {
 
-    userQuery
-        .getUserByUsername(req.session.user.username)
-        .then(queryResponse => {
+                if (queryResponse.rows[0].role_id !== 1) {
 
-            if (queryResponse.rows[0].role_id !== 1) {
+                    res.redirect('/home')
 
+                } else {
+
+                    res.render('codakey.ejs', {
+                        username: req.session.user.username,
+                        page: 'CodaKey',
+                        responseMsg: '',
+                    })
+                }
+            })
+            .catch(e => {
                 res.redirect('/home')
+                console.log(e)
+            })
+    }
 
-            } else {
-
-                res.render('codakey.ejs', {
-                    username: req.session.user.username,
-                    page: 'CodaKey',
-                    responseMsg: '',
-                })
-            }
-        })
-        .catch(e => {
-            res.redirect('/home')
-            console.log(e)
-        })
 })
 
 adminRoute.post('/codakey', function (req, res) {
