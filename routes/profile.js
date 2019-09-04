@@ -42,15 +42,15 @@ profileRoute.post('/', function (req, res) {
     userQuery
         .getUserByUsername(req.session.user.username)
         .then(userResponse => {
-            console.log('password: ' + JSON.stringify(userResponse.rows[0].password))
+            console.log('password: ' + JSON.stringify(userResponse.password))
 
-            if (bcrypt.compareSync(confirmPassword, userResponse.rows[0].password)) checker += 1;
+            if (bcrypt.compareSync(confirmPassword, userResponse.password)) checker += 1;
             console.log('checker pass: ' + checker)
 
             return userQuery.testIfUserInDb(newUsername)
         })
         .then(queryResponse => {
-            console.log('user check ' + JSON.stringify(queryResponse.rows[0]))
+            console.log('user check ' + JSON.stringify(queryResponse))
 
             if (queryResponse.rows[0] === undefined) checker += 1;
             console.log('checker user check: ' + checker)
