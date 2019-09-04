@@ -9,7 +9,7 @@
   },
   "engines": {
     "npm": "6.11.2",
-    "node": "8.11.4"  
+    "node": "8.11.4"
   },
   "repository": {
     "type": "git",
@@ -24,12 +24,16 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+    "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.4",
     "cookie-session": "^2.0.0-beta.3",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "express-validator": "^5.3.1",
     "markdown-it": "^8.4.2",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pg": "^7.12.1",
     "serve-favicon": "^2.5.0"
   },
