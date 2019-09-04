@@ -15,11 +15,18 @@ loginRoute.get('/', function (req, res) {
 
     if (req.session.user) {
         res.redirect('/home')
+<<<<<<< HEAD
     }else {
         res.render('login.ejs', {
             errorMsg: ''
         })
     }
+=======
+    } else {
+        res.render('login.ejs', { errorMsg: '' })
+    }
+    
+>>>>>>> 8769ff1db107a1e0f79e792db777fac1e138d71d
 })
 
 /////////////////  ERRORS FROM POST TO GET ////////////////
@@ -32,6 +39,7 @@ loginRoute.post('/', function (req, res) {
     const errorResponse = 'invalid username or password'
 
     userQuery.getUserByUsername(username)
+
         .then(credentials => {
 
             if (bcrypt.compareSync(password, credentials.password)) {
@@ -52,7 +60,6 @@ loginRoute.post('/', function (req, res) {
             console.error(e)
             res.render('login.ejs', { errorMsg : errorResponse })
         })
-
 })
 
 
