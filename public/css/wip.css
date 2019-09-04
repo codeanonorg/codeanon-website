@@ -334,3 +334,10 @@ textarea[type=contenu] {
     overflow: hidden;
     transition: max-height 0.2s ease-out;
 }
+
+.article_content {
+    background-color: #eeeeee;
+    color: #222831;
+    border-radius: 1em;
+    padding: 0.5em 0.5em;
+}
