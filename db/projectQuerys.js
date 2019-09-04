@@ -15,6 +15,10 @@ module.exports = {
             project_description,
         } = req.body
 
+        if (typeof project_tags !== Object) {
+            project_tags = [project_tags]
+        }
+
         let md = new MarkdownIt()
         let htmlProject = md.render(project_content)
 

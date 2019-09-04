@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" type="text/css" href="/css/wip.css">
+    <title>CodeAnon</title>
+</head>
+
+<body>
+
+    <section class="layout col-light">
+        <!-- Header-->
+        <% include templates/header.ejs %>
+        <main>
+            <h2>list of all unverified articles</h2>
+
+            <article>
+
+                <% for (let i = 0; i < article_list.length; i++) {%>
+
+                <div class="container">
+                    <a href="/article/<%= article_list[i].article_id %> ">
+
+
+                        <section class="card-flex">
+                            <header>
+                                <h3><%= article_list[i].title %></h3>
+                                <h3>
+                                    <object data="user.svg" type="image/svg+xml">
+                                        <img src="../../public/user.svg" alt="">
+                                    </object>
+                                    <span><%= article_list[i].username %></span> | <%= article_date_list[i] %>
+                                </h3>
+
+                                <p>
+                                    <%= article_list[i].description.slice(0, 120) %>
+
+                                </p>
+                                <p>
+                                    <% if(article_list[i].tags) {%>
+                                    <% article_list[i].tags.forEach( item => {%>
+                                    #<%= item  %>
+                                    <% }) %>
+                                    <% } %>
+                                </p>
+                            </header>
+                        </section>
+                    </a>
+                    <section class="side-card-flex">
+                        <form action="/article/<%= article_list[i].article_id %>/delete" method="get">
+                            <button class="danger" id="test">Delete Article</button>
+                        </form>
+
+                    </section>
+                </div>
+                <% } %>
+            </article>
+        </main>
+        <!-- Footer-->
+        <% include templates/footer.ejs %>
+    </section>
+
+</body>
+
+</html>

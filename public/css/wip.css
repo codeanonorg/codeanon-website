@@ -139,6 +139,40 @@ span {
     border: 2px solid #eeeeee;
     border-radius: 1em;
 }
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.card-flex {
+    order: 0;
+    flex-grow: 4;
+
+    margin: 2rem 0.4rem 0 0;
+    padding: 0.5em 0.5em;
+    background: #eeeeee;
+    color: #222831;
+    border-radius: 1em;
+    box-shadow: 4px 5px 5px 0px rgba(0,0,0,0.37);
+    transition: transform 0.4s;
+}
+
+.side-card-flex {
+    order: 0;
+    flex-grow: 1;
+
+    margin-top: 2rem;
+    padding: 0.5em 0.5em;
+    background: #eeeeee;
+    color: #222831;
+    border-radius: 1em;
+    box-shadow: 4px 5px 5px 0px rgba(0,0,0,0.37);
+    transition: transform 0.4s;
+}
+
 .arrow-down {
     border: solid white;
     border-width: 0 3px 3px 0;
@@ -187,7 +221,7 @@ button{
     font-size: 1.4rem;
     background: inherit;
     color: inherit;
-    border: 2px solid #b55400;
+    border: none;/*2px solid #b55400;*/
     border-radius: 1em;
     padding: 0.5rem;
 }
@@ -195,7 +229,9 @@ button:hover {
     background: #b55400;
     border-radius: 1rem;
 }
-
+.danger {
+    background: #ff4d4d !important;
+}
 textarea[type=description]{
     padding: 0.6em 0.6em;
     font-size: 1.2em;
@@ -297,4 +333,11 @@ textarea[type=contenu] {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+}
+
+.article_content {
+    background-color: #eeeeee;
+    color: #222831;
+    border-radius: 1em;
+    padding: 0.5em 0.5em;
 }
