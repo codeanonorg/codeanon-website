@@ -23,7 +23,7 @@ adminRoute.get('/', function (req, res) {
             .getUserByUsername(req.session.user.username)
             .then(queryResponse => {
 
-                if (queryResponse.rows[0].role_id !== 1) {
+                if (queryResponse.role_id !== 1) {
                     res.redirect('/home')
                 } else {
                     res.render('admin.ejs', {
@@ -48,7 +48,7 @@ adminRoute.get('/codakey', function (req, res) {
             .getUserByUsername(req.session.user.username)
             .then(queryResponse => {
 
-                if (queryResponse.rows[0].role_id !== 1) {
+                if (queryResponse.role_id !== 1) {
 
                     res.redirect('/home')
 
@@ -127,7 +127,7 @@ adminRoute.get('/unverifiedArticles', function (req, res) {
         .getUserByUsername(req.session.user.username)
         .then(queryResponse => {
 
-            if (queryResponse.rows[0].role_id !== 1) {
+            if (queryResponse.role_id !== 1) {
 
                 res.redirect('/home')
 
