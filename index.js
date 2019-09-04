@@ -47,7 +47,10 @@ app.use(session({
 app.use(expressValidator())
 
 app.use((req, res, next) => {
-    if (req.session.user) {
+    if (req.session.user 
+        || req.path === '/login' 
+        || req.path === '/register' 
+        || req.path === '/home'
         next(req, res)
     } else {
         res.redirect('/login')
