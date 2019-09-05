@@ -82,16 +82,19 @@ adminRoute.post('/codakey', function (req, res) {
             return codakeyQuery.testIfKeyInDb(req.param.codakey)
         })
         .then(queryResponse => {
+            console.log(queryResponse.rows)
 
             if (!req.body.codakey) {
 
                 res.render('codakey.ejs', {
                     username: req.session.user.username,
                     page: 'CodaKey',
-                    responseMsg: 'Veuillez à remplir le champ!',
+                    responseMsg: 'Veuillez remplir le champ!',
                 })
 
-            } else if (queryResponse.rows[0]) {
+            } else if (queryResponse.rows.length !== 0) {
+
+                console.log(queryResponse.rows)
 
                 res.render('codakey.ejs', {
                     username: req.session.user.username,
@@ -100,7 +103,7 @@ adminRoute.post('/codakey', function (req, res) {
                 })
 
             } else {
-
+                console.log('ici')
                 return codakeyQuery.createCodaKey(req.body.codakey)
             }
         })

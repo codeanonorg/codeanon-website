@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(session({
     name: 'session',
-    secret: process.env.SECRET || "jaimeleschats",
+    secret: process.env.SECRET || "jetarabiscottesouventEnandalousie",
     //  keys: new Keygrip(secret, 'SHA256', 'base64'),
 
     //  Options
