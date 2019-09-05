@@ -14,13 +14,15 @@ module.exports = {
         return new Promise((resolve, reject) => {
             db.query(sqlQuery, username_)
             .then( data => {
-                if (data.rows.length == 0) {
-                    reject(`no user ${username_} in db`)
+                if (data.rows.length === 0) {
+                    console.error(`no user ${username_} in db`)
+                    reject(1)
                 } else {
                     resolve(data.rows[0])
                 }
             })
             .catch( err => {
+                console.error(err)
                 reject('[db] server side error')
             })
         })

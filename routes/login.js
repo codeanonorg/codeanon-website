@@ -50,7 +50,10 @@ loginRoute.post('/', function (req, res) {
         })
         .catch(e => {
             console.error(e)
-            res.render('login.ejs', { errorMsg : errorResponse })
+            if (e === 1) {
+                e = errorResponse
+            }
+            res.render('login.ejs', { errorMsg : e })
         })
 })
 
