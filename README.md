@@ -1,5 +1,7 @@
 # Site CODEANON
 
+[![Build Status](https://travis-ci.org/codeanonorg/codeanon-website.svg?branch=master)](https://travis-ci.org/codeanonorg/codeanon-website)
+
 ## Pour les devs
 
 * Veillez a installer Postgresql pour pouvoir se connecter au site
