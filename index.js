@@ -31,6 +31,7 @@ app.use(express.static('bower_components'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+app.set('trust proxy', 1)
 app.use(session({
     name: 'session',
     secret: process.env.SECRET || "jetarabiscottesouventEnandalousie",
