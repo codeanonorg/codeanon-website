@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" type="text/css" href="/css/wip.css">
+    <title>CodeAnon</title>
+</head>
+
+<body>
+    <section class="layout col-light">
+        <!-- Header-->
+        <% include templates/header.ejs %>
+
+        <main>
+            <h1>User List</h1>
+            <table class="back-light col-dark">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <% for (let i = 0; i < user_list.length; i++) {%>
+                        
+                
+                        
+                    <tr>
+                        <td>
+                                <a href="/profile/<%= user_list[i].user_id %>" target="_blank" rel="noopener noreferrer">
+                                <%= user_list[i].username %>
+                            </a>
+                        </td>
+                        <td>
+                                <%= user_list[i].email %>
+                        </td>
+                        <td>
+                                <%= user_list[i].status_name %>
+                        </td>
+                        <td>
+                                <%= user_list[i].role_name %>
+                        </td>
+                        
+                    </tr>
+                
+                    <% } %>
+                </tbody>
+            </table>
+        </main>
+
+        <!-- Footer-->
+        <% include templates/footer.ejs %>
+    </section>
+</body>

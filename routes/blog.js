@@ -31,7 +31,7 @@ blogRoute.get('/', function (req, res) {
 
                     if (articles.rows[0]) {
 
-                        dateArray = time.getDatesForArticleList(articles)
+                        dateArray = time.getDatesForArticleList(articles.rows)
                         articleList = articles.rows
 
                     } else {

@@ -99,6 +99,17 @@ module.exports = {
         const sqlQuery = 'SELECT user_id FROM users WHERE username = $1'
         
         return db.query(sqlQuery, username_)
-    }
+    },
 
+    getAllUsers: function () {
+        const sqlQuery =    `SELECT users.user_id, users.username, users.email, users.password, users.timestamp, roles.name AS role_name, account_status.name AS status_name, users.update_timestamp
+                            FROM users
+                            LEFT JOIN roles
+                                ON roles.role_id = users.role_id
+                            LEFT JOIN account_status
+                                ON account_status.status_id = users.status_id
+                            ORDER BY user_id DESC`;
+
+        return db.query(sqlQuery)
+    }
 }

@@ -104,6 +104,29 @@ span {
     color: #b55400;
 }
 
+
+
+table {
+    margin: 1rem 0;
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    text-align: center;
+    
+    box-shadow: 4px 5px 5px 0px rgba(0, 0, 0, 0.514);
+}
+tr {
+    border-bottom: 10px solid #222831;
+}
+thead > th {
+    padding: 16px !important;
+    font-weight: 300;
+}
+tbody > td {
+    padding: 1rem;
+    font-weight: 300;
+}
+
 /*** Classes***/
 
 .marg-left{

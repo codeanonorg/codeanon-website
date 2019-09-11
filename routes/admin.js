@@ -4,14 +4,14 @@
  *
  */
 
-const { Router }    = require('express')
-const adminRoute    = Router()
+const { Router } = require('express')
+const adminRoute = Router()
 
-const codakeyQuery  = require('../db/codakeyQuerys')
-const userQuery     = require('../db/userQuerys')
-const articleQuery  = require('../db/articleQuerys')
+const codakeyQuery = require('../db/codakeyQuerys')
+const userQuery = require('../db/userQuerys')
+const articleQuery = require('../db/articleQuerys')
 
-const time          = require('../public/js/timeHandling')
+const time = require('../public/js/timeHandling')
 
 adminRoute.get('/', function (req, res) {
 
@@ -140,7 +140,7 @@ adminRoute.get('/unverifiedArticles', function (req, res) {
             }
         })
         .then(queryResponse => {
-            
+
             let dateArray;
             let articleList;
 
@@ -165,5 +165,45 @@ adminRoute.get('/unverifiedArticles', function (req, res) {
             console.log(e)
         })
 })
+
+adminRoute.get('/user-list', (req, res) => {
+    /*
+    
+    if (!req.session.user) res.redirect('/')
+
+    */
+    //check if admin :: get users
+
+    // ///!!!\\\ WRAP ALL QUERYS
+    userQuery
+        .getUserByUsername(req.session.user.username)
+        .then(queryResponse => {
+            if (queryResponse.role_id !== 1) {
+                res.redirect('/home')
+            }
+
+            return userQuery.getAllUsers()
+        })
+        .then(queryResponse => {
+            console.log(queryResponse.rows)
+            if (queryResponse.rows[0]) {
+                
+                dateArray = time.getDatesForArticleList(queryResponse.rows)
+                userList = queryResponse.rows
+
+            } else {
+                dateArray = []
+                articleList = []
+            }
+            res.render('userList.ejs', {
+                username: req.session.user.username,
+                user_list: userList,
+                user_date_list: dateArray,
+                page: 'User List',
+            })
+        })
+        .catch(e => console.error(e))
+})
+
 
 module.exports = adminRoute
