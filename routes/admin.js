@@ -205,5 +205,15 @@ adminRoute.get('/user-list', (req, res) => {
         .catch(e => console.error(e))
 })
 
+/* for debug use
+adminRoute.get('/fakeUser', (req, res) => {
+    req.session.user = {
+        'username': 'fake',
+        'email': 'fake.fake@fake',
+        'user_id': 99456,
+    };
+    res.redirect('/home')
+})
+*/
 
 module.exports = adminRoute
