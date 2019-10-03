@@ -90,4 +90,19 @@ profileRoute.post('/', function (req, res) {
         .catch(e => console.error(e.stack))
 })
 
+profileRoute.get('/:userId', (req, res) => {
+    res.send('ok profile ' + req.params.userId)
+})
+
+profileRoute.get('/:userId/delete', (req, res) => {
+    res.send('delete profile ' + req.params.userId + ' page')
+})
+
+profileRoute.get('/:userId/kick', (req, res) => {
+    res.send('kick profile ' + req.params.userId + ' page')
+})
+
+profileRoute.get('/:userId/ban', (req, res) => {
+    res.send('ban profile ' + req.params.userId + ' page')
+})
 module.exports = profileRoute

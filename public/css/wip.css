@@ -364,3 +364,49 @@ textarea[type=contenu] {
     border-radius: 1em;
     padding: 0.5em 0.5em;
 }
+
+/*  Bouton */
+
+.delete-button {
+    font-size: 1rem;
+    margin: .2rem 0;
+
+    background: #ff8d8d7a;
+    border: 2px solid #ee1909;
+    border-radius: .5rem;
+
+    color: #000;
+}
+.delete-button:hover{
+    background: #f85f5faf;
+    border-radius: .5rem;
+}
+.kick-button {
+    font-size: 1rem;
+    margin: .2rem 0;
+
+    background: #375dc47a;
+    border: 2px solid #096cee;
+    border-radius: .5rem;
+
+    color: #000;
+}
+.kick-button:hover{
+    background: #4537c4be;
+    border-radius: .5rem;
+}
+
+.ban-button {
+    font-size: 1rem;
+    margin: .2rem 0;
+
+    background: #fffd8d7a;
+    border: 2px solid #919b07;
+    border-radius: .5rem;
+
+    color: #000;
+}
+.ban-button:hover{
+    background: #f8ee5faf;
+    border-radius: .5rem;
+}

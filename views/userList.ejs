@@ -24,32 +24,41 @@
                         <th>Email</th>
                         <th>Status</th>
                         <th>Role</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
 
                     <% for (let i = 0; i < user_list.length; i++) {%>
-                        
-                
-                        
+
                     <tr>
                         <td>
-                                <a href="/profile/<%= user_list[i].user_id %>" target="_blank" rel="noopener noreferrer">
+                            <a href="/profile/<%= user_list[i].user_id %>" target="_blank" rel="noopener noreferrer">
                                 <%= user_list[i].username %>
                             </a>
                         </td>
                         <td>
-                                <%= user_list[i].email %>
+                            <%= user_list[i].email %>
                         </td>
                         <td>
-                                <%= user_list[i].status_name %>
+                            <%= user_list[i].status_name %>
                         </td>
                         <td>
-                                <%= user_list[i].role_name %>
+                            <%= user_list[i].role_name %>
                         </td>
-                        
+                        <td>
+                            <a href="/profile/<%= user_list[i].user_id %>/kick">
+                                <button class="kick-button">kick</button>
+                            </a>
+                            <a href="/profile/<%= user_list[i].user_id %>/ban">
+                                <button class="ban-button">ban</button>
+                            </a>
+                            <a href="/profile/<%= user_list[i].user_id %>/delete">
+                                <button class="delete-button">delete</button>
+                            </a>
+                        </td>
                     </tr>
-                
+
                     <% } %>
                 </tbody>
             </table>
