@@ -40,7 +40,7 @@ app.use(session({
     //  Options
     path: '/',
     httpOnly: true,
-    //  secure: true, // need https rev-proxie
+    secure: true, // need https rev-proxie
     signed: true,
     maxAge: 172800000, // 48 * 60 * 60 * 1000 = 48h
     sameSite: 'strict',
