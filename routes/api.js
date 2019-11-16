@@ -23,7 +23,7 @@ apiRoute.get('/articles/top3', function (req, res) {
             console.error(e.stack)
             console.log('error')
         })
-    })
+    
     /*
     res.status(200).send({
         name: 'testUser'
