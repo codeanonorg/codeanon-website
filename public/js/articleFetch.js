@@ -1,41 +1,56 @@
-const getUsers = async () => {
+window.onload = () => {
+    const getUsers = async () => {
 
-    let res = await fetch('/api/articles/top3')
-    if (res.ok) {
-        let fullList = await res.json();
-        console.log(fullList);
-        displayArticleOnDom(fullList);
-    } else {
-        console.error('Retour du serveur: ', res.status);
+        let res = await fetch('/api/articles/top3')
+        if (res.ok) {
+            let fullList = await res.json();
+            //  console.log(fullList);
+            await displayArticleOnDom(fullList);
+        } else {
+            console.error('Retour du serveur: ', res.status);
+        }
     }
-}
-getUsers();
+    getUsers();
 
-function displayArticleOnDom(fullList) {
-    window.onload = () => {
-        for (let i = 0; i < 3; i++) {
+    async function displayArticleOnDom(fullList) {
+        let maxLoops;
+        if (fullList.length < 3) {
+            maxLoops = fullList.length
+        } else {
+            maxLoops = 3;
+        }
+        
+        for (let i = 0; i < maxLoops; i++) {
             const element = document.querySelector("#articles");
 
-            let tagString;
-            if (fullList.article_list[i].tags) {
-                article_list[i].tags.forEach(item => {
-                    tagString += ("#" + item);
-                })
-            }
+            let tagString = '# ';
 
-            element.appendChild(`<a href="/article/${fullList.article_list[i].article_id}">
+            
+            if (fullList[i].tags.length > 1) {
+                for (let index = 0; index < fullList[i].tags.length; index++) {
+                    console.log(fullList[i].tags[0])
+                    tagString.concat('# ', fullList[i].tags[index])
+                    
+                }
+            } else if (fullList[i].tags) {
+                tagString = fullList[i].tags
+            }
+            
+            //  console.log(i + ' ' + tagString)
+
+            element.insertAdjacentHTML("afterend", `<a href="/article/${fullList[i].article_id}">
         <section class="card">
             <header>
-                <h3> ${fullList.article_list[i].title} </h3>
+                <h3> ${fullList[i].title} </h3>
                 <h3>
                     <object data="user.svg" type="image/svg+xml">
                         <img src="/public/user.svg" alt="">
                     </object>
-                    <span> ${fullList.article_list[i].username} </span> | ${fullList.article_date_list[i]} %>
+                    <span> ${fullList[i].username} </span> | ${fullList[i].date}
                 </h3>
                 
                 <p>
-                    ${fullList.article_list[i].description.slice(0, 120)}
+                    ${fullList[i].description.slice(0, 120)}
                 </p>
                 <p>
                     ${tagString}
@@ -44,6 +59,8 @@ function displayArticleOnDom(fullList) {
         </section>
     </a>
     `)
+            //}
         }
     }
+
 }
