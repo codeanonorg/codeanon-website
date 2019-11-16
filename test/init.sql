@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS projects (
     title           text        NOT NULL UNIQUE,
     user_id         integer     NOT NULL, --  FK
     timestamp       bigint      NOT NULL,
+    repo_link       text        NOT NULL,
     tags            text[],
     description     text,
     content         text        NOT NULL,
