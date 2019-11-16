@@ -102,6 +102,10 @@ projectRoute.get('/:projectId', function (req, res) {
         .then(project => {
             if (project.rows[0]) {
                 res.render('project.ejs', {
+
+                    //  add project github link
+                    //  need to modify database
+
                     username: req.session.user.username,
                     project_title: project.rows[0].title,
                     project_author: project.rows[0].username, // need to be resolved into the actual username QUERY

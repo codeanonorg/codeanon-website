@@ -21,6 +21,7 @@ const logout = require('./routes/logout')
 const admin = require('./routes/admin')
 const about = require('./routes/about')
 const resources = require('./routes/resources')
+const api = require('./routes/api')
 
 const app = express()
 
@@ -90,6 +91,7 @@ app.use('/logout', check, logout)
 app.use('/admin', check, adminCheck, admin)
 app.use('/about', check, about)
 app.use('/resources', check, resources)
+app.use('/api', api)
 
 app.get('*', (req, res) => {
     res.status(404).render('404.ejs', {
