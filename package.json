@@ -29,6 +29,7 @@
     "ejs": "^2.7.2",
     "express": "^4.17.1",
     "express-validator": "^5.3.1",
+    "highlight": "^0.2.4",
     "markdown-it": "^8.4.2",
     "pg": "^7.12.1",
     "serve-favicon": "^2.5.0"
